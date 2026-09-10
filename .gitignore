@@ -83,3 +83,5 @@ static/assets/spartak-auto-v3/class-a-cutouts/transparent-png/*-2x-*.png
 static/assets/images/daynight-premium-banners/*.png
 static/assets/images/daynight-premium-banners/webp/*-clean-v1.webp
 static/assets/images/daynight-premium-banners/webp/*-spartak-v*.webp
+
+.vercel
