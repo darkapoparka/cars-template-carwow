@@ -7,7 +7,6 @@
 
 	let {
 		vehiclesCount,
-		resultCount,
 		hasAdvancedFilters,
 		sort,
 		sortChipLabel,
@@ -28,7 +27,6 @@
 		clearPrice
 	}: {
 		vehiclesCount: number;
-		resultCount: number;
 		hasAdvancedFilters: boolean;
 		sort: SortKey;
 		sortChipLabel: string;
@@ -51,10 +49,6 @@
 </script>
 
 <div class="mobile-inventory-quick" aria-label="Бързи филтри">
-	<p class="mobile-inventory-count" role="status">
-		{resultCount}
-		{resultCount === 1 ? 'резултат' : 'резултата'}
-	</p>
 	<div class="mobile-inventory-pills">
 		<button
 			type="button"
@@ -157,11 +151,3 @@
 		{/if}
 	</div>
 </div>
-
-<style>
-	.mobile-inventory-count {
-		margin: 0 0 8px;
-		color: var(--sa-muted);
-		font-size: 13px;
-	}
-</style>

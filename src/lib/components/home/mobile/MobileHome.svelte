@@ -433,7 +433,7 @@
 	</svg>
 {/snippet}
 
-<div class="mobile-home" aria-label="Day Night Auto — начало">
+<div class="mobile-home">
 	<header class="mh-hero">
 		<div class="mh-hero__bar">
 			<a class="mh-hero__brand" href={resolve('/')} aria-label="Day Night Auto home">
@@ -467,6 +467,7 @@
 		<div class={`mh-hero__box${heroBox ? ' mh-hero__box--card' : ''}`}>
 			<div
 				class={`mh-hero__modes${heroToggle === 'segmented' ? ' mh-hero__modes--segmented' : ''}`}
+				role="group"
 				aria-label="Избери действие"
 			>
 				<button
@@ -593,7 +594,7 @@
 								</span>
 							</span>
 						</a>
-						<div class="mh-car__tools" aria-label="Действия за автомобила">
+						<div class="mh-car__tools" role="group" aria-label="Действия за автомобила">
 							<button
 								type="button"
 								class:is-active={isCompared}
@@ -1582,6 +1583,32 @@
 		color: var(--sa-blue);
 	}
 
+	@media (max-width: 390px) {
+		.mh-quick {
+			gap: 7px;
+		}
+
+		.mh-quick__pill {
+			gap: 5px;
+			padding-inline: 8px;
+		}
+	}
+
+	@media (max-width: 370px) {
+		.mh-quick {
+			gap: 6px;
+		}
+
+		.mh-quick__pill {
+			gap: 4px;
+			padding-inline: 7px;
+		}
+
+		.mh-quick__car-icon {
+			width: 28px;
+		}
+	}
+
 	/* Sections */
 	.mh-section {
 		display: grid;
@@ -1903,7 +1930,7 @@
 	}
 
 	.mh-brandcard__count {
-		color: #687180;
+		color: #5f6876;
 		font-size: 12px;
 		font-weight: var(--sa-weight-medium);
 		line-height: 1.2;

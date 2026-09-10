@@ -49,10 +49,10 @@
 		--promo-action-ink: #171b1e;
 		position: relative;
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		width: 100%;
 		min-height: 196px;
-		padding: 20px 16px;
+		padding: 22px 16px 20px;
 		border: 0;
 		border-radius: 12px;
 		background: #171b1e;
@@ -74,10 +74,11 @@
 	}
 	.mobile-promo__copy {
 		display: grid;
-		justify-items: center;
-		text-align: center;
-		gap: 8px;
-		width: 68%;
+		justify-items: start;
+		align-content: start;
+		text-align: left;
+		gap: 7px;
+		width: min(70%, 248px);
 		position: relative;
 		z-index: 1;
 	}
@@ -86,15 +87,15 @@
 		font-size: 22px;
 		font-weight: 700;
 		line-height: 1.2;
-		white-space: pre-line;
+		white-space: normal;
 		letter-spacing: -0.02em;
 	}
 	.mobile-promo__description {
 		color: var(--promo-ink);
 		font-size: 14px;
 		font-weight: 400;
-		line-height: 1.5;
-		white-space: pre-line;
+		line-height: 1.45;
+		white-space: normal;
 	}
 	.mobile-promo__cta {
 		display: inline-flex;

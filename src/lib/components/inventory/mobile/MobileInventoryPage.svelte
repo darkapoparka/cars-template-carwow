@@ -538,7 +538,6 @@
 		<section class="mobile-inventory-results" aria-live="polite">
 			<MobileInventoryQuickFilters
 				vehiclesCount={vehicles.length}
-				resultCount={filteredVehicles.length}
 				{hasAdvancedFilters}
 				{sort}
 				{sortChipLabel}
