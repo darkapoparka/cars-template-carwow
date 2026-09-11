@@ -1,15 +1,8 @@
 <script lang="ts">
-	import {
-		BadgeCheck,
-		CarFront,
-		ClipboardCheck,
-		Clock,
-		Phone,
-		PhoneCall,
-		Send
-	} from '@lucide/svelte';
+	import { BadgeCheck, CarFront, ClipboardCheck, Clock, PhoneCall, Send } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
 	import { daynightSite } from '$lib/data/daynight-site';
+	import MobileHeroBar from '$lib/components/shared/MobileHeroBar.svelte';
 
 	const phoneHref = `tel:+359${daynightSite.phone.slice(1)}`;
 
@@ -69,14 +62,7 @@
 			alt=""
 			aria-hidden="true"
 		/>
-		<div class="mobile-financing-hero__bar">
-			<a href={resolve('/')} aria-label="Day Night Auto начало">
-				<img src={resolve('/brand/daynight-logo-generated.png')} alt={daynightSite.shortName} />
-			</a>
-			<a class="mobile-financing-hero__phone" href={phoneHref} aria-label="Обади се">
-				<Phone size={19} strokeWidth={2.45} />
-			</a>
-		</div>
+		<MobileHeroBar showLocation={false} />
 
 		<div class="mobile-financing-hero__copy">
 			<span>Финансиране</span>
@@ -219,36 +205,6 @@
 		opacity: 0.45;
 		object-fit: cover;
 		object-position: center;
-	}
-
-	.mobile-financing-hero__bar {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--sa-mobile-gap-md);
-	}
-
-	.mobile-financing-hero__bar img {
-		display: block;
-		width: 170px;
-		height: auto;
-	}
-
-	.mobile-financing-hero__phone {
-		display: grid;
-		width: var(--sa-mobile-pill-h);
-		height: var(--sa-mobile-pill-h);
-		flex: 0 0 auto;
-		place-items: center;
-		border-radius: 50%;
-		background: var(--sa-red);
-		color: #fff !important;
-	}
-
-	.mobile-financing-hero__phone :global(svg),
-	.mobile-financing-hero__phone :global(svg *) {
-		color: #fff !important;
-		stroke: #fff !important;
 	}
 
 	.mobile-financing-hero__copy {

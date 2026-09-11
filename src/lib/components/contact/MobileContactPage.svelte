@@ -249,14 +249,7 @@
 			alt=""
 			aria-hidden="true"
 		/>
-		{#if isImportMode}<MobileHeroBar />{:else}<div class="mobile-contact-hero__bar">
-				<a href={resolve('/')} aria-label="Day Night Auto начало">
-					<img src={resolve('/brand/daynight-logo-generated.png')} alt={daynightSite.shortName} />
-				</a>
-				<a class="mobile-contact-hero__phone" href={phoneHref} aria-label="Обади се">
-					<Phone size={19} strokeWidth={2.35} />
-				</a>
-			</div>{/if}
+		<MobileHeroBar showLocation={isImportMode} />
 
 		<div class="mobile-contact-hero__copy">
 			{#if !isImportMode}<span class="mobile-contact-hero__label">Контакти</span>{/if}
@@ -496,7 +489,7 @@
 			<nav class="mobile-import-disclosures" aria-label="Повече за вноса">
 				<MobilePromoCard
 					title="Как работи"
-					description={"От обявата до оферта\nс конкретен срок."}
+					description={'От обявата до оферта\nс конкретен срок.'}
 					label="Виж стъпките"
 					image="/assets/images/home-promos/leasing-calculator-cutout-v7.webp"
 					tone="red"
@@ -504,7 +497,7 @@
 				/>
 				<MobilePromoCard
 					title="Какво поемаме"
-					description={"Проверка и транспорт,\nдокументи и предаване."}
+					description={'Проверка и транспорт,\nдокументи и предаване.'}
 					label="Виж услугата"
 					image="/assets/images/home-promos/gclass-urus-pair-v4.webp"
 					cars
@@ -711,37 +704,6 @@
 		opacity: 0.42;
 		object-fit: cover;
 		object-position: center;
-	}
-
-	.mobile-contact-hero__bar {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--sa-mobile-gap-md);
-	}
-
-	.mobile-contact-hero__bar img {
-		display: block;
-		width: 170px;
-		height: auto;
-	}
-
-	.mobile-contact-hero__phone {
-		display: grid;
-		width: var(--sa-mobile-pill-h);
-		height: var(--sa-mobile-pill-h);
-		flex: 0 0 auto;
-		place-items: center;
-		border: 1px solid rgba(255, 255, 255, 0.34);
-		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.15);
-		color: #fff !important;
-	}
-
-	.mobile-contact-hero__phone :global(svg),
-	.mobile-contact-hero__phone :global(svg *) {
-		color: #fff !important;
-		stroke: #fff !important;
 	}
 
 	.mobile-contact-hero__copy {

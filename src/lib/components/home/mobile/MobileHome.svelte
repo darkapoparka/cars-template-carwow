@@ -4,13 +4,10 @@
 		Check,
 		ChevronLeft,
 		ChevronRight,
-		MapPinned,
 		MapPin,
 		Navigation,
 		Phone,
 		PhoneCall,
-		GitCompare,
-		Heart,
 		Search,
 		Settings2,
 		X
@@ -23,12 +20,12 @@
 	import MobileDrawer from '$lib/components/shared/mobile/MobileDrawer.svelte';
 	import MobileFullSheet from '$lib/components/shared/mobile/MobileFullSheet.svelte';
 	import MobileBottomDock from './MobileBottomDock.svelte';
+	import MobileHeroBar from '$lib/components/shared/MobileHeroBar.svelte';
 	import {
 		enhanceDayNightImageFallbacks,
 		daynightImageFallback
 	} from '$lib/utils/daynight-image-fallback';
 	import { onMount } from 'svelte';
-	import { getOptionalGarageContext } from '$lib/state/garage.svelte';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import {
 		bodyChipIconFor,
@@ -87,7 +84,6 @@
 	});
 	const featuredCars = $derived(data.featuredCars.slice(0, 4));
 	const total = $derived(data.total);
-	const garage = getOptionalGarageContext();
 
 	const popularBrands = $derived(data.brands.slice(0, 6));
 	const bodyChips = $derived(data.bodyTypes.slice(0, 6));
@@ -435,32 +431,7 @@
 
 <div class="mobile-home">
 	<header class="mh-hero">
-		<div class="mh-hero__bar">
-			<a class="mh-hero__brand" href={resolve('/')} aria-label="Day Night Auto home">
-				<img
-					class="mh-hero__logo"
-					src={resolve('/brand/daynight-logo-generated.png')}
-					alt={daynightSite.shortName}
-				/>
-			</a>
-			<div class="mh-hero__bar-actions">
-				<button
-					class="mh-hero__bar-action"
-					type="button"
-					aria-label={`Локация: ${daynightSite.locationShort}`}
-					onclick={() => (locationOpen = true)}
-				>
-					<MapPinned size={19} strokeWidth={2.2} aria-hidden="true" />
-				</button>
-				<a
-					class="mh-hero__bar-action mh-hero__bar-action--call"
-					href={phoneHref}
-					aria-label="Обади се на Day Night Auto"
-				>
-					<Phone size={19} strokeWidth={2.35} aria-hidden="true" />
-				</a>
-			</div>
-		</div>
+		<MobileHeroBar onLocation={() => (locationOpen = true)} />
 
 		<h1 class="mh-hero__title">Day Night Auto</h1>
 
@@ -565,8 +536,6 @@
 			</div>
 			<div class="mh-carlist">
 				{#each featuredCars as car (car.slug)}
-					{@const isFavorite = garage.isFavorite(car.slug)}
-					{@const isCompared = garage.isCompared(car.slug)}
 					<article class="mh-car">
 						<a class="mh-car__link" href={resolve('/inventory/[slug]', { slug: car.slug })}>
 							<span class="mh-car__media">
@@ -594,30 +563,6 @@
 								</span>
 							</span>
 						</a>
-						<div class="mh-car__tools" role="group" aria-label="Действия за автомобила">
-							<button
-								type="button"
-								class:is-active={isCompared}
-								aria-pressed={isCompared}
-								aria-label={isCompared
-									? `Премахни ${car.shortTitle} от сравнение`
-									: `Добави ${car.shortTitle} за сравнение`}
-								onclick={() => garage.toggleCompare(car.slug)}
-							>
-								<GitCompare size={17} strokeWidth={2.25} />
-							</button>
-							<button
-								type="button"
-								class:is-active={isFavorite}
-								aria-pressed={isFavorite}
-								aria-label={isFavorite
-									? `Премахни ${car.shortTitle} от любими`
-									: `Добави ${car.shortTitle} в любими`}
-								onclick={() => garage.toggleFavorite(car.slug)}
-							>
-								<Heart size={17} strokeWidth={2.25} />
-							</button>
-						</div>
 					</article>
 				{/each}
 			</div>
@@ -1222,55 +1167,6 @@
 		color: #fff;
 	}
 
-	.mh-hero__bar {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 12px;
-	}
-
-	.mh-hero__bar-actions {
-		display: flex;
-		flex: 0 0 auto;
-		gap: 8px;
-	}
-
-	.mh-hero__bar-action {
-		display: inline-grid;
-		box-sizing: border-box;
-		width: var(--sa-mobile-pill-h);
-		height: var(--sa-mobile-pill-h);
-		place-items: center;
-		border: 1px solid rgba(255, 255, 255, 0.34);
-		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.15);
-		color: #fff !important;
-		cursor: pointer;
-		line-height: 0;
-	}
-
-	.mh-hero__bar-action :global(svg),
-	.mh-hero__bar-action :global(svg *) {
-		color: currentColor !important;
-		stroke: currentColor !important;
-	}
-
-	.mh-hero__brand {
-		display: inline-flex;
-		min-width: 0;
-		align-items: center;
-		color: #fff !important;
-	}
-
-	.mh-hero__logo {
-		display: block;
-		width: 170px;
-		height: auto;
-		object-fit: contain;
-		object-position: left center;
-		transform: translateZ(0);
-	}
-
 	.mh-hero__title {
 		position: absolute;
 		width: 1px;
@@ -1345,14 +1241,14 @@
 		box-sizing: border-box;
 		width: 100%;
 		min-width: 0;
-		min-height: 42px;
+		min-height: 52px;
 		align-items: center;
 		justify-content: center;
 		border: 0;
 		background: transparent;
-		color: var(--mh-hero-tab-color, rgba(255, 255, 255, 0.7));
-		font: var(--sa-weight-semibold) 16px / 1.2 var(--sa-font);
-		padding: 5px 8px 7px;
+		color: var(--mh-hero-tab-color, rgba(255, 255, 255, 0.76));
+		font: 700 19px / 1.15 var(--sa-font);
+		padding: 8px 8px 10px;
 		cursor: pointer;
 		transition: color 0.18s ease;
 		-webkit-tap-highlight-color: transparent;
@@ -1379,8 +1275,8 @@
 		bottom: -1px;
 		left: 0;
 		width: auto;
-		height: 3px;
-		border-radius: 3px 3px 0 0;
+		height: 4px;
+		border-radius: 4px 4px 0 0;
 		background: var(--sa-red, #d50032);
 		content: '';
 	}
@@ -1564,7 +1460,7 @@
 		background: var(--sa-fill);
 		padding: 0 var(--sa-pill-pad-x);
 		color: var(--sa-ink);
-		font-size: var(--sa-text-sm);
+		font-size: 18px;
 		font-weight: var(--sa-pill-weight);
 		line-height: 1;
 		white-space: nowrap;
@@ -1741,7 +1637,7 @@
 
 	.mh-budget-card__copy strong {
 		color: var(--sa-ink);
-		font-size: var(--sa-text-sm);
+		font-size: 19px;
 		font-weight: var(--sa-weight-semibold);
 		line-height: 1.3;
 	}
@@ -2029,49 +1925,6 @@
 		letter-spacing: var(--sa-tracking-wide);
 		line-height: 1;
 		text-transform: uppercase;
-	}
-
-	.mh-car__tools {
-		position: absolute;
-		top: 7px;
-		right: 7px;
-		display: grid;
-		gap: 4px;
-		z-index: 2;
-	}
-
-	.mh-car__tools button {
-		display: grid;
-		width: 44px;
-		height: 44px;
-		place-items: center;
-		border: 1px solid rgba(255, 255, 255, 0.72);
-		border-radius: 50%;
-		background: #fff;
-		padding: 0;
-		color: var(--sa-ink);
-		cursor: pointer;
-		-webkit-tap-highlight-color: transparent;
-	}
-
-	.mh-car__tools button.is-active {
-		background: var(--sa-red);
-		color: #fff;
-	}
-
-	.mh-car__tools button:focus-visible {
-		outline: 2px solid var(--sa-ink);
-		outline-offset: 2px;
-	}
-
-	.mh-car__tools button :global(svg) {
-		display: block;
-		color: currentColor;
-		stroke: currentColor;
-	}
-
-	.mh-car__tools button.is-active:last-child :global(svg) {
-		fill: currentColor;
 	}
 
 	.mh-car__title {
@@ -3095,7 +2948,7 @@
 		}
 
 		.mh-hero__modes button {
-			font-size: var(--sa-text-sm);
+			font-size: 19px;
 		}
 
 		.mh-hero__search {
