@@ -666,7 +666,7 @@
 	.mobile-contact-hero--import {
 		gap: 12px;
 		background: #05070a;
-		padding-bottom: 15px;
+		padding-bottom: 26px;
 	}
 
 	.mobile-contact-hero--import::after {
@@ -683,7 +683,9 @@
 	.mobile-contact-hero--import .mobile-contact-hero__copy {
 		min-height: 44px;
 		align-content: center;
-		max-width: 318px;
+		justify-items: center;
+		max-width: none;
+		text-align: center;
 	}
 
 	.mobile-contact-hero.mobile-contact-hero--import h1 {
@@ -888,7 +890,7 @@
 	.mobile-contact-app main.mobile-contact-main--sheet {
 		position: relative;
 		z-index: 2;
-		margin-top: -14px;
+		margin-top: -8px;
 		border-radius: 22px 22px 0 0;
 		background: #fff;
 		padding-top: 27px;

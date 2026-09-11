@@ -501,8 +501,6 @@
 			{/each}
 		</nav>
 
-		<MobileHomeServices />
-
 		<section class="mh-section mh-section--budget" aria-labelledby="mh-budget-title">
 			<div class="mh-section__head">
 				<h2 id="mh-budget-title">По цена</h2>
@@ -634,6 +632,8 @@
 				{/each}
 			</div>
 		</section>
+
+		<MobileHomeServices />
 
 		<MobileHomeVideos />
 

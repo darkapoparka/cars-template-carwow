@@ -581,7 +581,7 @@
 		display: grid;
 		gap: 12px;
 		overflow: hidden;
-		padding: calc(env(safe-area-inset-top) + 12px) var(--sa-mobile-gutter-wide) 18px;
+		padding: calc(env(safe-area-inset-top) + 12px) var(--sa-mobile-gutter-wide) 26px;
 		background: #05070a;
 		color: #fff;
 		isolation: isolate;
@@ -612,7 +612,8 @@
 		display: grid;
 		min-height: 44px;
 		align-content: center;
-		max-width: 318px;
+		justify-items: center;
+		max-width: none;
 	}
 
 	.ms-hero__copy h1 {
@@ -622,6 +623,7 @@
 		font-weight: 800;
 		line-height: 1.2;
 		letter-spacing: 0;
+		text-align: center;
 	}
 
 	.ms-quick-start {
@@ -735,7 +737,7 @@
 	.mobile-sell main.ms-main--sheet {
 		position: relative;
 		z-index: 2;
-		margin-top: -14px;
+		margin-top: -8px;
 		border-radius: 22px 22px 0 0;
 		background: var(--ms-canvas);
 		padding-top: 26px;

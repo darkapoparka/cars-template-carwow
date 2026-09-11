@@ -152,12 +152,12 @@
 	.mobile-home-videos__rail {
 		display: grid;
 		grid-auto-flow: column;
-		grid-auto-columns: min(82vw, 316px);
+		grid-auto-columns: calc(100% - 28px);
 		gap: 10px;
 		overflow-x: auto;
-		margin-inline: calc(var(--sa-mobile-gutter) * -1);
-		padding: 0 var(--sa-mobile-gutter) 4px;
-		scroll-padding-inline: var(--sa-mobile-gutter);
+		margin-inline: 0;
+		padding: 0 0 4px;
+		scroll-padding-inline: 0;
 		scroll-snap-type: x proximity;
 		scrollbar-width: none;
 	}
@@ -314,9 +314,9 @@
 			padding-inline: 12px;
 		}
 		.mobile-home-videos__rail {
-			margin-inline: -12px;
-			padding-inline: 12px;
-			scroll-padding-inline: 12px;
+			margin-inline: 0;
+			padding-inline: 0;
+			scroll-padding-inline: 0;
 		}
 	}
 </style>
