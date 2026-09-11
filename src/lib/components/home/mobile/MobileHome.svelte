@@ -76,9 +76,7 @@
 		{ brand: 'Honda', label: 'Honda' },
 		{ brand: 'Toyota', label: 'Toyota' },
 		{ brand: 'Volvo', label: 'Volvo' },
-		{ brand: 'Ford', label: 'Ford' },
-		{ brand: 'Hyundai', label: 'Hyundai' },
-		{ brand: 'Tesla', label: 'Tesla' }
+		{ brand: 'Ford', label: 'Ford' }
 	] as const;
 	const brandTiles = $derived.by(() => {
 		const countByBrand = new Map(data.brandTiles.map((tile) => [tile.brand, tile.count]));
@@ -581,9 +579,8 @@
 		</section>
 
 		<section class="mh-section mh-section--brands" aria-labelledby="mh-brand-title">
-			<div class="mh-section__head">
+			<div class="mh-section__head mh-section__head--solo">
 				<h2 id="mh-brand-title">Марки</h2>
-				<a href={inventoryHref}>Всички <ChevronRight size={13} strokeWidth={2.6} /></a>
 			</div>
 			<div class="mh-brand-grid">
 				{#each brandTiles as tile (tile.brand)}
@@ -614,14 +611,18 @@
 						</span>
 					</a>
 				{/each}
-				<a class="mh-brandcard mh-brandcard--all" href={inventoryHref}>
-					<span class="mh-brandcard__all-icon" aria-hidden="true">
-						<img src={resolve('/brand/daynight-logo-generated.png')} alt="" loading="lazy" />
-					</span>
-					<span class="mh-brandcard__name">Всички марки</span>
-				</a>
 			</div>
 		</section>
+
+		<a class="mh-browse-banner" href={inventoryHref}>
+			<span>
+				<strong>Всички марки и модели</strong>
+				<small>{total} автомобила в каталога</small>
+			</span>
+			<span class="mh-browse-banner__action"
+				>Виж всички <ChevronRight size={15} strokeWidth={2.5} /></span
+			>
+		</a>
 
 		<section class="mh-section" aria-labelledby="mh-type-title">
 			<div class="mh-section__head">
@@ -1580,8 +1581,8 @@
 	.mh-budget-card {
 		position: relative;
 		display: grid;
-		grid-template-rows: 80px minmax(0, 1fr);
-		min-height: 140px;
+		grid-template-rows: 62px 48px;
+		min-height: 112px;
 		overflow: hidden;
 		border: 1px solid #e0e5ec;
 		border-radius: 8px;
@@ -1598,7 +1599,7 @@
 	.mh-budget-card__media {
 		position: relative;
 		display: grid;
-		min-height: 80px;
+		min-height: 62px;
 		place-items: end center;
 		overflow: hidden;
 		padding: 4px 8px 0;
@@ -1622,7 +1623,7 @@
 		display: block;
 		width: 100%;
 		max-width: 100%;
-		height: 72px;
+		height: 54px;
 		object-fit: contain;
 		object-position: center bottom;
 		transform: none;
@@ -1639,23 +1640,23 @@
 
 	.mh-budget-card--open .mh-budget-card__media img {
 		width: 100%;
-		height: 72px;
+		height: 54px;
 		transform: translateX(0);
 	}
 
 	.mh-budget-card__copy {
 		display: grid;
 		align-content: start;
-		gap: 4px;
+		gap: 2px;
 		min-width: 0;
-		padding: 8px 10px 10px;
+		padding: 4px 10px 8px;
 	}
 
 	.mh-budget-card__copy strong {
 		color: var(--sa-ink);
-		font-size: 19px;
+		font-size: var(--sa-mobile-type-control-sm);
 		font-weight: var(--sa-weight-semibold);
-		line-height: 1.3;
+		line-height: 1.1;
 	}
 
 	.mh-budget-card__copy span {
@@ -1666,6 +1667,59 @@
 		line-height: 1.15;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	.mh-browse-banner {
+		display: flex;
+		min-height: 64px;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		margin: 2px 16px 0;
+		border-radius: 10px;
+		background: #171b1e;
+		padding: 10px 10px 10px 14px;
+		color: #fff !important;
+		text-decoration: none;
+	}
+
+	.mh-browse-banner > span:first-child {
+		display: grid;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	.mh-browse-banner strong {
+		color: #fff !important;
+		font-size: 15px;
+		font-weight: var(--sa-weight-semibold);
+		line-height: 1.15;
+	}
+
+	.mh-browse-banner small {
+		color: rgba(255, 255, 255, 0.68);
+		font-size: 11px;
+		font-weight: var(--sa-weight-medium);
+	}
+
+	.mh-browse-banner__action {
+		display: inline-flex;
+		min-height: 40px;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		gap: 3px;
+		border-radius: 8px;
+		background: #fff;
+		padding: 0 10px;
+		color: #171b1e !important;
+		font-size: 12px;
+		font-weight: var(--sa-weight-semibold);
+	}
+
+	.mh-browse-banner:focus-visible {
+		outline: 3px solid var(--sa-red);
+		outline-offset: 2px;
 	}
 
 	.mh-type-grid {
@@ -1774,7 +1828,7 @@
 
 	.mh-brandcard {
 		display: grid;
-		min-height: 116px;
+		min-height: 112px;
 		align-items: center;
 		justify-items: center;
 		align-content: center;
@@ -1852,25 +1906,6 @@
 		font-weight: var(--sa-weight-medium);
 		line-height: 1.2;
 		white-space: nowrap;
-	}
-
-	.mh-brandcard--all {
-		grid-template-rows: 48px auto;
-	}
-
-	.mh-brandcard__all-icon {
-		display: grid;
-		width: 100%;
-		height: 48px;
-		place-items: center;
-	}
-
-	.mh-brandcard__all-icon img {
-		display: block;
-		width: 100%;
-		max-width: 104px;
-		height: auto;
-		object-fit: contain;
 	}
 
 	/* Car card — real inventory rail */
