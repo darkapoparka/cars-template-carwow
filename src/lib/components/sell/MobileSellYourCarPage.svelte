@@ -408,20 +408,20 @@
 		display: block;
 		width: 100%;
 		overflow: hidden;
-		border: 0;
+		border: 1px solid #d8e0e8;
 		border-radius: var(--sa-r-md);
-		background: transparent;
-		padding: 0;
-		box-shadow: none;
+		background: #eef2f5;
+		padding: 6px;
+		box-shadow: 0 1px 2px rgba(15, 20, 23, 0.04);
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
 	}
 	.sell-manual-banner img {
 		display: block;
 		width: 100%;
-		height: auto;
-		border-radius: var(--sa-r-md);
-		object-fit: cover;
+		aspect-ratio: 2.45 / 1;
+		border-radius: 11px;
+		object-fit: fill;
 	}
 	.sell-manual-banner:active {
 		transform: scale(0.995);
