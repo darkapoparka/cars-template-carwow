@@ -152,7 +152,7 @@
 	.mobile-home-videos__rail {
 		display: grid;
 		grid-auto-flow: column;
-		grid-auto-columns: calc(100% - 28px);
+		grid-auto-columns: 100%;
 		gap: 10px;
 		overflow-x: auto;
 		margin-inline: 0;
