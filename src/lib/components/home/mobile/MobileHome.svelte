@@ -59,7 +59,11 @@
 	type InventoryHref = typeof inventoryPath | `${typeof inventoryPath}?${string}`;
 	type ImportLeadHref = typeof importRequestPath | `${typeof importRequestPath}?${string}`;
 
-	const bodyTiles = $derived(data.bodyTiles.slice(0, 6));
+	const mobileBodyCatalog = ['Джип', 'Седан', 'Купе', 'Ван', 'Комби', 'Хечбек'] as const;
+	const bodyTiles = $derived.by(() => {
+		const countByBody = new Map(data.bodyTiles.map((tile) => [tile.body, tile.count]));
+		return mobileBodyCatalog.map((body) => ({ body, count: countByBody.get(body) ?? 0 }));
+	});
 	const budgetTiles = $derived(
 		data.budgetTiles.filter((tile) => tile.count > 0 || tile.value === 'all').slice(0, 4)
 	);
@@ -225,6 +229,12 @@
 		`${inventoryPath}?brand=${encodeURIComponent(brand)}`;
 	const bodyHref = (body: string): InventoryHref =>
 		`${inventoryPath}?body=${encodeURIComponent(body)}`;
+	const bodyCardHref = (body: string, count: number): InventoryHref | ImportLeadHref =>
+		count > 0
+			? bodyHref(body)
+			: `${importRequestPath}?intent=import&query=${encodeURIComponent(body)}`;
+	const bodyCountLabel = (count: number) =>
+		count === 0 ? 'Внос по заявка' : count === 1 ? '1 кола' : `${count} коли`;
 	const budgetHref = (budget: string): InventoryHref =>
 		`${inventoryPath}?price=${encodeURIComponent(budget)}`;
 	const budgetCardHref = (budget: string) =>
@@ -618,15 +628,15 @@
 				<h2 id="mh-type-title">По тип</h2>
 				<a href={inventoryHref}>Всички <ChevronRight size={13} strokeWidth={2.6} /></a>
 			</div>
-			<div class="mh-rail mh-rail--cat">
+			<div class="mh-type-grid">
 				{#each bodyTiles as tile (tile.body)}
-					<a class="mh-cat" href={resolve(bodyHref(tile.body))}>
+					<a class="mh-cat" href={resolve(bodyCardHref(tile.body, tile.count))}>
 						<span class="mh-cat__media">
 							<img class="mh-cat__image" src={bodyPhoto(tile.body)} alt="" loading="lazy" />
 						</span>
 						<span class="mh-cat__foot">
 							<span class="mh-cat__label">{bodyLabel(tile.body)}</span>
-							<span class="mh-cat__count">{tile.count} коли</span>
+							<span class="mh-cat__count">{bodyCountLabel(tile.count)}</span>
 						</span>
 					</a>
 				{/each}
@@ -639,19 +649,23 @@
 
 		<section class="mh-cta-wrap" aria-label="Призив за действие">
 			<div class="mh-cta">
+				<img
+					class="mh-cta__art"
+					src={resolve('/assets/images/home-promos/kristian-financing-campaign-v1.webp')}
+					alt=""
+					aria-hidden="true"
+					loading="lazy"
+				/>
+				<span class="mh-cta__shade" aria-hidden="true"></span>
 				<div class="mh-cta__copy">
-					<strong>{total} обяви · Оглед в София</strong>
-					<span>Финансиране · бартер · съдействие с документите</span>
+					<small>{total} автомобила · София</small>
+					<strong>Хареса си автомобил?</strong>
+					<span>Оглед, финансиране, бартер и документи — с един екип.</span>
 				</div>
 				<div class="mh-cta__actions">
 					<a class="is-browse" href={inventoryHref}>Всички автомобили</a>
 					<a class="is-call" href={phoneHref}>Обади се</a>
 				</div>
-			</div>
-			<div class="mh-trust">
-				<span>Проверени коли</span>
-				<span>В София</span>
-				<span>Оглед по уговорка</span>
 			</div>
 		</section>
 	</main>
@@ -1654,8 +1668,11 @@
 		white-space: nowrap;
 	}
 
-	.mh-rail--cat {
-		grid-auto-columns: calc((100% - 8px) / 2);
+	.mh-type-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 8px;
+		padding: 0 16px 4px;
 	}
 
 	/* Horizontal rails */
@@ -1691,8 +1708,8 @@
 	/* Category cards: vehicle body artwork on one soft-grey surface */
 	.mh-cat {
 		display: grid;
-		grid-template-rows: minmax(0, 1fr) 42px;
-		min-height: 132px;
+		grid-template-rows: minmax(0, 1fr) 40px;
+		min-height: 112px;
 		overflow: hidden;
 		border: 1px solid #e2e7ee;
 		border-radius: 8px;
@@ -1707,7 +1724,7 @@
 		min-height: 0;
 		place-items: center;
 		background: transparent;
-		padding: 8px 12px 0;
+		padding: 6px 6px 0;
 	}
 
 	.mh-cat__image {
@@ -1716,7 +1733,7 @@
 		display: block;
 		width: auto;
 		max-width: 100%;
-		height: 68px;
+		height: 52px;
 		max-height: 100%;
 		filter: drop-shadow(0 7px 8px rgba(15, 20, 27, 0.13));
 		object-fit: contain;
@@ -1724,24 +1741,26 @@
 	}
 
 	.mh-cat__foot {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 8px;
-		padding: 0 12px 11px;
+		display: grid;
+		align-content: center;
+		justify-items: center;
+		gap: 2px;
+		padding: 0 6px 7px;
+		text-align: center;
 	}
 
 	.mh-cat__label {
 		color: var(--sa-ink);
-		font-size: var(--sa-text-base);
+		font-size: var(--sa-mobile-type-control-sm);
 		font-weight: var(--sa-weight-semibold);
-		line-height: 1.1;
+		line-height: 1.05;
 	}
 
 	.mh-cat__count {
 		color: #4f5966;
-		font-size: var(--sa-text-xs);
+		font-size: 11px;
 		font-weight: var(--sa-weight-medium);
+		line-height: 1.1;
 		white-space: nowrap;
 	}
 
@@ -2004,59 +2023,98 @@
 	}
 
 	.mh-cta {
+		position: relative;
 		display: grid;
-		gap: 12px;
-		border-radius: var(--sa-r-lg);
-		background: var(--sa-fill);
-		padding: 16px;
+		min-height: 196px;
+		align-content: space-between;
+		gap: 14px;
+		overflow: hidden;
+		border-radius: 18px;
+		background: #07184d;
+		padding: 18px 16px 16px;
+		color: #fff;
+		isolation: isolate;
+	}
+
+	.mh-cta__art,
+	.mh-cta__shade {
+		position: absolute;
+		inset: 0;
+		z-index: -2;
+		width: 100%;
+		height: 100%;
+	}
+
+	.mh-cta__art {
+		object-fit: cover;
+		object-position: right center;
+	}
+
+	.mh-cta__shade {
+		z-index: -1;
+		background: linear-gradient(
+			90deg,
+			rgba(4, 14, 48, 0.98) 0%,
+			rgba(4, 14, 48, 0.92) 45%,
+			rgba(4, 14, 48, 0.22) 76%,
+			rgba(4, 14, 48, 0.06) 100%
+		);
 	}
 
 	.mh-cta__copy {
 		display: grid;
+		max-width: 66%;
 		gap: 4px;
 	}
 
-	.mh-cta__copy strong {
-		color: var(--sa-ink);
-		font-size: var(--sa-text-base);
+	.mh-cta__copy small {
+		color: rgba(255, 255, 255, 0.72);
+		font-size: var(--sa-mobile-type-micro);
 		font-weight: var(--sa-weight-semibold);
+		line-height: 1.2;
+		text-transform: uppercase;
+	}
+
+	.mh-cta__copy strong {
+		color: #fff !important;
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
 	}
 
 	.mh-cta__copy span {
-		color: #4f5966;
-		font-size: var(--sa-text-xs);
+		color: rgba(255, 255, 255, 0.84) !important;
+		font-size: var(--sa-mobile-type-meta);
 		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
 	}
 
 	.mh-cta__actions {
 		display: grid;
-		grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-		gap: 9px;
+		grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+		gap: 8px;
 	}
 
 	.mh-cta__actions a {
 		display: inline-flex;
 		min-width: 0;
-		min-height: var(--sa-mobile-action-h);
+		min-height: 46px;
 		align-items: center;
 		justify-content: center;
-		border-radius: var(--sa-r-sm);
+		border-radius: 10px;
 		padding: 0 10px;
-		font-size: var(--sa-text-sm);
+		font-size: var(--sa-mobile-type-control-sm);
 		font-weight: var(--sa-weight-semibold);
 		line-height: 1;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		box-shadow: none;
-		transition:
-			background-color 120ms ease-out,
-			color 120ms ease-out;
 	}
 
 	.mh-cta__actions .is-browse {
-		background: var(--sa-blue);
-		color: #fff !important;
+		background: #fff;
+		color: #111827 !important;
 	}
 
 	.mh-cta__actions .is-call {
@@ -2066,41 +2124,16 @@
 
 	@media (hover: hover) and (pointer: fine) {
 		.mh-cta__actions .is-browse:hover {
-			background: var(--sa-blue-strong);
+			background: #eef1f5;
 		}
-
 		.mh-cta__actions .is-call:hover {
 			background: #b90f1f;
 		}
 	}
 
-	.mh-cta__actions .is-browse:active,
-	.mh-cta__actions .is-browse:focus-visible {
-		background: var(--sa-blue-strong);
-	}
-
-	.mh-cta__actions .is-call:active,
-	.mh-cta__actions .is-call:focus-visible {
-		background: #b90f1f;
-	}
-
-	.mh-trust {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 7px;
-	}
-
-	.mh-trust span {
-		display: inline-flex;
-		min-height: 30px;
-		align-items: center;
-		border-radius: var(--sa-r-pill);
-		background: var(--sa-fill);
-		padding: 0 13px;
-		color: var(--sa-ink-soft);
-		font-size: var(--sa-text-xs);
-		font-weight: var(--sa-weight-medium);
+	.mh-cta__actions a:focus-visible {
+		outline: 3px solid #fff;
+		outline-offset: 2px;
 	}
 
 	/* Footer */

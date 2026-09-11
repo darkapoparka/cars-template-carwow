@@ -32,7 +32,6 @@ function buildBodyTiles(vehicles: Car[]) {
 	}
 	return order
 		.map((body) => ({ body, count: count.get(body) ?? 0 }))
-		.filter((t) => t.count >= 3)
 		.sort((a, b) => b.count - a.count)
 		.slice(0, 6);
 }
