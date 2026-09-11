@@ -81,11 +81,11 @@
 	}
 
 	.mobile-home-promo--light > img {
-		object-position: 64% center;
+		object-position: 64% 65%;
 	}
 
 	.mobile-home-promo--dark > img {
-		object-position: 72% center;
+		object-position: 72% 80%;
 	}
 
 	.mobile-home-promo__shade {
