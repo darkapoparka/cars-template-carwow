@@ -207,19 +207,22 @@
 				</div>
 			</section>
 		{:else}
+			<div class="sell-trust-row" aria-label="Условия за оценка">
+				<span>Безплатна оценка</span>
+				<span aria-hidden="true">·</span>
+				<span>До 1 работен ден</span>
+			</div>
 			<button
 				class="sell-manual-banner"
 				type="button"
 				onclick={openManualForm}
-				aria-label="Нямам номер или VIN. Въведи автомобила ръчно"
+				aria-label="Нямам номер или VIN. Въведи данните за автомобила ръчно"
 			>
-				<img
-					src={resolve('/assets/images/sell/sell-manual-banner-v4.webp')}
-					alt=""
-					aria-hidden="true"
-					width="435"
-					height="205"
-				/>
+				<span class="sell-manual-banner__copy">
+					<strong>Нямам номер или VIN</strong>
+					<small>Въведи данните за автомобила ръчно.</small>
+				</span>
+				<img class="sell-manual-banner__art" src={resolve('/assets/images/sell/sell-manual-art-v1.webp')} alt="" aria-hidden="true" />
 			</button>
 		{/if}
 	</main>
@@ -403,24 +406,72 @@
 		transform: translateX(-50%);
 	}
 
+	.sell-trust-row {
+		display: flex;
+		min-height: 28px;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		color: var(--sa-muted);
+		font-size: 12px;
+		font-weight: var(--sa-weight-medium);
+	}
+
 	.sell-manual-banner {
-		display: block;
+		position: relative;
+		display: grid;
 		width: 100%;
+		min-height: 156px;
+		align-items: center;
 		overflow: hidden;
 		border: 1px solid #d8e0e8;
-		border-radius: var(--sa-r-md);
-		background: #eef2f5;
-		padding: 6px;
+		border-radius: 16px;
+		background: linear-gradient(90deg, #f4f7f9 0%, #eef2f5 58%, #e9eef2 100%);
+		padding: 18px 148px 18px 18px;
 		box-shadow: 0 1px 2px rgba(15, 20, 23, 0.04);
+		text-align: left;
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
 	}
-	.sell-manual-banner img {
-		display: block;
-		width: 100%;
-		aspect-ratio: 2.45 / 1;
+	.sell-manual-banner__copy {
+		position: relative;
+		z-index: 2;
+		display: grid;
+		gap: 7px;
+		min-width: 0;
+	}
+	.sell-manual-banner__copy strong {
+		max-width: 12ch;
+		color: var(--sa-ink);
+		font-size: 19px;
+		font-weight: var(--sa-weight-strong);
+		line-height: 1.08;
+	}
+	.sell-manual-banner__copy small {
+		max-width: 20ch;
+		color: var(--sa-muted);
+		font-size: 13px;
+		font-weight: var(--sa-weight-medium);
+		line-height: 1.28;
+	}
+	.sell-manual-banner__art {
+		position: absolute;
+		top: 6px;
+		right: 6px;
+		bottom: 6px;
+		width: 53%;
+		height: calc(100% - 12px);
 		border-radius: 11px;
-		object-fit: fill;
+		object-fit: cover;
+		object-position: right center;
+	}
+	.sell-manual-banner::after {
+		position: absolute;
+		inset: 6px 42% 6px 6px;
+		z-index: 1;
+		background: linear-gradient(90deg,#f4f7f9 0%,rgba(244,247,249,.98) 76%,rgba(244,247,249,0) 100%);
+		content: '';
+		pointer-events: none;
 	}
 	.sell-manual-banner:active {
 		transform: scale(0.995);
