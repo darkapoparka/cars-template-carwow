@@ -2,8 +2,12 @@
 	import { ChevronRight } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
 
+	type PromoKind = 'sell' | 'import' | 'all';
+	let { kind = 'all' }: { kind?: PromoKind } = $props();
+
 	const promos = [
 		{
+			kind: 'sell',
 			title: 'Продай / Бартер',
 			text: 'Бърза оценка на автомобила',
 			cta: 'Заяви оценка',
@@ -12,6 +16,7 @@
 			image: '/assets/images/home-promos/sell-studio-v1.webp'
 		},
 		{
+			kind: 'import',
 			title: 'Внос от Европа',
 			text: 'Проверка, транспорт и документи',
 			cta: 'Заяви внос',
@@ -20,10 +25,21 @@
 			image: '/assets/images/import/import-delivery-handoff-banner-v1.webp'
 		}
 	] as const;
+
+	const visiblePromos = $derived(
+		kind === 'all' ? promos : promos.filter((promo) => promo.kind === kind)
+	);
+	const sectionLabel = $derived(
+		kind === 'sell'
+			? 'Продай или замени автомобил'
+			: kind === 'import'
+				? 'Внос от Европа'
+				: 'Продажба и внос'
+	);
 </script>
 
-<section class="mobile-home-promos" aria-label="Продажба и внос">
-	{#each promos as promo (promo.href)}
+<section class="mobile-home-promos" aria-label={sectionLabel}>
+	{#each visiblePromos as promo (promo.href)}
 		<a class={`mobile-home-promo mobile-home-promo--${promo.tone}`} href={resolve(promo.href)}>
 			<img src={resolve(promo.image)} alt="" loading="lazy" decoding="async" />
 			<span class="mobile-home-promo__shade" aria-hidden="true"></span>

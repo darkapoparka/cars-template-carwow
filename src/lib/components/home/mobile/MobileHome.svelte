@@ -75,8 +75,7 @@
 		{ brand: 'Mazda', label: 'Mazda' },
 		{ brand: 'Honda', label: 'Honda' },
 		{ brand: 'Toyota', label: 'Toyota' },
-		{ brand: 'Volvo', label: 'Volvo' },
-		{ brand: 'Ford', label: 'Ford' }
+		{ brand: 'Volvo', label: 'Volvo' }
 	] as const;
 	const brandTiles = $derived.by(() => {
 		const countByBrand = new Map(data.brandTiles.map((tile) => [tile.brand, tile.count]));
@@ -611,18 +610,19 @@
 						</span>
 					</a>
 				{/each}
+				<a class="mh-brandcard mh-brandcard--all" href={inventoryHref}>
+					<span class="mh-brandcard__icon mh-brandcard__icon--all" aria-hidden="true">
+						<img src={resolve('/brand/daynight-logo-generated.png')} alt="" loading="lazy" />
+					</span>
+					<span class="mh-brandcard__copy">
+						<span class="mh-brandcard__name">Всички марки</span>
+						<span class="mh-brandcard__count">{total} автомобила</span>
+					</span>
+				</a>
 			</div>
 		</section>
 
-		<a class="mh-browse-banner" href={inventoryHref}>
-			<span>
-				<strong>Всички марки и модели</strong>
-				<small>{total} автомобила в каталога</small>
-			</span>
-			<span class="mh-browse-banner__action"
-				>Виж всички <ChevronRight size={15} strokeWidth={2.5} /></span
-			>
-		</a>
+		<MobileHomeServices kind="sell" />
 
 		<section class="mh-section" aria-labelledby="mh-type-title">
 			<div class="mh-section__head">
@@ -644,7 +644,7 @@
 			</div>
 		</section>
 
-		<MobileHomeServices />
+		<MobileHomeServices kind="import" />
 
 		<MobileHomeVideos />
 
@@ -1669,59 +1669,6 @@
 		white-space: nowrap;
 	}
 
-	.mh-browse-banner {
-		display: flex;
-		min-height: 64px;
-		align-items: center;
-		justify-content: space-between;
-		gap: 12px;
-		margin: 2px 16px 0;
-		border-radius: 10px;
-		background: #171b1e;
-		padding: 10px 10px 10px 14px;
-		color: #fff !important;
-		text-decoration: none;
-	}
-
-	.mh-browse-banner > span:first-child {
-		display: grid;
-		gap: 2px;
-		min-width: 0;
-	}
-
-	.mh-browse-banner strong {
-		color: #fff !important;
-		font-size: 15px;
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1.15;
-	}
-
-	.mh-browse-banner small {
-		color: rgba(255, 255, 255, 0.68);
-		font-size: 11px;
-		font-weight: var(--sa-weight-medium);
-	}
-
-	.mh-browse-banner__action {
-		display: inline-flex;
-		min-height: 40px;
-		flex: 0 0 auto;
-		align-items: center;
-		justify-content: center;
-		gap: 3px;
-		border-radius: 8px;
-		background: #fff;
-		padding: 0 10px;
-		color: #171b1e !important;
-		font-size: 12px;
-		font-weight: var(--sa-weight-semibold);
-	}
-
-	.mh-browse-banner:focus-visible {
-		outline: 3px solid var(--sa-red);
-		outline-offset: 2px;
-	}
-
 	.mh-type-grid {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1906,6 +1853,26 @@
 		font-weight: var(--sa-weight-medium);
 		line-height: 1.2;
 		white-space: nowrap;
+	}
+
+	.mh-brandcard--all {
+		background: #e9edf2;
+	}
+
+	.mh-brandcard--all .mh-brandcard__name {
+		font-size: 13px;
+		white-space: nowrap;
+	}
+
+	.mh-brandcard__icon--all {
+		width: 76px;
+	}
+
+	.mh-brandcard__icon--all img {
+		display: block;
+		width: 76px;
+		height: auto;
+		object-fit: contain;
 	}
 
 	/* Car card — real inventory rail */
