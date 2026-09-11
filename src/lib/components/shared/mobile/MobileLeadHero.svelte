@@ -58,12 +58,12 @@
 			<ArrowRight size={21} strokeWidth={2.6} aria-hidden="true" />
 		</button>
 	</form>
-	<div class:mobile-lead-hero__meta--info-only={!meta} class="mobile-lead-hero__meta">
-		{#if meta}<strong>{meta}</strong>{/if}
+	<div class="mobile-lead-hero__meta">
 		<button type="button" onclick={onInfo}>
-			<CircleHelp size={17} strokeWidth={2.15} aria-hidden="true" />
+			<CircleHelp size={16} strokeWidth={2.15} aria-hidden="true" />
 			<span>{infoLabel}</span>
 		</button>
+		{#if meta}<strong>{meta}</strong>{/if}
 	</div>
 </header>
 
@@ -82,6 +82,7 @@
 		font-weight: var(--sa-weight-display);
 		line-height: var(--sa-mobile-leading-heading);
 		letter-spacing: 0;
+		text-align: center;
 	}
 
 	.mobile-lead-hero__search {
@@ -153,34 +154,33 @@
 	}
 
 	.mobile-lead-hero__meta {
-		display: flex;
-		min-height: 32px;
-		align-items: center;
-		justify-content: space-between;
-		gap: 12px;
-	}
-
-	.mobile-lead-hero__meta--info-only {
-		justify-content: flex-end;
+		display: grid;
+		justify-items: center;
+		gap: 5px;
+		min-height: 44px;
 	}
 
 	.mobile-lead-hero__meta strong {
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-semibold);
+		color: rgba(255, 255, 255, 0.68);
+		font-size: 11px;
+		font-weight: var(--sa-weight-medium);
 		line-height: 1.2;
 	}
 
 	.mobile-lead-hero__meta button {
 		display: inline-flex;
-		min-height: 44px;
+		min-height: 40px;
 		align-items: center;
+		justify-content: center;
 		gap: 6px;
-		border: 0;
-		background: transparent;
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		border-radius: var(--sa-r-pill);
+		background: rgba(255, 255, 255, 0.08);
 		color: #fff;
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-micro) / 1.2 var(--sa-font);
-		padding: 0 2px 0 10px;
+		font: var(--sa-weight-semibold) var(--sa-mobile-type-meta) / 1 var(--sa-font);
+		padding: 0 14px;
 		cursor: pointer;
+		-webkit-tap-highlight-color: transparent;
 	}
 
 	.mobile-lead-hero__meta button :global(svg),

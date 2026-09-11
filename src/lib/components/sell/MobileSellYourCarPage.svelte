@@ -179,7 +179,6 @@
 		title="Продай автомобила"
 		bind:value={quickValue}
 		placeholder="Рег. номер или VIN"
-		meta="До 1 работен ден"
 		onSubmit={openForm}
 		onInfo={() => (infoOpen = true)}
 	/>
