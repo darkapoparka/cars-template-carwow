@@ -22,8 +22,10 @@
 <section class="mobile-home-videos" aria-labelledby="mobile-home-videos-title">
 	<header class="mobile-home-videos__head">
 		<div>
-			<span class="mobile-home-videos__eyebrow"><Play size={16} fill="currentColor" /> YouTube</span
-			>
+			<span class="mobile-home-videos__eyebrow">
+				<img src="/assets/brands/youtube-mark.png" alt="" aria-hidden="true" />
+				<span>YouTube</span>
+			</span>
 			<h2 id="mobile-home-videos-title">Гледай Day Night Auto</h2>
 		</div>
 		<a
@@ -130,7 +132,21 @@
 		font-size: var(--sa-mobile-type-micro);
 		font-weight: var(--sa-weight-semibold);
 		line-height: 1;
-		text-transform: uppercase;
+		text-transform: none;
+	}
+
+	.mobile-home-videos__eyebrow img {
+		display: block;
+		width: 28px;
+		height: 21px;
+		object-fit: contain;
+	}
+
+	.mobile-home-videos__eyebrow span {
+		color: #fff !important;
+		font-size: 15px;
+		font-weight: var(--sa-weight-strong);
+		letter-spacing: -0.01em;
 	}
 
 	.mobile-home-videos__head h2 {
@@ -152,16 +168,23 @@
 		color: #fff !important;
 	}
 
+	.mobile-home-videos__head > a :global(svg),
+	.mobile-home-videos__head > a :global(svg *) {
+		color: #fff !important;
+		stroke: #fff !important;
+	}
+
 	.mobile-home-videos__rail {
 		display: grid;
 		grid-auto-flow: column;
-		grid-auto-columns: 100%;
+		grid-auto-columns: calc(100% - 28px);
 		gap: 10px;
 		overflow-x: auto;
 		margin-inline: 0;
 		padding: 0 0 4px;
 		scroll-padding-inline: 0;
-		scroll-snap-type: x proximity;
+		overscroll-behavior-inline: contain;
+		scroll-snap-type: x mandatory;
 		scrollbar-width: none;
 	}
 
@@ -244,6 +267,13 @@
 		border-radius: 12px;
 		background: #e11d2e;
 		color: #fff;
+	}
+
+	.mobile-video-card__playmark :global(svg),
+	.mobile-video-card__playmark :global(svg *) {
+		color: #fff !important;
+		fill: #fff !important;
+		stroke: #fff !important;
 	}
 
 	.mobile-video-card__duration {
