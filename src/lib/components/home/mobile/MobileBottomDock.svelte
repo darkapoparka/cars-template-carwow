@@ -40,7 +40,7 @@
 	const isSell = $derived(currentPath.startsWith('/sell-your-car'));
 	const isMenuSection = $derived(
 		currentPath.startsWith('/favorites') ||
-		currentPath.startsWith('/services') ||
+			currentPath.startsWith('/services') ||
 			currentPath.startsWith('/about') ||
 			(currentPath.startsWith('/contact') && !isImport) ||
 			currentPath.startsWith('/financing') ||
@@ -636,5 +636,23 @@
 		:global(.progress-wrap) {
 			display: none !important;
 		}
+	}
+
+	/* Mobile typography contract */
+	.mobile-bottom-dock__item,
+	.mobile-bottom-dock__label {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+		line-height: 1.2;
+	}
+	.mobile-menu-sheet__quick strong {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-menu-sheet__nav > a,
+	.mobile-menu-sheet__nav > a > span:last-child {
+		font-size: var(--sa-mobile-type-input);
+		font-weight: var(--sa-weight-semibold);
+		line-height: var(--sa-mobile-leading-meta);
 	}
 </style>

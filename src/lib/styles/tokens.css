@@ -205,6 +205,24 @@
 	--sa-heading-panel: var(--sa-text-panel-title);
 	--sa-heading-card: var(--sa-text-card-title);
 
+	/* Mobile typography roles. Mobile components should use these semantic roles
+	 * instead of inventing one-off sizes/weights per page. */
+	--sa-mobile-type-micro: var(--sa-text-xs); /* 12px */
+	--sa-mobile-type-meta: var(--sa-text-caption); /* 13px */
+	--sa-mobile-type-control-sm: var(--sa-text-sm); /* 14px */
+	--sa-mobile-type-body: var(--sa-text-body-sm); /* 15px */
+	--sa-mobile-type-input: var(--sa-text-base); /* 16px */
+	--sa-mobile-type-card-title: var(--sa-text-base); /* 16px */
+	--sa-mobile-type-feature-title: var(--sa-text-lg); /* 18px */
+	--sa-mobile-type-primary-tab: var(--sa-text-lead); /* 19px */
+	--sa-mobile-type-section-title: var(--sa-text-xl); /* 20px */
+	--sa-mobile-type-page-title: var(--sa-text-2xl); /* 24px */
+	--sa-mobile-type-price: var(--sa-text-xl); /* 20px */
+	--sa-mobile-type-price-lg: var(--sa-text-2xl); /* 24px */
+	--sa-mobile-leading-heading: 1.12;
+	--sa-mobile-leading-body: 1.4;
+	--sa-mobile-leading-meta: 1.35;
+
 	/* Weight scale — the only allowed storefront weights. The rule: display (800)
 	 * is for large numerals/logotype emphasis only; small text never exceeds
 	 * semibold (600), so Cyrillic does not read as a heavy block. */

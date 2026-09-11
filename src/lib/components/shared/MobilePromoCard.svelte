@@ -153,4 +153,21 @@
 		background: #343a3e;
 		color: #fff;
 	}
+
+	/* Mobile typography contract */
+	.mobile-promo strong {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-promo__description {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-regular);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-promo__cta {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+		line-height: 1.2;
+	}
 </style>

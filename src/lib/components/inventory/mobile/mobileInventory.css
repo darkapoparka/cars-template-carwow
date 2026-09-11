@@ -175,7 +175,7 @@
 	min-width: 0;
 	flex: 1 1 auto;
 	overflow: hidden;
-	color: #7b8591;
+	color: #56616e;
 	font-size: var(--sa-text-base);
 	font-weight: 500;
 	line-height: 1;
@@ -420,7 +420,7 @@
 	min-width: 0;
 }
 
-.mobile-inventory-card h3 {
+.mobile-inventory-card h2 {
 	display: -webkit-box;
 	overflow: hidden;
 	margin: 0;
@@ -1116,7 +1116,82 @@
 		padding-left: 8px;
 	}
 
-	.mobile-inventory-card h3 {
+	.mobile-inventory-card h2 {
 		font-size: var(--sa-text-base);
 	}
+}
+/* Mobile typography contract */
+.mobile-map-card strong {
+	font-size: var(--sa-mobile-type-card-title);
+	font-weight: var(--sa-weight-strong);
+}
+.mobile-map-card span {
+	font-size: var(--sa-mobile-type-body);
+	font-weight: var(--sa-weight-medium);
+	line-height: var(--sa-mobile-leading-body);
+}
+.mobile-map-card__actions a,
+.mobile-inventory-pills button {
+	font-size: var(--sa-mobile-type-control-sm);
+	font-weight: var(--sa-weight-semibold);
+}
+.mobile-inventory-search__label,
+.mobile-filter-search input {
+	font-size: var(--sa-mobile-type-input);
+	font-weight: var(--sa-weight-medium);
+}
+.mobile-filter-sheet header span,
+.mobile-inventory-card__media span,
+.mobile-search-options__heading span {
+	font-size: var(--sa-mobile-type-micro);
+	font-weight: var(--sa-weight-semibold);
+}
+.mobile-inventory-card h2 {
+	font-size: var(--sa-mobile-type-card-title);
+	font-weight: var(--sa-weight-strong);
+	line-height: var(--sa-mobile-leading-heading);
+}
+.mobile-inventory-card__price strong {
+	font-size: var(--sa-mobile-type-price);
+	font-weight: var(--sa-weight-strong);
+	line-height: var(--sa-mobile-leading-heading);
+}
+.mobile-inventory-card__price-stack > span,
+.mobile-inventory-card li {
+	font-size: var(--sa-mobile-type-meta);
+	font-weight: var(--sa-weight-medium);
+}
+.mobile-inventory-empty h2,
+.mobile-filter-sheet header strong {
+	font-size: var(--sa-mobile-type-section-title);
+	font-weight: var(--sa-weight-strong);
+	line-height: var(--sa-mobile-leading-heading);
+}
+.mobile-inventory-empty p {
+	font-size: var(--sa-mobile-type-body);
+	font-weight: var(--sa-weight-medium);
+	line-height: var(--sa-mobile-leading-body);
+}
+.mobile-inventory-empty button,
+.mobile-search-options__chips button,
+.mobile-filter-options button,
+.mobile-filter-sheet__actions button {
+	font-size: var(--sa-mobile-type-control-sm);
+	font-weight: var(--sa-weight-semibold);
+}
+.mobile-search-options__heading small,
+.mobile-search-options__chips button small,
+.mobile-filter-options button small,
+.mobile-filter-options__empty,
+.mobile-filter-sheet__summary-field span {
+	font-size: var(--sa-mobile-type-meta);
+	font-weight: var(--sa-weight-medium);
+}
+.mobile-filter-options button .mobile-filter-options__brand-mark {
+	font-size: var(--sa-mobile-type-micro);
+	font-weight: var(--sa-weight-semibold);
+}
+.mobile-filter-sheet__summary-field strong {
+	font-size: var(--sa-mobile-type-input);
+	font-weight: var(--sa-weight-semibold);
 }

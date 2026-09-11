@@ -284,14 +284,14 @@
 			<nav class="ms-disclosures" aria-label="Повече за услугата">
 				<MobilePromoCard
 					title="Как работи"
-					description={"Три ясни стъпки до\nоценка на автомобила."}
+					description={'Три ясни стъпки до\nоценка на автомобила.'}
 					label="Виж стъпките"
 					image="/assets/images/home-promos/leasing-calculator-cutout-v7.webp"
 					onclick={() => openInfo('process')}
 				/>
 				<MobilePromoCard
 					title="Защо Day Night"
-					description={"Личен контакт с\nКристиян и екипа."}
+					description={'Личен контакт с\nКристиян и екипа.'}
 					label="Виж предимства"
 					image="/assets/images/home-promos/phone-portrait-generated-v7.webp"
 					tone="yellow"
@@ -1470,5 +1470,105 @@
 		.mobile-sell {
 			display: block;
 		}
+	}
+
+	/* Mobile typography contract */
+	.ms-hero__copy h1 {
+		font-size: var(--sa-mobile-type-page-title);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.ms-hero__copy p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.ms-quick-start label span,
+	.ms-field span,
+	.ms-section-head span,
+	.ms-wizard-step__intro > span {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.ms-quick-start input {
+		font: var(--sa-weight-strong) var(--sa-mobile-type-input) / 1.2 var(--sa-font);
+	}
+	.ms-quick-meta p {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.ms-quick-meta button {
+		font: var(--sa-weight-semibold) var(--sa-mobile-type-micro) / 1.2 var(--sa-font);
+	}
+	.ms-section-head h2,
+	.ms-info-hero__title h2,
+	.ms-sheet__head h2 {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.ms-confirm-card p,
+	.ms-wizard-step__intro p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.ms-confirm-summary dt,
+	.ms-vehicle-summary span,
+	.ms-vehicle-summary small {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+	}
+	.ms-confirm-summary dd,
+	.ms-vehicle-summary strong {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.ms-wizard-step__intro h3 {
+		font-size: var(--sa-mobile-type-page-title);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.ms-field input {
+		font: var(--sa-weight-regular) var(--sa-mobile-type-input) / var(--sa-mobile-leading-body)
+			var(--sa-font) !important;
+	}
+	.ms-field--phone input {
+		font-size: var(--sa-mobile-type-feature-title) !important;
+		font-weight: var(--sa-weight-semibold) !important;
+	}
+	.ms-vehicle-summary button,
+	.ms-wizard-back,
+	.ms-sheet__footer > a {
+		font: var(--sa-weight-semibold) var(--sa-mobile-type-meta) / 1.2 var(--sa-font);
+	}
+	.ms-primary-action,
+	.ms-secondary-action,
+	.ms-info-call {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.ms-form-message,
+	.ms-info-hero__title p,
+	.ms-sheet__head p {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.ms-step__number {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-strong);
+	}
+	.ms-step__copy strong,
+	.ms-benefit-list strong {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-strong);
+	}
+	.ms-step__copy small,
+	.ms-benefit-list small {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
 	}
 </style>

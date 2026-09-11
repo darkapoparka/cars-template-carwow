@@ -33,7 +33,7 @@
 	}
 </script>
 
-<div class="mobile-favorites" aria-label="Запазени автомобили">
+<div class="mobile-favorites">
 	<MobileHeader banner />
 	<main id="main-content" tabindex="-1">
 		<section class="mobile-favorites-top">
@@ -385,7 +385,7 @@
 	.mobile-favorites-empty p {
 		margin: 0;
 		max-width: 26ch;
-		color: #66707a;
+		color: #56616e;
 		font-size: var(--sa-text-sm);
 		line-height: 1.4;
 	}
@@ -488,5 +488,54 @@
 		.mobile-favorites-card h3 {
 			font-size: var(--sa-text-base);
 		}
+	}
+
+	/* Mobile typography contract */
+	.mobile-favorites-top h1 {
+		font-size: var(--sa-mobile-type-page-title);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-favorites-top p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-favorites-card__media span,
+	.mobile-favorites-card__title small {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-favorites-card h3 {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-favorites-card__price strong {
+		font-size: var(--sa-mobile-type-feature-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-favorites-card__price span {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mobile-favorites-card li {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-favorites-empty h2 {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-favorites-empty p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-favorites-empty a,
+	.mobile-favorites-top__back {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
 	}
 </style>

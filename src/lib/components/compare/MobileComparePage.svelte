@@ -26,11 +26,14 @@
 	<main id="main-content" tabindex="-1">
 		<div class="page-title">
 			<h1>Сравнение</h1>
-			<span aria-label={`${vehicles.length} от 3 избрани автомобила`}>{vehicles.length} / 3</span>
+			<span role="status" aria-label={`${vehicles.length} от 3 избрани автомобила`}
+				>{vehicles.length} / 3</span
+			>
 		</div>
 		<div class="actions">
 			<button type="button" aria-haspopup="dialog" onclick={() => (selectorOpen = true)}>
-				<Plus size={20} /> {vehicles.length < 3 ? 'Добави автомобил' : 'Промени избора'}
+				<Plus size={20} />
+				{vehicles.length < 3 ? 'Добави автомобил' : 'Промени избора'}
 			</button>
 			{#if vehicles.length > 2}<span>Плъзнете за третия автомобил</span>{/if}
 		</div>
@@ -240,5 +243,41 @@
 	.cars:focus-visible {
 		outline: 2px solid var(--sa-red);
 		outline-offset: 2px;
+	}
+
+	/* Mobile typography contract */
+	.mobile-compare h1 {
+		font-size: var(--sa-mobile-type-page-title);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-compare .page-title span,
+	.mobile-compare .actions span {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mobile-compare .empty h2 {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-compare .empty p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-compare .actions button,
+	.mobile-compare .identity a,
+	.mobile-compare dd {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-compare .identity strong {
+		font-size: var(--sa-mobile-type-feature-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-compare dt {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
 	}
 </style>

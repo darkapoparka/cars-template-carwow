@@ -48,7 +48,7 @@
 	} = $props();
 </script>
 
-<div class="mobile-inventory-quick" aria-label="Бързи филтри">
+<div class="mobile-inventory-quick" role="group" aria-label="Бързи филтри">
 	<div class="mobile-inventory-pills">
 		<button
 			type="button"

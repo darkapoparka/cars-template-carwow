@@ -471,12 +471,12 @@
 				</span>
 			</button>
 			{#if heroMode === 'buy'}
-				<a class="mh-hero__all" href={inventoryHref}>
-					<span>Всички {total} коли</span>
+				<a class="mh-hero__all mh-hero__all--browse" href={inventoryHref}>
+					<span>Виж всички {total} коли</span>
 					<ChevronRight size={12} strokeWidth={2.8} aria-hidden="true" />
 				</a>
 			{:else}
-				<button class="mh-hero__all" type="button" onclick={openSearch}>
+				<button class="mh-hero__all mh-hero__all--import" type="button" onclick={openSearch}>
 					<span>Заяви внос</span>
 					<ChevronRight size={12} strokeWidth={2.8} aria-hidden="true" />
 				</button>
@@ -1375,62 +1375,58 @@
 	.mh-hero__all {
 		display: inline-flex;
 		justify-self: center;
-		/* 44px standard tap target (was 40px hero-cta height) — the pill is a real
-		   nav control to the full inventory, so it earns the larger hit area. */
 		min-height: var(--sa-mobile-action-h);
 		align-items: center;
 		justify-content: center;
-		gap: 2px;
+		gap: 4px;
 		border: 0;
-		border-radius: var(--sa-r-pill);
-		background: rgba(255, 255, 255, 0.94);
-		padding: 0 8px 0 11px;
-		color: var(--sa-blue-strong) !important;
+		border-radius: 8px;
+		background: transparent;
+		padding: 0 8px;
+		color: rgba(255, 255, 255, 0.78) !important;
 		font-family: var(--sa-font);
-		font-size: var(--sa-text-xs);
+		font-size: var(--sa-mobile-type-control-sm);
 		font-weight: var(--sa-weight-semibold);
 		line-height: var(--sa-leading-none);
+		text-decoration: none;
 		cursor: pointer;
 		box-shadow: none;
-		margin-top: -1px;
+		margin-top: -3px;
 		transition:
-			background-color 120ms ease-out,
-			color 120ms ease-out;
+			color 120ms ease-out,
+			background-color 120ms ease-out;
+	}
+
+	.mh-hero__all span {
+		color: inherit !important;
+		-webkit-text-fill-color: currentColor !important;
 	}
 
 	.mh-hero__all :global(svg),
 	.mh-hero__all :global(svg *) {
-		width: 12px;
-		height: 12px;
-		color: var(--sa-blue-strong) !important;
-		stroke: var(--sa-blue-strong) !important;
+		width: 14px;
+		height: 14px;
+		color: currentColor !important;
+		stroke: currentColor !important;
 	}
 
 	@media (hover: hover) and (pointer: fine) {
 		.mh-hero__all:hover {
-			background: var(--sa-red);
+			background: rgba(255, 255, 255, 0.06);
 			color: #fff !important;
-		}
-
-		.mh-hero__all:hover :global(svg),
-		.mh-hero__all:hover :global(svg *) {
-			color: #fff !important;
-			stroke: #fff !important;
 		}
 	}
 
-	.mh-hero__all:active,
+	.mh-hero__all:active {
+		background: rgba(255, 255, 255, 0.08);
+		color: #fff !important;
+	}
+
 	.mh-hero__all:focus-visible {
-		background: var(--sa-red);
+		background: transparent;
 		color: #fff !important;
-	}
-
-	.mh-hero__all:active :global(svg),
-	.mh-hero__all:active :global(svg *),
-	.mh-hero__all:focus-visible :global(svg),
-	.mh-hero__all:focus-visible :global(svg *) {
-		color: #fff !important;
-		stroke: #fff !important;
+		outline: 2px solid rgba(255, 255, 255, 0.72);
+		outline-offset: 2px;
 	}
 
 	/* Secondary quick filters */
@@ -3013,5 +3009,85 @@
 		.mh-chips {
 			gap: 6px;
 		}
+	}
+
+	/* Mobile typography contract */
+	.mh-hero__modes button {
+		font-size: var(--sa-mobile-type-primary-tab);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mh-quick__pill {
+		font-size: var(--sa-mobile-type-input);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mh-section__head h2 {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mh-section__head a {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mh-budget-card__copy strong {
+		font-size: var(--sa-mobile-type-feature-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mh-budget-card__copy span {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.mh-brandcard__name {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mh-brandcard__count {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mh-car__brand,
+	.mh-car__badge {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mh-car__title {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mh-car__meta {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.mh-car__price {
+		font-size: var(--sa-mobile-type-feature-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mh-cta__copy strong {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mh-cta__copy span {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mh-cta__actions a {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mh-footer p {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mh-footer__phone span,
+	.mh-footer__loc,
+	.mh-footer__copy {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
 	}
 </style>

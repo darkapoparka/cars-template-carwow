@@ -210,7 +210,11 @@
 		sort = readMobileSort(params.get('sort'));
 	}
 	function syncUrl() {
-		const params = serializeInventoryFilters(criteria, sort, new URL(window.location.href).searchParams);
+		const params = serializeInventoryFilters(
+			criteria,
+			sort,
+			new URL(window.location.href).searchParams
+		);
 		replaceState(
 			resolve(
 				`${mode === 'map' ? '/inventory/map' : '/inventory'}${params.size ? `?${params}` : ''}`
@@ -530,7 +534,7 @@
 	}
 </script>
 
-<div class="mobile-inventory" aria-label="Мобилна страница автомобили">
+<div class="mobile-inventory">
 	<main id="main-content" tabindex="-1">
 		<h1 class="sr-only">Автомобили на склад — Ден и Нощ Ауто Груп</h1>
 		<MobileInventoryTop {mode} {query} onOpenSearch={() => openFilterSheet('search')} />

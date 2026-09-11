@@ -55,7 +55,7 @@
 	}
 </script>
 
-<div class="mobile-about-app" aria-label="За Day Night Auto">
+<div class="mobile-about-app">
 	<header class="mobile-about-hero">
 		<img
 			class="mobile-about-hero__bg"
@@ -521,5 +521,66 @@
 		.mobile-about-app {
 			display: block;
 		}
+	}
+
+	/* Mobile typography contract */
+	.mobile-about-hero__copy span,
+	.mobile-about-heading span,
+	.mobile-about-location span {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-about-hero h1 {
+		font-size: var(--sa-mobile-type-page-title);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-about-hero p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-about-action {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-about-heading h2,
+	.mobile-about-location h2 {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-about-heading--row > a {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-about-card strong,
+	.mobile-about-team-card strong {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-about-card small,
+	.mobile-about-team-card small {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.mobile-about-location p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-about-location :is(a, button) {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-about-steps strong {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-about-steps span {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+		line-height: var(--sa-mobile-leading-meta);
 	}
 </style>

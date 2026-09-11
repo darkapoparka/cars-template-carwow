@@ -133,7 +133,7 @@
 	}
 </script>
 
-<div class="mobile-services-app" aria-label="Услуги Day Night Auto">
+<div class="mobile-services-app">
 	<header class="mobile-services-hero">
 		<img
 			class="mobile-services-hero__bg"
@@ -547,7 +547,7 @@
 	}
 
 	.mobile-services-card small {
-		color: #66707a;
+		color: #56616e;
 		font-size: var(--sa-text-xs);
 		font-weight: 600;
 		line-height: 1.34;
@@ -752,5 +752,71 @@
 		.mobile-services-app {
 			display: block;
 		}
+	}
+
+	/* Mobile typography contract */
+	.mobile-services-hero__copy span,
+	.mobile-service-sheet header div:nth-child(2) > span,
+	.mobile-service-sheet__field span {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-services-hero h1 {
+		font-size: var(--sa-mobile-type-page-title);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-services-hero p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-services-primary,
+	.mobile-services-secondary,
+	.mobile-services-chips button {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-services-heading h2,
+	.mobile-service-sheet h2 {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-services-card strong {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-services-card small {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.mobile-service-sheet li {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.mobile-service-sheet__field input {
+		font: var(--sa-weight-regular) var(--sa-mobile-type-input) / var(--sa-mobile-leading-meta)
+			var(--sa-font) !important;
+	}
+	.mobile-service-sheet__submit {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-service-sheet__error {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-semibold);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.mobile-service-sheet__success strong {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-service-sheet__success small {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
 	}
 </style>

@@ -54,7 +54,7 @@
 	] as const;
 </script>
 
-<div class="mobile-financing-app" aria-label="Финансиране от Day Night Auto">
+<div class="mobile-financing-app">
 	<header class="mobile-financing-hero">
 		<img
 			class="mobile-financing-hero__bg"
@@ -345,7 +345,7 @@
 	}
 
 	.mobile-financing-card small {
-		color: #66707a;
+		color: #56616e;
 		font-size: var(--sa-text-xs);
 		font-weight: 700;
 		line-height: 1.28;
@@ -409,7 +409,7 @@
 	}
 
 	.mobile-financing-faq small {
-		color: #66707a;
+		color: #56616e;
 		font-size: var(--sa-text-sm);
 		font-weight: 700;
 		line-height: 1.35;
@@ -480,5 +480,62 @@
 		.mobile-financing-app {
 			display: block;
 		}
+	}
+
+	/* Mobile typography contract */
+	.mobile-financing-hero__copy span,
+	.mobile-financing-heading span,
+	.mobile-financing-cta > div > span {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-financing-hero h1 {
+		font-size: var(--sa-mobile-type-page-title);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-financing-hero p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-financing-action {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-financing-heading h2,
+	.mobile-financing-cta h2 {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-financing-card strong,
+	.mobile-financing-faq strong {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-financing-card small {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.mobile-financing-steps strong {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-financing-steps span {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.mobile-financing-faq small,
+	.mobile-financing-cta p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
+	.mobile-financing-cta a {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
 	}
 </style>

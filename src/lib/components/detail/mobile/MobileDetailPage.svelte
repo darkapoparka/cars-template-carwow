@@ -1201,4 +1201,70 @@
 		font-weight: 700;
 		transform: translateX(-50%);
 	}
+
+	/* Mobile typography contract */
+	.mobile-detail-sheet__brand {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-detail-sheet__title {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-detail-sheet__price-monthly {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mobile-detail-sheet__price-eur {
+		font-size: var(--sa-mobile-type-price-lg);
+		font-weight: var(--sa-weight-display);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-detail-sheet__price-bgn {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mobile-detail-sheet__actions a {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-detail-tabs button {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-detail__spec-grid span,
+	.mobile-detail__section dt {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mobile-detail__spec-grid strong {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.mobile-detail__section h2 {
+		font-size: var(--sa-mobile-type-feature-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.mobile-detail__section p {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-regular);
+		line-height: 1.5;
+	}
+	.mobile-detail__section li {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mobile-detail-sheet__dealer strong,
+	.mobile-detail-sheet__offer > strong {
+		font-size: var(--sa-mobile-type-card-title);
+		font-weight: var(--sa-weight-strong);
+	}
+	.mobile-detail-sheet__dealer span,
+	.mobile-detail-sheet__offer li {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
 </style>

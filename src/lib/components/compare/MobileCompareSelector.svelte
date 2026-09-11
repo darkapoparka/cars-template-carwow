@@ -216,4 +216,39 @@
 		line-height: 1.5;
 		color: var(--sa-ink-soft);
 	}
+
+	/* Mobile typography contract */
+	.selector h2 {
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-strong);
+		line-height: var(--sa-mobile-leading-heading);
+	}
+	.selector input {
+		font-size: var(--sa-mobile-type-input);
+		font-weight: var(--sa-weight-regular);
+	}
+	.selector .status {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.selector strong,
+	.selector b {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+		line-height: var(--sa-mobile-leading-meta);
+	}
+	.selector small {
+		font-size: var(--sa-mobile-type-micro);
+		font-weight: var(--sa-weight-medium);
+	}
+	.selector .done {
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
+	}
+	.selector .no-results {
+		font-size: var(--sa-mobile-type-body);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-body);
+	}
 </style>
