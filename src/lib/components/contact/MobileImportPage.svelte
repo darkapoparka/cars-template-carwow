@@ -255,7 +255,7 @@
 				aria-label="Нямам линк. Опиши автомобила и бюджета"
 			>
 				<img
-					src={resolve('/assets/images/import/import-manual-banner-v4.webp')}
+					src={resolve('/assets/images/import/import-manual-banner-v5.webp')}
 					alt=""
 					aria-hidden="true"
 					width="435"
@@ -576,7 +576,6 @@
 		display: block;
 		width: 100%;
 		height: auto;
-		aspect-ratio: 435 / 166;
 		border-radius: var(--sa-r-md);
 		object-fit: cover;
 	}
