@@ -214,23 +214,29 @@
 		<MobileHeroBar />
 
 		<div class="ms-hero__copy">
-			<h1>Продай или замени автомобила си</h1>
-			<p>Започнете с номера — под минута.</p>
+			<h1>Продай автомобила си</h1>
 		</div>
 
 		{#if !isRequestStep}
 			<form class="ms-quick-start" onsubmit={handleQuickStart} aria-label="Начало на заявката">
 				<label>
-					<span>Регистрационен номер</span>
-					<input type="text" bind:value={plate} placeholder="СА 1234 АВ" autocomplete="off" />
+					<input
+						type="text"
+						bind:value={plate}
+						placeholder="Регистрационен номер"
+						aria-label="Регистрационен номер"
+						autocomplete="off"
+					/>
 				</label>
 				<button type="submit" aria-label="Продължи">
 					<ChevronRight size={22} strokeWidth={2.7} aria-hidden="true" />
 				</button>
 			</form>
 			<div class="ms-quick-meta">
-				<p>Номерът се добавя само към заявката.</p>
-				<button type="button" onclick={() => revealDetails()}>Нямам номер</button>
+				<button type="button" onclick={() => revealDetails()}>
+					Нямам номер
+					<ChevronRight size={14} strokeWidth={2.6} aria-hidden="true" />
+				</button>
 			</div>
 		{/if}
 	</header>
@@ -604,7 +610,8 @@
 
 	.ms-hero__copy {
 		display: grid;
-		gap: var(--sa-mobile-gap-xs);
+		min-height: 44px;
+		align-content: center;
 		max-width: 318px;
 	}
 
@@ -617,18 +624,11 @@
 		letter-spacing: 0;
 	}
 
-	.ms-hero__copy p {
-		margin: 0;
-		color: rgba(255, 255, 255, 0.86);
-		font-size: var(--sa-text-sm);
-		font-weight: 600;
-		line-height: 1.3;
-	}
-
 	.ms-quick-start {
 		display: flex;
 		width: 100%;
-		min-height: var(--sa-mobile-search-h);
+		height: 52px;
+		min-height: 52px;
 		align-items: center;
 		box-sizing: border-box;
 		gap: 8px;
@@ -648,19 +648,10 @@
 	.ms-quick-start label {
 		display: grid;
 		flex: 1 1 auto;
-		gap: 2px;
 		min-width: 0;
-		min-height: 48px;
+		min-height: 44px;
 		align-content: center;
-		padding: 3px 0 2px;
-	}
-
-	.ms-quick-start label span {
-		color: #65707e;
-		font-size: 10px;
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1.2;
-		text-transform: none;
+		padding: 0;
 	}
 
 	.ms-quick-start input {
@@ -679,7 +670,9 @@
 
 	.ms-quick-start input::placeholder {
 		color: #626d7a;
+		font-weight: var(--sa-weight-regular);
 		opacity: 1;
+		text-transform: none;
 	}
 
 	.ms-quick-start button {
@@ -710,17 +703,9 @@
 
 	.ms-quick-meta {
 		display: flex;
-		align-items: start;
-		justify-content: space-between;
-		gap: 12px;
-	}
-
-	.ms-quick-meta p {
-		margin: 0;
-		color: rgba(255, 255, 255, 0.68);
-		font-size: 10px;
-		font-weight: 650;
-		line-height: 1.3;
+		min-height: 44px;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.ms-quick-meta button {
@@ -731,12 +716,13 @@
 		appearance: none;
 		border: 0;
 		background: transparent;
-		color: #fff;
 		cursor: pointer;
-		font: 800 11px/1.2 var(--sa-font);
-		padding: 0 2px;
-		text-decoration: underline;
-		text-underline-offset: 3px;
+		justify-content: center;
+		gap: 4px;
+		color: rgba(255, 255, 255, 0.78);
+		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1.2 var(--sa-font);
+		padding: 0 8px;
+		text-decoration: none;
 	}
 
 	.mobile-sell main {
@@ -1478,12 +1464,6 @@
 		font-weight: var(--sa-weight-display);
 		line-height: var(--sa-mobile-leading-heading);
 	}
-	.ms-hero__copy p {
-		font-size: var(--sa-mobile-type-body);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-body);
-	}
-	.ms-quick-start label span,
 	.ms-field span,
 	.ms-section-head span,
 	.ms-wizard-step__intro > span {
@@ -1493,13 +1473,8 @@
 	.ms-quick-start input {
 		font: var(--sa-weight-strong) var(--sa-mobile-type-input) / 1.2 var(--sa-font);
 	}
-	.ms-quick-meta p {
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-meta);
-	}
 	.ms-quick-meta button {
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-micro) / 1.2 var(--sa-font);
+		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1.2 var(--sa-font);
 	}
 	.ms-section-head h2,
 	.ms-info-hero__title h2,

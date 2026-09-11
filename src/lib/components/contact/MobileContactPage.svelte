@@ -6,7 +6,6 @@
 		ChevronRight,
 		CircleCheck,
 		Clock,
-		Link,
 		MapPin,
 		MessageCircle,
 		Phone,
@@ -254,13 +253,11 @@
 		<div class="mobile-contact-hero__copy">
 			{#if !isImportMode}<span class="mobile-contact-hero__label">Контакти</span>{/if}
 			<h1>
-				{isImportMode ? 'Намерете автомобила. Ние ще го внесем.' : 'Свържете се със Day Night Auto'}
+				{isImportMode ? 'Внос на автомобил' : 'Свържете се със Day Night Auto'}
 			</h1>
-			<p>
-				{isImportMode
-					? 'Поставете линк — ние поемаме оттам.'
-					: 'Огледи, въпроси за налични автомобили, бартер, документи и посещение на място.'}
-			</p>
+			{#if !isImportMode}
+				<p>Огледи, въпроси за налични автомобили, бартер, документи и посещение на място.</p>
+			{/if}
 		</div>
 
 		{#if isImportMode}
@@ -270,7 +267,6 @@
 				aria-label="Начало на заявката за внос"
 			>
 				<label>
-					<Link size={18} strokeWidth={2.35} aria-hidden="true" />
 					<input
 						bind:value={sourceUrl}
 						type="url"
@@ -285,8 +281,10 @@
 				</button>
 			</form>
 			<div class="mobile-import-quick__meta">
-				<p>mobile.de, AutoScout24 или друга обява</p>
-				<button type="button" onclick={() => revealImportForm()}>Нямам линк</button>
+				<button type="button" onclick={() => revealImportForm()}>
+					Нямам линк
+					<ChevronRight size={14} strokeWidth={2.6} aria-hidden="true" />
+				</button>
 			</div>
 		{:else}
 			<div class="mobile-contact-actions">
@@ -668,7 +666,7 @@
 	.mobile-contact-hero--import {
 		gap: 12px;
 		background: #05070a;
-		padding-bottom: 18px;
+		padding-bottom: 15px;
 	}
 
 	.mobile-contact-hero--import::after {
@@ -683,6 +681,8 @@
 	}
 
 	.mobile-contact-hero--import .mobile-contact-hero__copy {
+		min-height: 44px;
+		align-content: center;
 		max-width: 318px;
 	}
 
@@ -749,7 +749,8 @@
 	.mobile-import-quick {
 		display: flex;
 		width: 100%;
-		min-height: var(--sa-mobile-search-h);
+		height: 52px;
+		min-height: 52px;
 		align-items: center;
 		box-sizing: border-box;
 		gap: 8px;
@@ -768,11 +769,11 @@
 
 	.mobile-import-quick label {
 		display: grid;
-		grid-template-columns: 20px minmax(0, 1fr);
+		grid-template-columns: minmax(0, 1fr);
 		flex: 1 1 auto;
-		gap: 8px;
+		gap: 0;
 		min-width: 0;
-		min-height: 48px;
+		min-height: 44px;
 		align-items: center;
 		color: #697483;
 		padding: 0;
@@ -792,6 +793,7 @@
 
 	.mobile-import-quick input::placeholder {
 		color: #626d7a;
+		font-weight: var(--sa-weight-regular);
 		opacity: 1;
 	}
 
@@ -819,17 +821,9 @@
 
 	.mobile-import-quick__meta {
 		display: flex;
-		align-items: start;
-		justify-content: space-between;
-		gap: 12px;
-	}
-
-	.mobile-import-quick__meta p {
-		margin: 0;
-		color: rgba(255, 255, 255, 0.68);
-		font-size: 10px;
-		font-weight: 650;
-		line-height: 1.3;
+		min-height: 44px;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.mobile-import-quick__meta button {
@@ -837,12 +831,14 @@
 		min-height: 44px;
 		flex: 0 0 auto;
 		align-items: center;
-		color: #fff;
-		font-size: 11px;
-		font-weight: 800;
+		justify-content: center;
+		gap: 4px;
+		color: rgba(255, 255, 255, 0.78);
+		font-size: var(--sa-mobile-type-control-sm);
+		font-weight: var(--sa-weight-semibold);
 		line-height: 1.2;
-		text-decoration: underline;
-		text-underline-offset: 3px;
+		padding: 0 8px;
+		text-decoration: none;
 	}
 
 	.mobile-contact-actions {
@@ -1519,13 +1515,8 @@
 	.mobile-import-quick input {
 		font: var(--sa-weight-semibold) var(--sa-mobile-type-input) / 1.2 var(--sa-font);
 	}
-	.mobile-import-quick__meta p {
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-meta);
-	}
 	.mobile-import-quick__meta button {
-		font-size: var(--sa-mobile-type-micro);
+		font-size: var(--sa-mobile-type-control-sm);
 		font-weight: var(--sa-weight-semibold);
 	}
 	.mobile-contact-action,
