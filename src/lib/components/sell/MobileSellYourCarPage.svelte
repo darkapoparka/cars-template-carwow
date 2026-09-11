@@ -408,11 +408,11 @@
 		display: block;
 		width: 100%;
 		overflow: hidden;
-		border: 1px solid #dce3ea;
+		border: 0;
 		border-radius: var(--sa-r-md);
-		background: #fff;
+		background: transparent;
 		padding: 0;
-		box-shadow: 0 1px 2px rgba(15, 20, 23, 0.035);
+		box-shadow: none;
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
 	}
@@ -421,6 +421,7 @@
 		width: 100%;
 		height: auto;
 		aspect-ratio: 435 / 205;
+		border-radius: var(--sa-r-md);
 		object-fit: cover;
 	}
 	.sell-manual-banner:active {

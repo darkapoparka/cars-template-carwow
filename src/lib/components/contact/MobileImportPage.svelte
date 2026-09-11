@@ -566,11 +566,10 @@
 		overflow: hidden;
 		border: 0;
 		border-radius: var(--sa-r-md);
-		border: 1px solid #dce3ea;
-		background: #fff;
+		background: transparent;
 		padding: 0;
 		cursor: pointer;
-		box-shadow: 0 1px 2px rgba(15, 20, 23, 0.035);
+		box-shadow: none;
 		-webkit-tap-highlight-color: transparent;
 	}
 	.import-manual-banner img {
@@ -578,6 +577,7 @@
 		width: 100%;
 		height: auto;
 		aspect-ratio: 435 / 166;
+		border-radius: var(--sa-r-md);
 		object-fit: cover;
 	}
 	.import-manual-banner:active {
