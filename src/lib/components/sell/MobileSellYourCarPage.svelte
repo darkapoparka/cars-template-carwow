@@ -215,7 +215,7 @@
 				aria-label="Нямам номер или VIN. Въведи автомобила ръчно"
 			>
 				<img
-					src={resolve('/assets/images/sell/sell-manual-banner-v2.webp')}
+					src={resolve('/assets/images/sell/sell-manual-banner-v3.webp')}
 					alt=""
 					aria-hidden="true"
 					width="435"
