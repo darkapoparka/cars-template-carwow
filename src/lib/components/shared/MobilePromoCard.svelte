@@ -51,8 +51,8 @@
 		display: flex;
 		align-items: flex-start;
 		width: 100%;
-		min-height: 196px;
-		padding: 22px 16px 20px;
+		min-height: 172px;
+		padding: 18px 16px 16px;
 		border: 0;
 		border-radius: 12px;
 		background: #171b1e;
@@ -77,16 +77,16 @@
 		justify-items: start;
 		align-content: start;
 		text-align: left;
-		gap: 7px;
-		width: min(70%, 248px);
+		gap: 6px;
+		width: min(68%, 236px);
 		position: relative;
 		z-index: 1;
 	}
 	.mobile-promo strong {
 		color: var(--promo-ink);
-		font-size: 22px;
-		font-weight: 700;
-		line-height: 1.2;
+		font-size: 21px;
+		font-weight: 750;
+		line-height: 1.16;
 		white-space: normal;
 		letter-spacing: -0.02em;
 	}
@@ -105,7 +105,7 @@
 		min-height: 44px;
 		max-width: 100%;
 		padding: 8px 12px;
-		margin-top: 6px;
+		margin-top: 4px;
 		border-radius: 8px;
 		background: var(--promo-action);
 		color: var(--promo-action-ink);
@@ -121,24 +121,24 @@
 	}
 	.mobile-promo > img {
 		position: absolute;
-		right: -10px;
+		right: -8px;
 		bottom: 0;
-		width: 38%;
-		height: 154px;
+		width: 39%;
+		height: 142px;
 		object-fit: contain;
 		object-position: right bottom;
 		pointer-events: none;
 	}
 	.mobile-promo--portrait > img {
-		height: 174px;
-		width: 44%;
-		bottom: -20px;
+		height: 156px;
+		width: 43%;
+		bottom: -16px;
 	}
 	.mobile-promo--cars > img {
-		width: 52%;
+		width: 49%;
 		height: auto;
-		bottom: -5%;
-		right: -6px;
+		bottom: -4%;
+		right: -4px;
 	}
 	.mobile-promo:focus-visible {
 		outline: 2px solid #171b1e !important;
