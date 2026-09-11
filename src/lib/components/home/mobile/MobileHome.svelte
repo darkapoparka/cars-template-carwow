@@ -21,6 +21,8 @@
 	import MobileFullSheet from '$lib/components/shared/mobile/MobileFullSheet.svelte';
 	import MobileBottomDock from './MobileBottomDock.svelte';
 	import MobileHeroBar from '$lib/components/shared/MobileHeroBar.svelte';
+	import MobileHomeServices from './MobileHomeServices.svelte';
+	import MobileHomeVideos from './MobileHomeVideos.svelte';
 	import {
 		enhanceDayNightImageFallbacks,
 		daynightImageFallback
@@ -499,6 +501,8 @@
 			{/each}
 		</nav>
 
+		<MobileHomeServices />
+
 		<section class="mh-section mh-section--budget" aria-labelledby="mh-budget-title">
 			<div class="mh-section__head">
 				<h2 id="mh-budget-title">По цена</h2>
@@ -630,6 +634,8 @@
 				{/each}
 			</div>
 		</section>
+
+		<MobileHomeVideos />
 
 		<section class="mh-cta-wrap" aria-label="Призив за действие">
 			<div class="mh-cta">
@@ -1379,11 +1385,11 @@
 		align-items: center;
 		justify-content: center;
 		gap: 4px;
-		border: 0;
-		border-radius: 8px;
-		background: transparent;
-		padding: 0 8px;
-		color: rgba(255, 255, 255, 0.78) !important;
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: var(--sa-r-pill);
+		background: rgba(255, 255, 255, 0.08);
+		padding: 0 13px;
+		color: rgba(255, 255, 255, 0.92) !important;
 		font-family: var(--sa-font);
 		font-size: var(--sa-mobile-type-control-sm);
 		font-weight: var(--sa-weight-semibold);
@@ -1391,7 +1397,7 @@
 		text-decoration: none;
 		cursor: pointer;
 		box-shadow: none;
-		margin-top: -3px;
+		margin-top: -1px;
 		transition:
 			color 120ms ease-out,
 			background-color 120ms ease-out;
@@ -1412,18 +1418,18 @@
 
 	@media (hover: hover) and (pointer: fine) {
 		.mh-hero__all:hover {
-			background: rgba(255, 255, 255, 0.06);
+			background: rgba(255, 255, 255, 0.13);
 			color: #fff !important;
 		}
 	}
 
 	.mh-hero__all:active {
-		background: rgba(255, 255, 255, 0.08);
+		background: rgba(255, 255, 255, 0.17);
 		color: #fff !important;
 	}
 
 	.mh-hero__all:focus-visible {
-		background: transparent;
+		background: rgba(255, 255, 255, 0.08);
 		color: #fff !important;
 		outline: 2px solid rgba(255, 255, 255, 0.72);
 		outline-offset: 2px;

@@ -828,16 +828,19 @@
 
 	.mobile-import-quick__meta button {
 		display: inline-flex;
+		border: 1px solid rgba(255, 255, 255, 0.16);
 		min-height: 44px;
 		flex: 0 0 auto;
 		align-items: center;
+		border-radius: var(--sa-r-pill);
+		background: rgba(255, 255, 255, 0.08);
 		justify-content: center;
 		gap: 4px;
-		color: rgba(255, 255, 255, 0.78);
+		color: rgba(255, 255, 255, 0.92);
 		font-size: var(--sa-mobile-type-control-sm);
 		font-weight: var(--sa-weight-semibold);
 		line-height: 1.2;
-		padding: 0 8px;
+		padding: 0 13px;
 		text-decoration: none;
 	}
 

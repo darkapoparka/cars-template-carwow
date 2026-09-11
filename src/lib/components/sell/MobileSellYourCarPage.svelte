@@ -714,14 +714,15 @@
 		flex: 0 0 auto;
 		align-items: center;
 		appearance: none;
-		border: 0;
-		background: transparent;
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: var(--sa-r-pill);
+		background: rgba(255, 255, 255, 0.08);
 		cursor: pointer;
 		justify-content: center;
 		gap: 4px;
-		color: rgba(255, 255, 255, 0.78);
+		color: rgba(255, 255, 255, 0.92);
 		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1.2 var(--sa-font);
-		padding: 0 8px;
+		padding: 0 13px;
 		text-decoration: none;
 	}
 
