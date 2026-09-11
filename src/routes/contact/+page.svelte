@@ -7,6 +7,7 @@
 	import StorefrontShell from '$lib/components/layout/StorefrontShell.svelte';
 	import DesktopContactPage from '$lib/components/contact/DesktopContactPage.svelte';
 	import MobileContactPage from '$lib/components/contact/MobileContactPage.svelte';
+	import MobileImportPage from '$lib/components/contact/MobileImportPage.svelte';
 	import RouteSeo from '$lib/components/seo/RouteSeo.svelte';
 	import DayNightFooter from '$lib/components/layout/DayNightFooter.svelte';
 	import RouteImageBehavior from '$lib/components/layout/RouteImageBehavior.svelte';
@@ -17,8 +18,9 @@
 
 	const showMobileShell = $derived(isPhoneViewport());
 	const showDesktopShell = $derived(isDesktopOrServerViewport());
+	const isImport = $derived(page.url.searchParams.get('intent') === 'import');
 	const currentSeo = $derived(
-		browser && page.url.searchParams.get('intent') === 'import'
+		browser && isImport
 			? {
 					title: 'Внос на автомобил | Day Night Auto София',
 					description:
@@ -36,7 +38,11 @@
 
 {#if showMobileShell}
 	{#key page.url.search}
-		<MobileContactPage />
+		{#if isImport}
+			<MobileImportPage />
+		{:else}
+			<MobileContactPage />
+		{/if}
 	{/key}
 {/if}
 

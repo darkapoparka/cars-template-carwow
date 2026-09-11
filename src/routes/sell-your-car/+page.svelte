@@ -24,7 +24,7 @@
 {/if}
 
 {#if showMobileShell}
-	<MobileSellYourCarPage initialPath="/sell-your-car" />
+	<MobileSellYourCarPage />
 {/if}
 
 {#if showDesktopShell}
