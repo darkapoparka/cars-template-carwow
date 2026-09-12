@@ -20,6 +20,7 @@
 		sectionId,
 		panel = 'dark',
 		compact = false,
+		deckWidth = 'standard',
 		artwork = 'cars',
 		rail,
 		afterPanel,
@@ -35,6 +36,7 @@
 		sectionId?: string;
 		panel?: 'dark' | 'light';
 		compact?: boolean;
+		deckWidth?: 'standard' | 'wide' | 'full';
 		artwork?: 'cars' | 'contact';
 		rail?: Snippet;
 		afterPanel?: Snippet;
@@ -53,6 +55,8 @@
 		'daynight-yellow-route-hero',
 		rail && 'daynight-yellow-route-hero--with-rail',
 		compact && 'daynight-yellow-route-hero--compact',
+		deckWidth === 'wide' && 'daynight-yellow-route-hero--deck-wide',
+		deckWidth === 'full' && 'daynight-yellow-route-hero--deck-full',
 		artwork === 'contact' && 'daynight-yellow-route-hero--contact'
 	]}
 	aria-labelledby={headingId}
@@ -104,7 +108,6 @@
 		{#if copy}
 			<p>{copy}</p>
 		{/if}
-
 		{#if children || (primaryLabel && primaryHref)}
 			<div
 				class={[
@@ -312,6 +315,18 @@
 		width: 100%;
 	}
 
+	.daynight-yellow-route-hero--deck-wide .daynight-yellow-route-hero__deck {
+		max-width: 1040px;
+	}
+
+	.daynight-yellow-route-hero--deck-full .daynight-yellow-route-hero__content {
+		max-width: 1368px;
+	}
+
+	.daynight-yellow-route-hero--deck-full .daynight-yellow-route-hero__deck {
+		max-width: 1320px;
+	}
+
 	.daynight-yellow-route-hero__actions {
 		display: grid;
 		gap: 10px;
@@ -367,43 +382,8 @@
 		right: 0;
 	}
 
-	.daynight-yellow-route-hero__actions a {
-		align-items: center;
-		border: 1px solid transparent;
-		border-radius: 9px;
-		display: inline-flex;
-		font-size: var(--sa-text-desktop-action-sm, 16px);
-		font-weight: 800;
-		justify-content: center;
-		min-height: 48px;
-		padding: 0 20px;
-		text-decoration: none;
-		transition:
-			background-color 160ms ease,
-			border-color 160ms ease;
-	}
-
-	.daynight-yellow-route-hero__primary {
-		background: var(--sa-red);
-		color: #fff;
-	}
-
-	.daynight-yellow-route-hero__primary:hover {
-		background: var(--sa-red-strong);
-	}
-
-	.daynight-yellow-route-hero__secondary.sa-cta-ghost {
-		background: #fff;
-		color: var(--sa-ink);
-	}
-
-	.daynight-yellow-route-hero__secondary.sa-cta-ghost:hover {
-		background: #f2f2f2;
-	}
-
-	.daynight-yellow-route-hero__actions a:focus-visible {
-		outline: 3px solid #fff;
-		outline-offset: 3px;
+	.daynight-yellow-route-hero__actions .sa-cta {
+		width: 100%;
 	}
 
 	.daynight-yellow-route-hero__car {

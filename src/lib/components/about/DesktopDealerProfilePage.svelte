@@ -6,6 +6,7 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import LazyMapEmbed from '$lib/components/shared/map/LazyMapEmbed.svelte';
 	import { featuredDayNightVehicles } from '$lib/data/daynight-vehicles';
 	import { daynightReviews, daynightReviewDisclosure } from '$lib/data/daynight-reviews';
@@ -32,6 +33,16 @@
 </script>
 
 <div class="dealer-page">
+	<DesktopYellowRouteHero
+		headingId="dealer-profile-route-title"
+		title="Day Night Auto София"
+		copy="Автокъща в София с подбрани автомобили, ясна информация за състоянието и съдействие до сделката."
+		primaryLabel="Виж наличните"
+		primaryHref="/inventory"
+		secondaryLabel="Свържете се"
+		secondaryHref="/contact"
+		compact
+	/>
 	<section class="background-light mb-32">
 		<div class="container">
 			<ul class="breadcrumb">
@@ -168,6 +179,17 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.dealer-page > .background-light,
+		.dealer-profile-hero__content > h1 {
+			display: none;
+		}
+
+		.dealer-profile-hero {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	.dealer-page,
 	.dealer-page * {
 		box-sizing: border-box;

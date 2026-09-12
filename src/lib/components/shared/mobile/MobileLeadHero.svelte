@@ -73,7 +73,7 @@
 		gap: 13px;
 		background: var(--sa-blue);
 		color: #fff;
-		padding: calc(env(safe-area-inset-top) + 12px) var(--sa-mobile-gutter-wide) 18px;
+		padding: calc(env(safe-area-inset-top) + 12px) var(--sa-mobile-gutter-wide) 34px;
 	}
 
 	.mobile-lead-hero h1 {

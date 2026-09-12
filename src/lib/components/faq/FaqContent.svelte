@@ -17,6 +17,7 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import { daynightFaqGroups } from '$lib/data/daynight-faq';
 
 	// Start with the questions visible; the visitor chooses which answer to expand.
@@ -28,6 +29,16 @@
 </script>
 
 <div class="faq-page">
+	<DesktopYellowRouteHero
+		headingId="faq-route-title"
+		title="Често задавани въпроси"
+		copy="Отговори на чести въпроси за покупка, продажба, финансиране и контакт с Day Night Auto."
+		panel="light"
+		primaryLabel="Свържете се"
+		primaryHref="/contact"
+		secondaryLabel="Виж автомобилите"
+		secondaryHref="/inventory"
+	/>
 	<!-- breadcrumb -->
 	<section class="background-light mb-32">
 		<div class="container">
@@ -110,6 +121,18 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.faq-page > .background-light,
+		.faq-page h1,
+		.faq-page .tf-spacing-style3 {
+			display: none;
+		}
+
+		.faq-page > .bg-white {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	.faq-page section > .container + .container {
 		margin-top: 32px;
 	}

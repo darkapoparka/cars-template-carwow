@@ -16,10 +16,21 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import { daynightReviews, daynightReviewDisclosure } from '$lib/data/daynight-reviews';
 </script>
 
 <div class="reviews-page">
+	<DesktopYellowRouteHero
+		headingId="reviews-route-title"
+		title="Отзиви от клиенти"
+		copy={daynightReviewDisclosure}
+		panel="light"
+		primaryLabel="Виж автомобилите"
+		primaryHref="/inventory"
+		secondaryLabel="Свържете се"
+		secondaryHref="/contact"
+	/>
 	<!-- breadcrumb -->
 	<section class="background-light mb-32">
 		<div class="container">
@@ -81,6 +92,19 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.reviews-page > .background-light,
+		.reviews-page > .pb-100 > .container > h1,
+		.review-disclosure,
+		.reviews-page > .pb-100 > .container > .tf-spacing-style3 {
+			display: none;
+		}
+
+		.reviews-page > .pb-100 {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	.review-disclosure {
 		color: var(--sa-muted);
 		margin-top: 12px;

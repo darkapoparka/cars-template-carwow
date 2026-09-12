@@ -9,6 +9,7 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import {
 		daynightTeam,
 		daynightTeamDisclosure,
@@ -185,6 +186,16 @@
 {/snippet}
 
 <div class="team-page">
+	<DesktopYellowRouteHero
+		headingId="team-route-title"
+		title="Екипът на Day Night Auto"
+		copy={daynightTeamDisclosure}
+		panel="light"
+		primaryLabel="Свържете се"
+		primaryHref="/contact"
+		secondaryLabel="Виж автомобилите"
+		secondaryHref="/inventory"
+	/>
 	<section class="background-light mb-32">
 		<div class="container">
 			<ul class="breadcrumb">
@@ -225,6 +236,18 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.team-page > .background-light,
+		.team-page > .pb-100 > .container > h1,
+		.team-disclosure {
+			display: none;
+		}
+
+		.team-page > .pb-100 > .tf-spacing-style3 {
+			height: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	.team-disclosure {
 		margin-top: 12px;
 		color: var(--sa-muted);

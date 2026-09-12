@@ -108,7 +108,7 @@ export const PUBLIC_STATIC_ROUTES: PublicStaticRoute[] = [
 		sitemap: true
 	},
 	{
-		path: 'team/prodazhbi-daynight-auto',
+		path: 'team/prodazhbi-showroom',
 		title: `Продажби | ${DAY_SITE_TITLE}`,
 		description: "Контакт с търговския екип на Day Night Auto за налични автомобили и оферти.",
 		sitemap: true

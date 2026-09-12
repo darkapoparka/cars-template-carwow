@@ -12,6 +12,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { ChevronRight, Mail, Share2 } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import type { DayNightArticle } from '$lib/data/daynight-blog';
 
@@ -104,6 +105,16 @@
 {/snippet}
 
 <div class="blog-article-page">
+	<DesktopYellowRouteHero
+		headingId="blog-article-route-title"
+		title={article.title}
+		copy={`${article.category} · ${formatArticleDate(article.date)}`}
+		primaryLabel="Всички публикации"
+		primaryHref="/blog"
+		secondaryLabel="Свържете се"
+		secondaryHref="/contact"
+		compact
+	/>
 	<section class="background-light mb-32">
 		<div class="container">
 			<ul class="breadcrumb">
@@ -116,7 +127,7 @@
 		</div>
 	</section>
 
-	<section>
+	<section class="blog-article-main">
 		<div class="bloc-details-container">
 			<h1 class="title-2 mb-16 text-center">{article.title}</h1>
 			{@render articleMeta()}
@@ -209,6 +220,17 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.blog-article-page > .background-light,
+		.blog-article-main .title-2 {
+			display: none;
+		}
+
+		.blog-article-main {
+			padding-top: var(--sa-space-10);
+		}
+	}
+
 	/* Self-contained scoped styles for /blog/[slug]. Reproduce the legacy app.css +
 	   StorefrontTemplateContent :global rules for the verbatim class strings used
 	   above. Brand colours route through tokens (--sa-*); template neutrals stay

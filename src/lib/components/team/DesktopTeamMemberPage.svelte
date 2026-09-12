@@ -9,6 +9,7 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import LazyMapEmbed from '$lib/components/shared/map/LazyMapEmbed.svelte';
 	import { featuredDayNightVehicles } from '$lib/data/daynight-vehicles';
 	import { daynightReviews, daynightReviewDisclosure } from '$lib/data/daynight-reviews';
@@ -36,6 +37,16 @@
 </script>
 
 <div class="team-member-page">
+	<DesktopYellowRouteHero
+		headingId="team-member-route-title"
+		title={member.name}
+		copy={member.role}
+		primaryLabel="Виж автомобилите"
+		primaryHref="/inventory"
+		secondaryLabel="Свържете се"
+		secondaryHref="/contact"
+		compact
+	/>
 	<section class="background-light mb-32">
 		<div class="container">
 			<ul class="breadcrumb">
@@ -171,6 +182,17 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.team-member-page > .background-light,
+		.team-member-profile__content > h1 {
+			display: none;
+		}
+
+		.team-member-profile {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	.team-member-page,
 	.team-member-page * {
 		box-sizing: border-box;

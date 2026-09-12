@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Heart } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import VehicleCard from '$lib/components/inventory/desktop/VehicleCard.svelte';
 	import {
 		cars,
@@ -28,27 +29,20 @@
 </script>
 
 <main id="main-content" tabindex="-1" class="desktop-favorites inventory-template-shell">
-	<section class="desktop-favorites__hero" aria-labelledby="favorites-title">
-		<div class="desktop-favorites__hero-inner">
-			<div class="desktop-favorites__hero-copy">
-				<p class="desktop-favorites__eyebrow">Любими</p>
-				<h1 id="favorites-title">Запазени автомобили</h1>
-				<p>
-					{vehicles.length
-						? `${countLabel} са готови за сравнение, оглед или запитване.`
-						: 'Запазвайте автомобили от наличността и ги преглеждайте тук.'}
-				</p>
-			</div>
-			<div class="desktop-favorites__hero-actions" aria-label="Действия">
-				<a class="desktop-favorites__cta sa-cta sa-cta-primary" href={resolve('/inventory')}>
-					Виж наличните автомобили
-				</a>
-				<a class="desktop-favorites__cta sa-cta sa-cta-on-dark" href={resolve('/compare')}>
-					Сравни автомобили
-				</a>
-			</div>
+	<DesktopYellowRouteHero
+		headingId="favorites-title"
+		title="Запазени автомобили"
+		copy={vehicles.length
+			? `${countLabel} са готови за сравнение, оглед или запитване.`
+			: 'Запазвайте автомобили от наличността и ги преглеждайте тук.'}
+		panel="light"
+		compact
+	>
+		<div class="desktop-favorites__hero-actions" aria-label="Действия">
+			<a class="sa-cta sa-cta-primary" href={resolve('/inventory')}>Виж наличните автомобили</a>
+			<a class="sa-cta sa-cta-ghost" href={resolve('/compare')}>Сравни автомобили</a>
 		</div>
-	</section>
+	</DesktopYellowRouteHero>
 
 	<section class="desktop-favorites__content" aria-label="Списък със запазени автомобили">
 		{#if vehicles.length}
@@ -71,7 +65,7 @@
 				</div>
 				<h2>Нямате запазени автомобили</h2>
 				<p>Изберете сърцето върху обява, за да съберете кратък списък за оглед и сравнение.</p>
-				<a class="desktop-favorites__cta sa-cta sa-cta-primary" href={resolve('/inventory')}>
+				<a class="sa-cta sa-cta-primary" href={resolve('/inventory')}>
 					Разгледай автомобилите
 				</a>
 			</div>
@@ -83,7 +77,7 @@
 					<p class="desktop-favorites__section-kicker">Още налични</p>
 					<h2>Автомобили, които може да разгледате</h2>
 				</div>
-				<a class="desktop-favorites__section-link" href={resolve('/inventory')}>
+				<a class="sa-cta sa-cta-ghost sa-cta-compact" href={resolve('/inventory')}>
 					Всички автомобили
 				</a>
 			</div>
@@ -97,23 +91,14 @@
 </main>
 
 <style>
-	.desktop-favorites__hero-actions .sa-cta-primary {
-		border-color: var(--sa-surface) !important;
-	}
 	.desktop-favorites {
-		background: #f3f6fa;
-		color: #0f172a;
+		background: var(--discovery-canvas, #f4f6fa);
+		color: var(--sa-ink);
 		font-family: var(--sa-font);
 		min-height: 720px;
-		padding-bottom: 96px;
+		padding-bottom: var(--sa-desktop-section-y-lg);
 	}
 
-	.desktop-favorites__hero {
-		background: var(--sa-blue);
-		color: #fff;
-	}
-
-	.desktop-favorites__hero-inner,
 	.desktop-favorites__content {
 		box-sizing: border-box;
 		margin: 0 auto;
@@ -123,80 +108,23 @@
 		width: 100%;
 	}
 
-	.desktop-favorites__hero-inner {
-		align-items: end;
-		display: flex;
-		gap: 32px;
-		justify-content: space-between;
-		min-height: 288px;
-		padding-bottom: 56px;
-		padding-top: 58px;
-	}
-
-	.desktop-favorites__hero-copy {
-		max-width: 760px;
-	}
-
-	.desktop-favorites__eyebrow,
 	.desktop-favorites__section-kicker {
-		color: #b00000;
+		color: var(--sa-red);
 		font-size: var(--sa-text-desktop-dense, 16px);
 		font-weight: 700;
 		line-height: 1.2;
 		margin: 0 0 8px;
 	}
 
-	.desktop-favorites__eyebrow {
-		color: rgba(255, 255, 255, 0.78);
-	}
-
-	.desktop-favorites h1,
 	.desktop-favorites h2,
 	.desktop-favorites p {
 		letter-spacing: 0;
 	}
 
-	.desktop-favorites h1 {
-		color: #fff;
-		font-size: clamp(52px, 4.6vw, 68px);
-		font-weight: 650;
-		line-height: 1.04;
-		margin: 0;
-	}
-
-	.desktop-favorites__hero-copy > p:last-child {
-		color: rgba(255, 255, 255, 0.88);
-		font-size: var(--sa-text-desktop-lead, 20px);
-		font-weight: 500;
-		line-height: 1.5;
-		margin: 18px 0 0;
-		max-width: 720px;
-	}
-
 	.desktop-favorites__hero-actions {
-		align-items: center;
-		display: flex;
-		flex: 0 0 auto;
-		gap: 12px;
-	}
-
-	.desktop-favorites__cta,
-	.desktop-favorites__section-link {
-		align-items: center;
-		border-radius: 8px;
-		display: inline-flex;
-		font-size: var(--sa-text-desktop-action, 18px);
-		font-weight: 600;
-		justify-content: center;
-		line-height: 1.15;
-		min-height: 52px;
-		padding: 0 24px;
-		text-decoration: none;
-		transition:
-			background-color 0.14s ease-out,
-			border-color 0.14s ease-out,
-			color 0.14s ease-out;
-		white-space: nowrap;
+		display: grid;
+		gap: 10px;
+		grid-template-columns: repeat(2, minmax(220px, 1fr));
 	}
 
 	.desktop-favorites__content {
@@ -233,20 +161,6 @@
 		border-top: 1px solid #dce5f0;
 		margin-top: 56px;
 		padding-top: 44px;
-	}
-
-	.desktop-favorites__section-link {
-		background: #fff;
-		border-color: #cbd7e6;
-		color: #111827;
-		min-height: 48px;
-	}
-
-	.desktop-favorites__section-link:hover,
-	.desktop-favorites__section-link:focus-visible {
-		background: var(--sa-blue);
-		border-color: var(--sa-blue);
-		color: #fff;
 	}
 
 	.desktop-favorites__grid {

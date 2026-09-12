@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import {
 		calculateFinance,
 		readFinanceInputs,
@@ -99,6 +100,16 @@
 </script>
 
 <div class="calculator-page">
+	<DesktopYellowRouteHero
+		headingId="calculator-route-title"
+		title="Калкулатор за месечна вноска"
+		copy="Ориентировъчна сметка за бюджет, първоначална вноска и месечна вноска."
+		panel="light"
+		primaryLabel="Виж автомобилите"
+		primaryHref="/inventory"
+		secondaryLabel="За финансирането"
+		secondaryHref="/financing"
+	/>
 	<!-- breadcrumb -->
 	<section class="background-light">
 		<div class="container">
@@ -387,6 +398,19 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.calculator-page > .background-light,
+		.calculator-page > .pb-100 > .tf-spacing-style3,
+		.calculator-page > .pb-100 > .container > h1,
+		.calculator-page > .pb-100 > .container > h1 + p {
+			display: none;
+		}
+
+		.calculator-page > .pb-100 {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	@media (max-width: 991px) {
 		.breadcrumb { padding-top: 12px; padding-bottom: 12px; font-size: 12px; }
 		.tf-spacing-style3 { height: 20px; padding: 0; }

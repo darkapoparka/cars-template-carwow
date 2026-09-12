@@ -11,6 +11,7 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight, GitCompare } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import { getDayNightVehicleBySlug, type Car } from '$lib/data/daynight-vehicles';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import { getGarageContext } from '$lib/state/garage.svelte';
@@ -49,6 +50,16 @@
 </script>
 
 <div class="compare-page">
+	<DesktopYellowRouteHero
+		headingId="compare-route-title"
+		title="Сравнение на автомобили"
+		copy="Сравнете пробег, гориво, оборудване и цена преди оглед."
+		panel="light"
+		primaryLabel="Добави автомобили"
+		primaryHref="/inventory"
+		secondaryLabel="Запазени автомобили"
+		secondaryHref="/favorites"
+	/>
 	<!-- breadcrumb -->
 	<section class="background-light">
 		<div class="container">
@@ -177,6 +188,19 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.compare-page > .background-light,
+		.compare-page > .pb-100 > .tf-spacing-style3,
+		.compare-page > .pb-100 > .container > h1,
+		.compare-page > .pb-100 > .container > h1 + p {
+			display: none;
+		}
+
+		.compare-page > .pb-100 {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	@media (max-width: 991px) {
 		.breadcrumb { padding-top: 12px; padding-bottom: 12px; font-size: 12px; }
 		.tf-spacing-style3 { height: 20px; padding: 0; }

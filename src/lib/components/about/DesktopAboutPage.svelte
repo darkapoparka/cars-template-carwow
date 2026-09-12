@@ -48,7 +48,11 @@
 		panel="light"
 		compact
 	>
-		{#snippet afterPanel()}
+		<div class="about-hero-panel">
+			<div class="about-hero-primary">
+				<strong>Намери следващия си автомобил</strong>
+				<a class="sa-cta sa-cta-primary" href={resolve('/inventory')}>Виж автомобилите</a>
+			</div>
 			<nav class="about-hero-contact" aria-label="Контакти и социални мрежи">
 				<a href={daynightSite.mapUrl} target="_blank" rel="noopener noreferrer"
 					><MapPin size={18} />{daynightSite.locationShort}</a
@@ -74,9 +78,6 @@
 					</a>
 				</div>
 			</nav>
-		{/snippet}
-		<div class="about-hero-strip">
-			<span>Намери следващия си автомобил</span><DesktopBrowseLink href={resolve('/inventory')} label="Виж автомобилите" tone="dark" />
 		</div>
 	</DesktopYellowRouteHero>
 
@@ -212,45 +213,69 @@
 </main>
 
 <style>
+	.about-hero-panel {
+		display: grid;
+		gap: 12px;
+		padding: 14px;
+	}
+
+	.about-hero-primary {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 16px;
+	}
+
+	.about-hero-primary strong {
+		font: 600 18px/1.35 var(--sa-font);
+		text-align: left;
+	}
+
+	.about-hero-primary .sa-cta {
+		min-width: 190px;
+	}
+
 	.about-hero-contact {
 		display: grid;
-		grid-template-columns: repeat(2, 200px);
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
 		align-items: center;
-		justify-content: center;
-		gap: 12px;
-		margin-top: 18px;
+		gap: 10px;
 	}
+
 	.about-hero-contact a {
 		display: inline-flex;
-		align-items: center;
-		gap: 8px;
 		min-height: 44px;
-		font: 500 15px/1.4 var(--sa-font);
-		color: var(--sa-ink);
-	}
-	.about-hero-contact > a {
+		align-items: center;
 		justify-content: center;
-		min-height: 48px;
-		padding: 0 20px;
+		gap: 8px;
+		border: 1px solid var(--desktop-control-border);
 		border-radius: 8px;
-		background: #fff;
-		font-weight: 600;
+		background: var(--desktop-field);
+		color: var(--sa-ink);
+		font: 600 14px/1.35 var(--sa-font);
+		padding: 0 12px;
 	}
-	.about-hero-contact > a:hover {
-		background: #f7f8fa;
+
+	.about-hero-contact > a:hover,
+	.about-hero-contact > a:focus-visible,
+	.about-hero-socials a:hover,
+	.about-hero-socials a:focus-visible {
+		border-color: var(--desktop-secondary-hover);
+		background: var(--desktop-secondary-hover);
 	}
+
 	.about-hero-socials {
 		display: flex;
-		grid-column: 1 / -1;
-		justify-content: center;
 		gap: 8px;
 	}
+
 	.about-hero-socials a {
-		justify-content: center;
 		width: 44px;
+		padding: 0;
 		border-radius: 50%;
-		background: rgb(255 255 255 / 45%);
+		background: #fff;
 	}
+
 	.about-hero-socials img {
 		filter: brightness(0);
 	}
@@ -299,19 +324,6 @@
 		--sa-cta-font-size: 16px;
 		gap: 12px;
 		padding-inline: 22px;
-	}
-	.about-hero-strip {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 24px;
-		padding: 16px 20px;
-	}
-	.about-hero-strip span {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		font: 500 18px/1.4 var(--sa-font);
 	}
 	.about-story {
 		display: grid;

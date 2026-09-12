@@ -43,13 +43,22 @@
 	let filterOpen = $state(false);
 </script>
 
-{#snippet inventoryFilters()}
-	<div class="inventory-banner-filters">
-		<InventoryFilterTriggers
-			filters={page.quickFilters}
-			onOpen={(name) => filterDialog.open(name)}
-		/>
-		<InventoryShortcutShelf />
+{#snippet inventoryControls()}
+	<div class="inventory-hero-controls">
+		<div class="inventory-hero-controls__search">
+			<SearchBar
+				layoutMode="grid"
+				searchId="daynight-inventory-hero-search"
+				onOpen={() => filterDialog.open('', true)}
+			/>
+		</div>
+		<div class="inventory-banner-filters">
+			<InventoryFilterTriggers
+				filters={page.quickFilters}
+				onOpen={(name) => filterDialog.open(name)}
+			/>
+			<InventoryShortcutShelf />
+		</div>
 	</div>
 {/snippet}
 
@@ -62,14 +71,9 @@
 				headingId="daynight-inventory-title"
 				title="Налични автомобили"
 				panel="light"
-				rail={inventoryFilters}
-			>
-				<SearchBar
-					layoutMode="grid"
-					searchId="daynight-inventory-hero-search"
-					onOpen={() => filterDialog.open('', true)}
-				/>
-			</DesktopYellowRouteHero>
+				deckWidth="full"
+				children={inventoryControls}
+			/>
 		</div>
 		<div
 			class={inventoryViewportClass}
@@ -137,19 +141,28 @@
 		max-height: 45px !important;
 		white-space: normal !important;
 	}
+	.inventory-hero-controls {
+		display: grid;
+		gap: 12px;
+	}
+
+	.inventory-hero-controls__search {
+		width: min(100%, 760px);
+		margin-inline: auto;
+	}
+
 	.inventory-banner-filters {
-		background: var(--discovery-panel);
-		border-radius: 12px;
+		background: transparent;
+		border-radius: 0;
 	}
+
 	:global(.inventory-refined .inventory-hero .daynight-yellow-route-hero__content) {
-		padding-top: 26px;
-		padding-bottom: 12px;
+		padding-top: 30px;
+		padding-bottom: 24px;
 	}
+
 	:global(.inventory-refined .inventory-hero .daynight-yellow-route-hero__deck) {
-		margin-top: 16px !important;
-	}
-	:global(.inventory-refined .inventory-hero .daynight-yellow-route-hero__rail) {
-		margin-bottom: 14px !important;
+		margin-top: 18px !important;
 	}
 	:global(
 		.inventory-refined .daynight-inventory-viewport--grid [data-daynight-grid-panel].active > .grid
@@ -198,18 +211,12 @@
 		width: 100%;
 	}
 	:global(.inventory-refined .inventory-hero .daynight-yellow-route-hero) {
-		min-height: 0;
-		padding-bottom: 8px;
+		min-height: 390px;
 	}
-	:global(.inventory-refined .inventory-hero .daynight-yellow-route-hero__rail) {
-		max-width: 1320px;
-		margin-inline: auto;
-		width: calc(100% - 64px);
-	}
+
 	:global(.inventory-refined .inventory-hero .daynight-yellow-route-hero__deck) {
 		background: var(--discovery-panel) !important;
 		padding: 14px 18px !important;
-		max-width: 640px;
 		border-radius: 12px;
 	}
 	:global(.inventory-refined .inventory-hero .daynight-inventory-searchbar__label) {

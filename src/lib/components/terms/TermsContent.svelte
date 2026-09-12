@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 
 	type TermsParagraph = { readonly text: string; readonly spaced?: boolean };
 
@@ -71,6 +72,16 @@
 </script>
 
 <div class="terms-page">
+	<DesktopYellowRouteHero
+		headingId="terms-route-title"
+		title="Условия за ползване"
+		copy="Информация за ползването на сайта, обявите, наличността и условията на Day Night Auto."
+		panel="light"
+		primaryLabel="Свържете се"
+		primaryHref="/contact"
+		secondaryLabel="Виж автомобилите"
+		secondaryHref="/inventory"
+	/>
 	<section class="breadcrumb-band" aria-label="Навигационна пътека">
 		<div class="terms-container">
 			<ol class="breadcrumb">
@@ -142,6 +153,18 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.terms-page > .breadcrumb-band,
+		.terms-main h1,
+		.heading-spacer {
+			display: none;
+		}
+
+		.terms-main {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	.terms-page,
 	.terms-page * {
 		box-sizing: border-box;
