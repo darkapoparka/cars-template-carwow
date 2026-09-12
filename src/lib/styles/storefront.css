@@ -1,4 +1,5 @@
-@import 'tailwindcss';
+/* Restrict automatic utility discovery to application source, not audit/docs examples. */
+@import 'tailwindcss' source('../../');
 
 @source '../../routes/**/*.{svelte,ts}';
 @source '../components/**/*.{svelte,ts}';

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { daynightSite } from '$lib/data/daynight-site';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import { CarFront, House } from '@lucide/svelte';
@@ -17,19 +18,22 @@
 </script>
 
 <svelte:head>
-	<title>{page.status} · Day Night Auto</title>
+	<title>{page.status} · {daynightSite.shortName}</title>
 </svelte:head>
 
 <main id="main-content" class="daynight-error" aria-labelledby="daynight-error-title">
 	<div class="daynight-error__card">
 		<a class="daynight-error__brand" href={resolve('/')}>
-			<img src={resolve('/brand/daynight-logo-generated.png')} alt="Day Night Auto" />
+			<img src={resolve(daynightSite.logoLight)} alt={`${daynightSite.shortName}`} />
 		</a>
 		<span class="daynight-error__code">{page.status}</span>
 		<h1 id="daynight-error-title">{heading}</h1>
 		<p>{detail}</p>
 		<div class="daynight-error__actions">
-			<a class="daynight-error__action daynight-error__action--primary" href={resolve('/inventory')}>
+			<a
+				class="daynight-error__action daynight-error__action--primary"
+				href={resolve('/inventory')}
+			>
 				<CarFront size={18} strokeWidth={2.3} aria-hidden="true" />
 				<span>Виж автомобилите</span>
 			</a>
@@ -71,7 +75,7 @@
 	}
 
 	.daynight-error__code {
-		color: #B00000;
+		color: #b00000;
 		font-size: 0.875rem;
 		font-weight: 700;
 		letter-spacing: 2px;
@@ -123,7 +127,7 @@
 	}
 
 	.daynight-error__action--primary {
-		background: #B00000;
+		background: #b00000;
 		color: #fff !important;
 	}
 </style>

@@ -23,11 +23,13 @@
 	let {
 		open = $bindable(false),
 		labelledBy,
+		presentation = 'full',
 		onClose,
 		children
 	}: {
 		open?: boolean;
 		labelledBy?: string;
+		presentation?: 'full' | 'content';
 		onClose?: () => void;
 		children?: Snippet;
 	} = $props();
@@ -36,6 +38,26 @@
 		const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 		document.body.appendChild(node);
 		node.showModal();
+		// A backdrop gesture must begin and end outside the panel.
+		let startedOnBackdrop = false;
+		const outsidePanel = (event: MouseEvent) => {
+			const rect = node.getBoundingClientRect();
+			return (
+				event.clientX < rect.left ||
+				event.clientX >= rect.right ||
+				event.clientY < rect.top ||
+				event.clientY >= rect.bottom
+			);
+		};
+		const trackPointer = (event: PointerEvent) => {
+			startedOnBackdrop = presentation === 'content' && event.button === 0 && outsidePanel(event);
+		};
+		const dismissBackdrop = (event: MouseEvent) => {
+			if (startedOnBackdrop && outsidePanel(event)) closeSheet();
+			startedOnBackdrop = false;
+		};
+		document.addEventListener('pointerdown', trackPointer, true);
+		document.addEventListener('click', dismissBackdrop, true);
 		const containTab = (event: KeyboardEvent) => trapModalTab(event, node);
 		const containFocus = (event: FocusEvent) => {
 			if (node.open && event.target instanceof Node && !node.contains(event.target)) {
@@ -49,6 +71,8 @@
 		const applyViewportSize = () => {
 			if (!vv) return;
 			node.style.setProperty('--sa-ov-h', `${Math.round(vv.height)}px`);
+			const bottom = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+			node.style.setProperty('--sa-ov-bottom', `${bottom}px`);
 			node.style.setProperty('--sa-ov-top', `${Math.round(vv.offsetTop)}px`);
 		};
 		applyViewportSize();
@@ -59,12 +83,19 @@
 		const previousOverflow = body.style.overflow;
 		body.style.overflow = 'hidden';
 
+		let disposed = false;
 		let raf = 0;
 		void tick().then(() => {
-			raf = requestAnimationFrame(() => node.focus({ preventScroll: true }));
+			if (disposed) return;
+			raf = requestAnimationFrame(() => {
+				if (!disposed && node.isConnected && node.open) node.focus({ preventScroll: true });
+			});
 		});
 
 		return () => {
+			disposed = true;
+			document.removeEventListener('pointerdown', trackPointer, true);
+			document.removeEventListener('click', dismissBackdrop, true);
 			document.removeEventListener('keydown', containTab, true);
 			document.removeEventListener('focusin', containFocus);
 			vv?.removeEventListener('resize', applyViewportSize);
@@ -97,6 +128,7 @@
 {#if open}
 	<dialog
 		class="mobile-fullsheet"
+		class:mobile-fullsheet--content={presentation === 'content'}
 		{@attach fullSheetPanel}
 		aria-modal="true"
 		aria-labelledby={labelledBy}
@@ -132,5 +164,23 @@
 		-webkit-font-smoothing: antialiased;
 		overscroll-behavior: contain;
 		outline: none;
+	}
+
+	/* Information has intrinsic height. Full task sheets keep their original geometry. */
+	.mobile-fullsheet--content {
+		grid-template-rows: minmax(0, 1fr);
+		top: auto;
+		bottom: var(--sa-ov-bottom, 0px);
+		height: auto;
+		max-height: calc(var(--sa-ov-h, 100dvh) - var(--sa-space-4) - env(safe-area-inset-top));
+		max-width: 36rem;
+		margin-inline: auto;
+		overflow: hidden;
+		border-radius: var(--sa-r-xl) var(--sa-r-xl) 0 0;
+		background: var(--sa-surface);
+		box-shadow: var(--sa-shadow-lg);
+	}
+	.mobile-fullsheet--content::backdrop {
+		background: color-mix(in srgb, var(--sa-dark) 52%, transparent);
 	}
 </style>

@@ -1,10 +1,21 @@
 <script lang="ts">
-	import { ArrowLeft, CircleCheck, Globe2, Phone, X } from '@lucide/svelte';
+	import { onDestroy } from 'svelte';
+	import {
+		validateImportVehicle,
+		validateLeadContact,
+		type LeadIssue
+	} from '$lib/utils/lead-validation';
+	import { CircleCheck, Globe2, Phone } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
 	import { page as appPage } from '$app/state';
 	import { submitImportRequest } from '$lib/client/import-request-submit';
+	import MobileLeadManualCard from '$lib/components/shared/mobile/MobileLeadManualCard.svelte';
+	import MobileLeadInfo from '$lib/components/shared/mobile/MobileLeadInfo.svelte';
+	import { importOrigins, DEFAULT_IMPORT_ORIGIN } from '$lib/data/lead-content';
+	import MobileLeadForm from '$lib/components/shared/mobile/MobileLeadForm.svelte';
 	import MobileFullSheet from '$lib/components/shared/mobile/MobileFullSheet.svelte';
 	import MobileLeadHero from '$lib/components/shared/mobile/MobileLeadHero.svelte';
+	import MobileLeadContactCard from '$lib/components/shared/mobile/MobileLeadContactCard.svelte';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import {
 		buildImportNotes,
@@ -43,24 +54,17 @@
 	let formStep = $state<1 | 2>(1);
 	let submitState = $state<ImportSubmitState>('idle');
 	let submitMessage = $state('');
-	let selectedOrigin = $state('XX');
+	let issue = $state<LeadIssue | null>(null);
+	let submissionController: AbortController | undefined;
+	onDestroy(() => submissionController?.abort());
+	let selectedOrigin = $state<string>(DEFAULT_IMPORT_ORIGIN);
 
-	const originOptions = [
-		{ code: 'XX', label: 'Всички' },
-		{ code: 'DE', label: 'Германия' },
-		{ code: 'EU', label: 'Европа' },
-		{ code: 'US', label: 'САЩ' },
-		{ code: 'JP', label: 'Япония' },
-		{ code: 'CN', label: 'Китай' }
-	] as const;
+	const originOptions = importOrigins;
 	const selectedOriginLabel = $derived(
 		originOptions.find((option) => option.code === selectedOrigin)?.label ?? 'Всички'
 	);
 
-	const phoneHref = `tel:+359${daynightSite.phone.slice(1)}`;
-	const hasRequestData = $derived(
-		Boolean(sourceUrl.trim() || importQuery.trim() || importMake.trim() || importModel.trim())
-	);
+	const phoneHref = daynightSite.phoneHref;
 	const requestTitle = $derived(
 		importQuery.trim() ||
 			[importMake.trim(), importModel.trim()].filter(Boolean).join(' ') ||
@@ -86,6 +90,7 @@
 	}
 
 	function openForm() {
+		issue = null;
 		applyQuickValue();
 		formStep = 1;
 		submitMessage = '';
@@ -94,11 +99,15 @@
 	}
 
 	function openManualForm() {
+		sourceUrl = '';
 		quickValue = '';
 		openForm();
 	}
 
 	function closeForm() {
+		submissionController?.abort();
+		if (submitState === 'submitting') submitState = 'idle';
+		issue = null;
 		formOpen = false;
 		formStep = 1;
 		submitMessage = '';
@@ -106,6 +115,7 @@
 	}
 
 	function goBack() {
+		issue = null;
 		formStep = 1;
 		submitMessage = '';
 		if (submitState === 'error') submitState = 'idle';
@@ -114,67 +124,78 @@
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
+		if (submitState === 'submitting') return;
+		issue =
+			formStep === 1
+				? validateImportVehicle({
+						sourceUrl,
+						query: importQuery,
+						year: importYear,
+						budget: importBudget
+					})
+				: validateLeadContact(contact);
+		if (issue) {
+			submitState = 'error';
+			submitMessage = issue.message;
+			const field = (event.currentTarget as HTMLFormElement).elements.namedItem(issue.field);
+			if (field instanceof HTMLElement) field.focus();
+			return;
+		}
 		if (formStep === 1) {
-			if (!hasRequestData) {
-				submitState = 'error';
-				submitMessage = 'Добавете линк, VIN или кратко описание на автомобила.';
-				return;
-			}
 			submitState = 'idle';
 			submitMessage = '';
 			formStep = 2;
 			return;
 		}
-
-		if (submitState === 'submitting') return;
 		const contactValue = contact.trim();
-		if (!contactValue) {
-			submitState = 'error';
-			submitMessage = 'Въведете телефон или имейл за обратна връзка.';
-			return;
-		}
+		const controller = new AbortController();
+		submissionController = controller;
 
 		const email = contactValue.includes('@') ? contactValue : null;
 		const phone = email ? null : contactValue;
 		submitState = 'submitting';
 		submitMessage = '';
 
-		const result = await submitImportRequest({
-			customerName: 'Заявка за внос от сайта',
-			contact: contactValue,
-			email,
-			phone,
-			originCountry: selectedOrigin,
-			destinationCountry: 'BG',
-			desiredMake: importMake.trim() || null,
-			desiredModel: importModel.trim() || null,
-			desiredYearMin: parseYearValue(importYear),
-			desiredYearMax: null,
-			budgetMin: null,
-			budgetMax: parseBudgetAmount(importBudget),
-			fuel: null,
-			transmission: null,
-			notes: [
-				`Произход: ${selectedOriginLabel}`,
-				buildImportNotes(
-					{
-						...initial,
-						isImport: true,
-						query: importQuery.trim(),
-						make: importMake.trim(),
-						model: importModel.trim(),
-						year: importYear.trim(),
-						budget: importBudget.trim(),
-						sourceUrl: sourceUrl.trim(),
-						phone: contactValue
-					},
-					message
-				)
-			]
-				.filter(Boolean)
-				.join('\n'),
-			companyWebsite
-		});
+		const result = await submitImportRequest(
+			{
+				customerName: 'Заявка за внос от сайта',
+				contact: contactValue,
+				email,
+				phone,
+				originCountry: selectedOrigin,
+				destinationCountry: daynightSite.countryCode,
+				desiredMake: importMake.trim() || null,
+				desiredModel: importModel.trim() || null,
+				desiredYearMin: parseYearValue(importYear),
+				desiredYearMax: null,
+				budgetMin: null,
+				budgetMax: parseBudgetAmount(importBudget),
+				fuel: null,
+				transmission: null,
+				notes: [
+					`Произход: ${selectedOriginLabel}`,
+					buildImportNotes(
+						{
+							...initial,
+							isImport: true,
+							query: importQuery.trim(),
+							make: importMake.trim(),
+							model: importModel.trim(),
+							year: importYear.trim(),
+							budget: importBudget.trim(),
+							sourceUrl: sourceUrl.trim(),
+							phone: contactValue
+						},
+						message
+					)
+				]
+					.filter(Boolean)
+					.join('\n'),
+				companyWebsite
+			},
+			{ signal: controller.signal }
+		);
+		if (controller.signal.aborted) return;
 
 		if (result.ok) {
 			submitState = 'success';
@@ -248,179 +269,146 @@
 					</button>
 				{/each}
 			</nav>
-			<button
-				class="import-manual-banner"
-				type="button"
-				onclick={openManualForm}
-				aria-label="Нямам линк. Опиши автомобила и бюджета"
-			>
-				<img
-					src={resolve('/assets/images/import/import-manual-banner-v5.webp')}
-					alt=""
-					aria-hidden="true"
-					width="435"
-					height="166"
-				/>
-			</button>
+			<MobileLeadManualCard
+				title="Нямам линк"
+				copy="Опиши автомобила и бюджета."
+				image={resolve('/assets/images/import/import-manual-art.webp')}
+				label="Нямам линк. Опиши автомобила и бюджета"
+				onOpen={openManualForm}
+			/>
+			<MobileLeadContactCard
+				{phoneHref}
+				title="Искаш съдействие?"
+				copy="Ще помогнем с избора, проверката и вноса."
+			/>
 		{/if}
 	</main>
 
 	<MobileFullSheet bind:open={formOpen} labelledBy="import-sheet-title" onClose={closeForm}>
-		<form class="lead-sheet" onsubmit={handleSubmit} aria-busy={submitState === 'submitting'}>
-			<header class="lead-sheet__header">
-				<button class="lead-sheet__close" type="button" onclick={closeForm} aria-label="Затвори">
-					<X size={21} strokeWidth={2.25} />
-				</button>
-				<div>
-					<span>Стъпка {formStep} от 2</span>
-					<h2 id="import-sheet-title">{formStep === 1 ? 'Автомобил' : 'Контакт'}</h2>
-				</div>
-				<span class="lead-sheet__step">{formStep}/2</span>
-			</header>
-
-			<div class="lead-sheet__progress" aria-hidden="true">
-				<span class="is-active"></span><span class:is-active={formStep === 2}></span>
-			</div>
-
-			<div class="lead-sheet__body">
-				{#if formStep === 1}
-					<section class="lead-fields" aria-label="Автомобил за внос">
+		<MobileLeadForm
+			titleId="import-sheet-title"
+			step={formStep}
+			busy={submitState === 'submitting'}
+			errorMessage={submitMessage}
+			submitLabel="Изпрати заявка"
+			onSubmit={handleSubmit}
+			onBack={goBack}
+			onClose={closeForm}
+		>
+			{#if formStep === 1}
+				<section class="lead-fields" aria-label="Автомобил за внос">
+					<label class="lead-field">
+						<span>Линк към обява <small>по желание</small></span>
+						<input
+							name="sourceUrl"
+							aria-invalid={issue?.field === 'sourceUrl' ? true : undefined}
+							aria-describedby={issue?.field === 'sourceUrl'
+								? 'import-sheet-title-error'
+								: undefined}
+							bind:value={sourceUrl}
+							type="url"
+							inputmode="url"
+							placeholder="https://..."
+							autocomplete="url"
+						/>
+					</label>
+					<label class="lead-field">
+						<span>Какъв автомобил търсите</span>
+						<input
+							name="query"
+							aria-invalid={issue?.field === 'query' ? true : undefined}
+							aria-describedby={issue?.field === 'query' ? 'import-sheet-title-error' : undefined}
+							bind:value={importQuery}
+							type="text"
+							placeholder="BMW X5, дизел..."
+							autocomplete="off"
+							required={!sourceUrl.trim()}
+						/>
+					</label>
+					<div class="lead-field-grid">
 						<label class="lead-field">
-							<span>Линк към обява <small>по желание</small></span>
+							<span>Година от</span>
 							<input
-								bind:value={sourceUrl}
-								type="url"
-								inputmode="url"
-								placeholder="https://..."
-								autocomplete="url"
-							/>
-						</label>
-						<label class="lead-field">
-							<span>Какъв автомобил търсите</span>
-							<input
-								bind:value={importQuery}
+								name="year"
+								aria-invalid={issue?.field === 'year' ? true : undefined}
+								aria-describedby={issue?.field === 'year' ? 'import-sheet-title-error' : undefined}
+								bind:value={importYear}
 								type="text"
-								placeholder="BMW X5, дизел..."
-								autocomplete="off"
-								required={!sourceUrl.trim()}
+								inputmode="numeric"
+								placeholder="2020"
 							/>
 						</label>
-						<div class="lead-field-grid">
-							<label class="lead-field">
-								<span>Година от</span>
-								<input bind:value={importYear} type="text" inputmode="numeric" placeholder="2020" />
-							</label>
-							<label class="lead-field">
-								<span>Бюджет €</span>
-								<input
-									bind:value={importBudget}
-									type="text"
-									inputmode="numeric"
-									placeholder="40 000"
-								/>
-							</label>
-						</div>
-					</section>
-				{:else}
-					<section class="lead-fields" aria-label="Контакт">
-						<div class="request-summary">
-							<div>
-								<span>Търсене</span><strong>{requestTitle}</strong>{#if requestMeta}<small
-										>{requestMeta}</small
-									>{/if}
-							</div>
-							<button type="button" onclick={goBack}>Редактирай</button>
-						</div>
 						<label class="lead-field">
-							<span>Телефон или имейл</span>
+							<span>Бюджет €</span>
 							<input
-								bind:value={contact}
+								name="budget"
+								aria-invalid={issue?.field === 'budget' ? true : undefined}
+								aria-describedby={issue?.field === 'budget'
+									? 'import-sheet-title-error'
+									: undefined}
+								bind:value={importBudget}
 								type="text"
-								placeholder="08... или email"
-								autocomplete="email"
-								required
+								inputmode="numeric"
+								placeholder="40 000"
 							/>
 						</label>
-						<label class="lead-field lead-field--textarea">
-							<span>Бележка <small>по желание</small></span>
-							<textarea
-								bind:value={message}
-								rows="3"
-								placeholder="Оборудване, гориво, други условия..."
-							></textarea>
-						</label>
-					</section>
-				{/if}
+					</div>
+				</section>
+			{:else}
+				<section class="lead-fields" aria-label="Контакт">
+					<div class="lead-summary">
+						<div>
+							<span>Търсене</span><strong>{requestTitle}</strong>{#if requestMeta}<small
+									>{requestMeta}</small
+								>{/if}
+						</div>
+						<button type="button" onclick={goBack}>Редактирай</button>
+					</div>
+					<label class="lead-field">
+						<span>Телефон или имейл</span>
+						<input
+							name="contact"
+							aria-invalid={issue?.field === 'contact' ? true : undefined}
+							aria-describedby={issue?.field === 'contact' ? 'import-sheet-title-error' : undefined}
+							bind:value={contact}
+							type="text"
+							placeholder="08... или email"
+							autocomplete="email"
+							required
+						/>
+					</label>
+					<label class="lead-field lead-field--textarea">
+						<span>Бележка <small>по желание</small></span>
+						<textarea
+							name="message"
+							aria-invalid={issue?.field === 'message' ? true : undefined}
+							aria-describedby={issue?.field === 'message' ? 'import-sheet-title-error' : undefined}
+							bind:value={message}
+							rows="3"
+							placeholder="Оборудване, гориво, други условия..."
+						></textarea>
+					</label>
+				</section>
+			{/if}
 
-				<label class="honeypot" aria-hidden="true">
-					<span>Компания</span><input
-						bind:value={companyWebsite}
-						type="text"
-						tabindex="-1"
-						autocomplete="off"
-					/>
-				</label>
-
-				{#if submitMessage}
-					<p class="lead-error" role="alert">{submitMessage}</p>
-				{/if}
-			</div>
-
-			<footer class="lead-sheet__footer">
-				{#if formStep === 2}
-					<button class="lead-back" type="button" onclick={goBack}
-						><ArrowLeft size={18} strokeWidth={2.4} /> Назад</button
-					>
-				{/if}
-				<button class="lead-primary" type="submit" disabled={submitState === 'submitting'}>
-					{formStep === 1
-						? 'Продължи'
-						: submitState === 'submitting'
-							? 'Изпращаме…'
-							: 'Изпрати заявка'}
-				</button>
-			</footer>
-		</form>
+			<label class="honeypot" aria-hidden="true">
+				<span>Компания</span><input
+					bind:value={companyWebsite}
+					type="text"
+					tabindex="-1"
+					autocomplete="off"
+				/>
+			</label>
+		</MobileLeadForm>
 	</MobileFullSheet>
 
 	<MobileFullSheet
+		presentation="content"
 		bind:open={infoOpen}
 		labelledBy="import-info-title"
 		onClose={() => (infoOpen = false)}
 	>
-		<section class="info-sheet">
-			<header class="info-sheet__header">
-				<div>
-					<span>Внос</span>
-					<h2 id="import-info-title">Как работи</h2>
-				</div>
-				<button type="button" onclick={() => (infoOpen = false)} aria-label="Затвори"
-					><X size={21} strokeWidth={2.25} /></button
-				>
-			</header>
-			<div class="info-sheet__list">
-				<article>
-					<b>01</b><span
-						><strong>Изпращате обява</strong><small>Или описвате автомобила, който търсите.</small
-						></span
-					>
-				</article>
-				<article>
-					<b>02</b><span
-						><strong>Получавате разчет</strong><small>Цена, транспорт и следващи стъпки.</small
-						></span
-					>
-				</article>
-				<article>
-					<b>03</b><span
-						><strong>Организираме вноса</strong><small>Координираме покупката и доставката.</small
-						></span
-					>
-				</article>
-			</div>
-			<a class="info-sheet__call" href={phoneHref}><Phone size={18} strokeWidth={2.3} /> Обади се</a
-			>
-		</section>
+		<MobileLeadInfo titleId="import-info-title" kind="import" onClose={() => (infoOpen = false)} />
 	</MobileFullSheet>
 </div>
 
@@ -442,7 +430,7 @@
 		gap: 10px;
 		margin-top: -14px;
 		border-radius: 24px 24px 0 0;
-		background: #eef2f6;
+		background: var(--sa-surface);
 		padding: 27px var(--sa-mobile-gutter) calc(86px + env(safe-area-inset-bottom));
 		box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.18);
 	}
@@ -477,13 +465,12 @@
 		align-items: center;
 		justify-content: center;
 		gap: 7px;
-		border: 1px solid #dde3ea;
+		border: 0;
 		border-radius: var(--sa-pill-radius);
-		background: #fff;
+		background: var(--sa-fill);
 		color: #25303b;
 		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1 var(--sa-font);
 		padding: 0 13px;
-		box-shadow: 0 1px 1px rgba(15, 20, 23, 0.025);
 		cursor: pointer;
 		white-space: nowrap;
 		-webkit-tap-highlight-color: transparent;
@@ -560,32 +547,6 @@
 		color: #ffde00;
 		font-size: 8px;
 	}
-	.import-manual-banner {
-		display: block;
-		width: 100%;
-		overflow: hidden;
-		border: 1px solid #d8e0e8;
-		border-radius: var(--sa-r-md);
-		background: #eef2f5;
-		padding: 6px;
-		cursor: pointer;
-		box-shadow: 0 1px 2px rgba(15, 20, 23, 0.04);
-		-webkit-tap-highlight-color: transparent;
-	}
-	.import-manual-banner img {
-		display: block;
-		width: 100%;
-		aspect-ratio: 2.45 / 1;
-		border-radius: 11px;
-		object-fit: fill;
-	}
-	.import-manual-banner:active {
-		transform: scale(0.995);
-	}
-	.import-manual-banner:focus-visible {
-		outline: 2px solid var(--sa-red);
-		outline-offset: 2px;
-	}
 
 	.import-success {
 		display: grid;
@@ -645,335 +606,6 @@
 	.import-success__actions button {
 		background: var(--sa-fill);
 		color: var(--sa-ink);
-	}
-
-	.lead-sheet {
-		display: grid;
-		height: 100%;
-		grid-template-rows: auto auto minmax(0, 1fr) auto;
-		background: #fff;
-	}
-	.lead-sheet__header {
-		display: grid;
-		grid-template-columns: 44px minmax(0, 1fr) 44px;
-		align-items: center;
-		gap: 10px;
-		background: var(--sa-blue);
-		color: #fff;
-		padding: calc(env(safe-area-inset-top) + 10px) 12px 10px;
-	}
-	.lead-sheet__header > div {
-		display: grid;
-		gap: 2px;
-		text-align: center;
-	}
-	.lead-sheet__header span {
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-medium);
-		color: rgba(255, 255, 255, 0.7);
-	}
-	.lead-sheet__header h2 {
-		margin: 0;
-		font-size: var(--sa-mobile-type-feature-title);
-		font-weight: var(--sa-weight-strong);
-		line-height: 1.15;
-	}
-	.lead-sheet__close {
-		display: grid;
-		width: 44px;
-		height: 44px;
-		place-items: center;
-		border: 0;
-		border-radius: 12px;
-		background: rgba(255, 255, 255, 0.08);
-		color: #fff;
-		padding: 0;
-		cursor: pointer;
-	}
-	.lead-sheet__step {
-		display: grid;
-		width: 38px;
-		height: 38px;
-		place-items: center;
-		justify-self: end;
-		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.1);
-		color: #fff !important;
-		font-size: var(--sa-mobile-type-micro) !important;
-		font-weight: var(--sa-weight-semibold) !important;
-	}
-	.lead-sheet__progress {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 3px;
-		background: var(--sa-blue);
-		padding: 0 12px 10px;
-	}
-	.lead-sheet__progress span {
-		height: 3px;
-		border-radius: 3px;
-		background: rgba(255, 255, 255, 0.18);
-	}
-	.lead-sheet__progress span.is-active {
-		background: var(--sa-red);
-	}
-	.lead-sheet__body {
-		overflow-y: auto;
-		overscroll-behavior: contain;
-		background: var(--sa-bg);
-		padding: 12px var(--sa-mobile-gutter) 18px;
-	}
-	.lead-fields {
-		display: grid;
-		gap: 8px;
-	}
-	.lead-field-grid {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 8px;
-	}
-	.lead-field {
-		display: grid;
-		min-width: 0;
-		gap: 2px;
-		border: 1px solid var(--sa-line-strong);
-		border-radius: 12px;
-		background: #fff;
-		padding: 6px 10px;
-	}
-	.lead-field:focus-within {
-		border-color: rgba(213, 0, 50, 0.52);
-		box-shadow: 0 0 0 2px rgba(213, 0, 50, 0.08);
-	}
-	.lead-field > span {
-		color: var(--sa-muted);
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1.2;
-	}
-	.lead-field > span small {
-		font: inherit;
-		font-weight: var(--sa-weight-regular);
-	}
-	.lead-field input,
-	.lead-field textarea {
-		width: 100%;
-		min-width: 0;
-		border: 0;
-		background: transparent;
-		color: var(--sa-ink);
-		font: var(--sa-weight-regular) var(--sa-mobile-type-input) / 1.3 var(--sa-font);
-		outline: 0;
-		padding: 0;
-		resize: none;
-	}
-	.lead-field input {
-		min-height: 30px;
-	}
-	.lead-field textarea {
-		min-height: 60px;
-		padding-top: 2px;
-	}
-	.lead-field input::placeholder,
-	.lead-field textarea::placeholder {
-		color: #8a94a0;
-		opacity: 1;
-	}
-	.lead-field--textarea {
-		padding-bottom: 9px;
-	}
-	.request-summary {
-		display: flex;
-		min-height: 60px;
-		align-items: center;
-		justify-content: space-between;
-		gap: 12px;
-		border: 1px solid var(--sa-line-strong);
-		border-radius: 12px;
-		background: #fff;
-		padding: 8px 10px;
-	}
-	.request-summary > div {
-		display: grid;
-		min-width: 0;
-		gap: 2px;
-	}
-	.request-summary span {
-		color: var(--sa-muted);
-		font-size: var(--sa-mobile-type-micro);
-	}
-	.request-summary strong {
-		overflow: hidden;
-		font-size: var(--sa-mobile-type-body);
-		font-weight: var(--sa-weight-strong);
-		line-height: 1.2;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	.request-summary small {
-		color: var(--sa-muted);
-		font-size: var(--sa-mobile-type-micro);
-	}
-	.request-summary button {
-		min-height: 40px;
-		flex: 0 0 auto;
-		border: 0;
-		border-radius: 10px;
-		background: var(--sa-fill);
-		color: var(--sa-ink);
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-micro) / 1 var(--sa-font);
-		padding: 0 11px;
-		cursor: pointer;
-	}
-	.lead-error {
-		margin: 10px 0 0;
-		border-radius: 10px;
-		background: #fff1f2;
-		color: #b42318;
-		font-size: var(--sa-mobile-type-meta);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-meta);
-		padding: 10px 11px;
-	}
-	.honeypot {
-		position: absolute;
-		left: -9999px;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-	}
-	.lead-sheet__footer {
-		display: grid;
-		grid-template-columns: auto minmax(0, 1fr);
-		gap: 8px;
-		border-top: 1px solid var(--sa-line);
-		background: #fff;
-		padding: 10px var(--sa-mobile-gutter) calc(10px + env(safe-area-inset-bottom));
-	}
-	.lead-sheet__footer > .lead-primary:only-child {
-		grid-column: 1 / -1;
-	}
-	.lead-back {
-		display: inline-flex;
-		min-height: 48px;
-		align-items: center;
-		justify-content: center;
-		gap: 6px;
-		border: 0;
-		border-radius: 12px;
-		background: var(--sa-fill);
-		color: var(--sa-ink);
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1 var(--sa-font);
-		padding: 0 13px;
-		cursor: pointer;
-	}
-	.lead-primary {
-		min-height: 48px;
-		border: 0;
-		border-radius: 12px;
-		background: var(--sa-red);
-		color: #fff;
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1 var(--sa-font);
-		padding: 0 16px;
-		cursor: pointer;
-	}
-	.lead-primary:disabled {
-		opacity: 0.68;
-		cursor: wait;
-	}
-
-	.info-sheet {
-		display: grid;
-		height: 100%;
-		grid-template-rows: auto 1fr auto;
-		background: var(--sa-bg);
-	}
-	.info-sheet__header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 12px;
-		background: var(--sa-blue);
-		color: #fff;
-		padding: calc(env(safe-area-inset-top) + 12px) var(--sa-mobile-gutter) 12px;
-	}
-	.info-sheet__header > div {
-		display: grid;
-		gap: 2px;
-	}
-	.info-sheet__header span {
-		color: rgba(255, 255, 255, 0.7);
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-medium);
-	}
-	.info-sheet__header h2 {
-		margin: 0;
-		font-size: var(--sa-mobile-type-section-title);
-		font-weight: var(--sa-weight-strong);
-	}
-	.info-sheet__header button {
-		display: grid;
-		width: 44px;
-		height: 44px;
-		place-items: center;
-		border: 0;
-		border-radius: 12px;
-		background: rgba(255, 255, 255, 0.08);
-		color: #fff;
-		padding: 0;
-		cursor: pointer;
-	}
-	.info-sheet__list {
-		display: grid;
-		align-content: start;
-		gap: 8px;
-		padding: 14px var(--sa-mobile-gutter);
-	}
-	.info-sheet__list article {
-		display: grid;
-		grid-template-columns: 38px minmax(0, 1fr);
-		align-items: center;
-		gap: 10px;
-		min-height: 68px;
-		border: 1px solid var(--sa-line-strong);
-		border-radius: 12px;
-		background: #fff;
-		padding: 9px 10px;
-	}
-	.info-sheet__list b {
-		display: grid;
-		width: 38px;
-		height: 38px;
-		place-items: center;
-		border-radius: 10px;
-		background: var(--sa-fill);
-		font-size: var(--sa-mobile-type-micro);
-	}
-	.info-sheet__list article > span {
-		display: grid;
-		gap: 3px;
-	}
-	.info-sheet__list strong {
-		font-size: var(--sa-mobile-type-body);
-		font-weight: var(--sa-weight-semibold);
-	}
-	.info-sheet__list small {
-		color: var(--sa-muted);
-		font-size: var(--sa-mobile-type-meta);
-		line-height: var(--sa-mobile-leading-meta);
-	}
-	.info-sheet__call {
-		display: inline-flex;
-		min-height: 48px;
-		align-items: center;
-		justify-content: center;
-		gap: 7px;
-		margin: 0 var(--sa-mobile-gutter) calc(12px + env(safe-area-inset-bottom));
-		border-radius: 12px;
-		background: var(--sa-red);
-		color: #fff;
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1 var(--sa-font);
-		text-decoration: none;
 	}
 
 	@media (max-width: 991px) {

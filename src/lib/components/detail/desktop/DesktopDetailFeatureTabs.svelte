@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { DayNightVehicle } from '$lib/data/daynight-vehicles';
-	import type { DetailFeatureTab } from '$lib/types/template-page';
+	import type { DetailFeatureTab } from '$lib/types/storefront-page';
 
 	let { vehicle, tabs }: { vehicle: DayNightVehicle; tabs: DetailFeatureTab[] } = $props();
 

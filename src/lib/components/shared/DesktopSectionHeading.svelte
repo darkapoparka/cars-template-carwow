@@ -8,12 +8,21 @@
 		copy,
 		centered = false,
 		titleContent
-	}: { title: string; href?: string; label?: string; copy?: string; centered?: boolean; titleContent?: Snippet } = $props();
+	}: {
+		title: string;
+		href?: string;
+		label?: string;
+		copy?: string;
+		centered?: boolean;
+		titleContent?: Snippet;
+	} = $props();
 </script>
 
 <div class="desktop-section-heading" class:desktop-section-heading--centered={centered}>
 	<div>
-		<h2>{#if titleContent}{@render titleContent()}{:else}{title}{/if}</h2>
+		<h2>
+			{#if titleContent}{@render titleContent()}{:else}{title}{/if}
+		</h2>
 		{#if copy}<p>{copy}</p>{/if}
 	</div>
 	{#if href && label}<DesktopBrowseLink {href} {label} />{/if}

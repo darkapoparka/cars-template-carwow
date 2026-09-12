@@ -24,6 +24,11 @@
 			(field) => sidebar || ['brand', 'model', 'price', 'mileage', 'fuel'].includes(field.name)
 		)
 	);
+	function openFromTrigger(event: MouseEvent, name?: string) {
+		if (event.currentTarget instanceof HTMLElement)
+			event.currentTarget.focus({ preventScroll: true });
+		onOpen(name);
+	}
 </script>
 
 <div class="inventory-filter-triggers" class:inventory-filter-triggers--sidebar={sidebar}>
@@ -35,7 +40,7 @@
 			disabled={!hydrated}
 			class:has-selection={selected.length > 0}
 			aria-haspopup="dialog"
-			onclick={() => onOpen(field.name)}
+			onclick={(event) => openFromTrigger(event, field.name)}
 		>
 			<span
 				>{selected.length === 1
@@ -51,7 +56,7 @@
 		disabled={!hydrated}
 		class="all-filters"
 		aria-haspopup="dialog"
-		onclick={() => onOpen()}
+		onclick={(event) => openFromTrigger(event)}
 		><SlidersHorizontal size={18} /><span>{sidebar ? 'Всички филтри' : 'Още филтри'}</span></button
 	>
 </div>

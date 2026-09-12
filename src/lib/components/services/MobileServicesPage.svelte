@@ -146,7 +146,7 @@
 		<div class="mobile-services-hero__copy">
 			<span>Услуги</span>
 			<h1>Подкрепа преди и след покупка</h1>
-			<p>Оглед, документи, регистрация, финансиране и бартер от екипа в София.</p>
+			<p>Оглед, документи, регистрация, финансиране и бартер от екипа в {daynightSite.city}.</p>
 		</div>
 
 		<div class="mobile-services-hero__actions">

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { daynightSite } from '$lib/data/daynight-site';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import {
@@ -104,7 +105,7 @@
 	<meta name="robots" content="noindex,nofollow" />
 </svelte:head>
 
-<main class="home2-shell">
+<main id="main-content" tabindex="-1" class="home2-shell">
 	<section class="home2-hero" aria-labelledby="home2-title">
 		<img
 			class="home2-hero__cars"
@@ -115,7 +116,7 @@
 
 		<header class="home2-nav" aria-label="Home2 navigation">
 			<a class="home2-logo" href={resolve('/presentation/home2')} aria-label="Day Night Auto Home2">
-				<img src="/brand/daynight-logo-generated.png" alt="Day Night Auto" />
+				<img src={daynightSite.logoLight} alt="Day Night Auto" />
 			</a>
 
 			<nav class="home2-nav__links" aria-label="Primary">

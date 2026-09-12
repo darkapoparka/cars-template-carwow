@@ -16,7 +16,14 @@
 	<ul id="menu-primary-menu" class={menuClasses}>
 		{#each desktopNavItems as item (item.href)}
 			<li class={topItemClasses}>
-				<a class={topLinkClasses} href={resolve(item.href)} aria-current={page.url.pathname === item.href || (item.href !== '/' && page.url.pathname.startsWith(`${item.href}/`)) ? 'page' : undefined}>{item.label}</a>
+				<a
+					class={topLinkClasses}
+					href={resolve(item.href)}
+					aria-current={page.url.pathname === item.href ||
+					(item.href !== '/' && page.url.pathname.startsWith(`${item.href}/`))
+						? 'page'
+						: undefined}>{item.label}</a
+				>
 			</li>
 		{/each}
 	</ul>

@@ -4,7 +4,7 @@
 	import { daynightSite } from '$lib/data/daynight-site';
 	import MobileHeroBar from '$lib/components/shared/MobileHeroBar.svelte';
 
-	const phoneHref = `tel:+359${daynightSite.phone.slice(1)}`;
+	const phoneHref = daynightSite.phoneHref;
 
 	const benefits = [
 		{
@@ -30,7 +30,7 @@
 	const steps = [
 		'Изпращаш запитване с автомобил и месечен бюджет.',
 		'Получаваш ориентировъчна вноска и условия.',
-		'Оглед в София и финализиране с екипа.'
+		`Оглед в ${daynightSite.city} и финализиране с екипа.`
 	] as const;
 
 	const faqs = [
@@ -67,7 +67,9 @@
 		<div class="mobile-financing-hero__copy">
 			<span>Финансиране</span>
 			<h1>Финансиране и разсрочено плащане</h1>
-			<p>Ясни условия, ориентировъчна месечна вноска и съдействие от екипа в София.</p>
+			<p>
+				Ясни условия, ориентировъчна месечна вноска и съдействие от екипа в {daynightSite.city}.
+			</p>
 		</div>
 
 		<div class="mobile-financing-actions">

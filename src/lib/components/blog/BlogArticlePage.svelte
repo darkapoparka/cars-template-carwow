@@ -12,6 +12,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { ChevronRight, Mail, Share2 } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import type { DayNightArticle } from '$lib/data/daynight-blog';
 
@@ -104,6 +105,16 @@
 {/snippet}
 
 <div class="blog-article-page">
+	<DesktopYellowRouteHero
+		headingId="blog-article-route-title"
+		title={article.title}
+		copy={`${article.category} · ${formatArticleDate(article.date)}`}
+		primaryLabel="Всички публикации"
+		primaryHref="/blog"
+		secondaryLabel="Свържете се"
+		secondaryHref="/contact"
+		compact
+	/>
 	<section class="background-light mb-32">
 		<div class="container">
 			<ul class="breadcrumb">
@@ -116,7 +127,7 @@
 		</div>
 	</section>
 
-	<section>
+	<section class="blog-article-main">
 		<div class="bloc-details-container">
 			<h1 class="title-2 mb-16 text-center">{article.title}</h1>
 			{@render articleMeta()}
@@ -148,13 +159,13 @@
 
 			<div class="divider mb-40"></div>
 			<div class="mb-40">
-			<div class="listing-details--contact-dealer mb-20">
-					<img src="/brand/daynight-logo-generated.png" alt={daynightSite.shortName} />
+				<div class="listing-details--contact-dealer mb-20">
+					<img src={daynightSite.logoLight} alt={daynightSite.shortName} />
 					<div class="content">
 						<a href={resolve('/about/daynight-auto-plovdiv')} class="h4 font-weight-600 mb-4">
-							Day Night Auto
+							{daynightSite.shortName}
 						</a>
-						<p class="text-secondary mb-18">Автокъща в София</p>
+						<p class="text-secondary mb-18">Автокъща в {daynightSite.city}</p>
 						{#if daynightSite.email}
 							<a href={`mailto:${daynightSite.email}`} class="text-highlight text-sm">
 								{daynightSite.email}
@@ -163,7 +174,8 @@
 					</div>
 				</div>
 				<p class="h7 line-height-28">
-					Имате въпрос за конкретен автомобил? <a href={resolve('/contact')}>Свържете се с екипа</a> и посочете обявата, която ви интересува.
+					Имате въпрос за конкретен автомобил? <a href={resolve('/contact')}>Свържете се с екипа</a> и
+					посочете обявата, която ви интересува.
 				</p>
 			</div>
 
@@ -209,6 +221,17 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.blog-article-page > .background-light,
+		.blog-article-main .title-2 {
+			display: none;
+		}
+
+		.blog-article-main {
+			padding-top: var(--sa-space-10);
+		}
+	}
+
 	/* Self-contained scoped styles for /blog/[slug]. Reproduce the legacy app.css +
 	   StorefrontTemplateContent :global rules for the verbatim class strings used
 	   above. Brand colours route through tokens (--sa-*); template neutrals stay
@@ -318,7 +341,6 @@
 		display: grid;
 	}
 
-
 	.grid-cols-3 {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
@@ -350,7 +372,6 @@
 	.gap-16 {
 		gap: 16px;
 	}
-
 
 	.gap-24 {
 		gap: 24px;
@@ -511,7 +532,6 @@
 		object-fit: cover;
 	}
 
-
 	/* Tag + share rows */
 	.bloc-details-tag-style-2,
 	.blog-detail-tags,
@@ -624,47 +644,88 @@
 	}
 
 	@media (max-width: 991px) {
-		.bloc-details-container .title-2 {
-			font-size: 32px;
-			line-height: 1.12;
+		.blog-article-page .container,
+		.blog-article-page .bloc-details-container {
+			width: calc(100% - 2 * var(--sa-mobile-gutter-wide));
+			padding: 0;
+		}
+		.blog-article-page .breadcrumb {
+			min-height: var(--sa-mobile-action-h);
+			padding-block: var(--sa-mobile-gap-xs);
+			gap: var(--sa-mobile-gap-sm);
+		}
+		.blog-article-page .bloc-details-container .title-2 {
+			font-size: var(--sa-mobile-type-page-title);
+			line-height: var(--sa-mobile-leading-heading);
 			text-align: left;
 		}
-
-		.bloc-details-tag-style-2 {
+		.blog-article-page h2:not(.h4) {
+			font-size: var(--sa-mobile-type-section-title);
+			line-height: 1.25;
+		}
+		.blog-article-page .h4,
+		.blog-article-page .h5 {
+			font-size: var(--sa-mobile-type-feature-title);
+			line-height: var(--sa-mobile-leading-heading);
+		}
+		.blog-article-page .h7 {
+			font-size: var(--sa-mobile-type-input);
+			font-weight: var(--sa-weight-regular);
+			line-height: var(--sa-leading-body);
+		}
+		.blog-article-page .text-secondary {
+			color: var(--sa-ink-soft);
+		}
+		.blog-article-page .bloc-details-tag-style-2 {
 			justify-content: flex-start;
 		}
-	}
-
-	@media (max-width: 767px) {
-		.container {
-			width: min(100% - 32px, 1320px);
+		.blog-article-page .py-100 {
+			padding-block: var(--sa-space-8);
 		}
-
-		.bloc-details-container {
-			width: min(100% - 32px, 930px);
+		.blog-article-page .md-grid-cols-1,
+		.blog-article-page .grid-cols-3 {
+			grid-template-columns: minmax(0, 1fr);
 		}
-
-		.py-100 {
-			padding-top: 56px;
-			padding-bottom: 56px;
-		}
-
-		.md-grid-cols-1,
-		.grid-cols-3 {
-			grid-template-columns: 1fr;
-		}
-
-		.md-flex-col {
+		.blog-article-page .md-flex-col {
 			flex-direction: column;
 		}
-
-		.blog-detail-recentpost {
+		.blog-article-page .blog-detail-recentpost {
 			align-items: flex-start;
 			flex-direction: column;
+			gap: var(--sa-mobile-gap-lg);
 		}
-
-		.blog-detail-recentpost > div {
+		.blog-article-page .blog-detail-recentpost > div {
 			max-width: none;
+		}
+		.blog-article-page .blog-detail-tags a,
+		.blog-article-page .blog-detail-social a {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			min-height: var(--sa-mobile-action-h);
+			min-width: var(--sa-mobile-action-h);
+		}
+		.blog-article-page .post-style-2 {
+			min-height: 230px;
+		}
+		.blog-article-page .post-style-2 .content {
+			padding: var(--sa-mobile-gap-lg);
+		}
+		.blog-article-page .post-style-2 .blog-related-meta {
+			color: var(--sa-surface);
+			font-size: var(--sa-mobile-type-meta);
+		}
+		.blog-article-page .listing-details--contact-dealer {
+			padding: var(--sa-mobile-gap-lg);
+			gap: var(--sa-mobile-gap-md);
+			grid-template-columns: 72px minmax(0, 1fr);
+		}
+		.blog-article-page .listing-details--contact-dealer img {
+			width: 72px;
+			height: auto;
+		}
+		.blog-article-page .mb-40 {
+			margin-bottom: var(--sa-mobile-page-gap);
 		}
 	}
 </style>

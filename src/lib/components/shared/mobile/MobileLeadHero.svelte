@@ -1,4 +1,9 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	let interactive = $state(false);
+	onMount(() => {
+		interactive = true;
+	});
 	import { ArrowRight, CircleHelp, Link2, ScanLine } from '@lucide/svelte';
 	import MobileHeroBar from '$lib/components/shared/MobileHeroBar.svelte';
 
@@ -46,6 +51,7 @@
 			{/if}
 		</span>
 		<input
+			disabled={!interactive}
 			bind:value
 			type="text"
 			inputmode={kind === 'import' ? 'url' : 'text'}
@@ -54,12 +60,20 @@
 			{placeholder}
 			aria-label={inputLabel}
 		/>
-		<button type="submit" aria-label="Продължи">
+		<button disabled={!interactive} type="submit" aria-label="Продължи">
 			<ArrowRight size={21} strokeWidth={2.6} aria-hidden="true" />
 		</button>
 	</form>
 	<div class="mobile-lead-hero__meta">
-		<button type="button" onclick={onInfo}>
+		<button
+			type="button"
+			aria-haspopup="dialog"
+			onclick={(event) => {
+				// Preserve the invoking button even when pointer taps do not focus buttons.
+				event.currentTarget.focus({ preventScroll: true });
+				onInfo();
+			}}
+		>
 			<CircleHelp size={16} strokeWidth={2.15} aria-hidden="true" />
 			<span>{infoLabel}</span>
 		</button>
@@ -73,7 +87,7 @@
 		gap: 13px;
 		background: var(--sa-blue);
 		color: #fff;
-		padding: calc(env(safe-area-inset-top) + 12px) var(--sa-mobile-gutter-wide) 18px;
+		padding: calc(env(safe-area-inset-top) + 12px) var(--sa-mobile-gutter-wide) 34px;
 	}
 
 	.mobile-lead-hero h1 {

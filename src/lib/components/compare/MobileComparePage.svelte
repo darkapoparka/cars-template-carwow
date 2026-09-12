@@ -2,14 +2,16 @@
 	import { resolve } from '$app/paths';
 	import { GitCompare, Plus, X } from '@lucide/svelte';
 	import { getGarageContext } from '$lib/state/garage.svelte';
-	import { getDayNightVehicleBySlug, type Car } from '$lib/data/daynight-vehicles';
+	import type { Car } from '$lib/data/daynight-vehicles';
+	import { resolveGarageVehicles, MAX_COMPARE_VEHICLES } from '$lib/utils/garage';
+	import GarageUnavailable from '$lib/components/shared/GarageUnavailable.svelte';
+	let { catalogue }: { catalogue: Car[] } = $props();
 	import MobileCompareSelector from './MobileCompareSelector.svelte';
 	let selectorOpen = $state(false);
 	import MobileBottomDock from '$lib/components/home/mobile/MobileBottomDock.svelte';
 	const garage = getGarageContext();
-	const vehicles = $derived(
-		garage.compare.map(getDayNightVehicleBySlug).filter((car): car is Car => Boolean(car))
-	);
+	const selection = $derived(resolveGarageVehicles(garage.compare, catalogue));
+	const vehicles = $derived(selection.available);
 	const rows: { label: string; value: (car: Car) => string }[] = [
 		{ label: 'Година', value: (car) => String(car.year) },
 		{ label: 'Пробег', value: (car) => car.mileage },
@@ -26,14 +28,20 @@
 	<main id="main-content" tabindex="-1">
 		<div class="page-title">
 			<h1>Сравнение</h1>
-			<span role="status" aria-label={`${vehicles.length} от 3 избрани автомобила`}
-				>{vehicles.length} / 3</span
+			<span
+				role="status"
+				aria-label={`${vehicles.length} от ${MAX_COMPARE_VEHICLES} избрани автомобила`}
+				>{vehicles.length} / {MAX_COMPARE_VEHICLES}</span
 			>
 		</div>
+		<GarageUnavailable
+			slugs={selection.unavailable}
+			onRemove={(slug) => garage.toggleCompare(slug)}
+		/>
 		<div class="actions">
 			<button type="button" aria-haspopup="dialog" onclick={() => (selectorOpen = true)}>
 				<Plus size={20} />
-				{vehicles.length < 3 ? 'Добави автомобил' : 'Промени избора'}
+				{vehicles.length < MAX_COMPARE_VEHICLES ? 'Добави автомобил' : 'Промени избора'}
 			</button>
 			{#if vehicles.length > 2}<span>Плъзнете за третия автомобил</span>{/if}
 		</div>
@@ -72,14 +80,14 @@
 			<section class="empty" aria-label="Няма избрани автомобили">
 				<GitCompare size={28} aria-hidden="true" />
 				<h2>Кои автомобили сравнявате?</h2>
-				<p>Изберете до 3 автомобила, за да сравните характеристиките им.</p>
+				<p>Изберете до {MAX_COMPARE_VEHICLES} автомобила, за да сравните характеристиките им.</p>
 			</section>
 		{/if}
 	</main>
 	<MobileBottomDock />
 </div>
 
-{#if selectorOpen}<MobileCompareSelector onClose={() => (selectorOpen = false)} />{/if}
+{#if selectorOpen}<MobileCompareSelector {catalogue} onClose={() => (selectorOpen = false)} />{/if}
 
 <style>
 	.mobile-compare {

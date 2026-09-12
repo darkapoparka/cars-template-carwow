@@ -4,7 +4,10 @@
 	import DayNightSpecIcon from '$lib/components/shared/icons/DayNightSpecIcon.svelte';
 	import { shortFuel } from '$lib/utils/format';
 	import { getGarageContext } from '$lib/state/garage.svelte';
-	import { getDayNightVehicleBySlug, type DayNightVehicle } from '$lib/data/daynight-vehicles';
+	import type { DayNightVehicle } from '$lib/data/daynight-vehicles';
+	import { resolveGarageVehicles } from '$lib/utils/garage';
+	import GarageUnavailable from '$lib/components/shared/GarageUnavailable.svelte';
+	let { catalogue }: { catalogue: DayNightVehicle[] } = $props();
 	import MobileHeader from '$lib/components/home/mobile/MobileHeader.svelte';
 	import MobileBottomDock from '$lib/components/home/mobile/MobileBottomDock.svelte';
 	import {
@@ -17,12 +20,8 @@
 
 	onMount(() => enhanceDayNightImageFallbacks());
 
-	// Map saved slugs → vehicles, dropping any that are no longer in the catalogue.
-	const vehicles = $derived(
-		garage.favorites
-			.map((slug) => getDayNightVehicleBySlug(slug))
-			.filter((vehicle): vehicle is DayNightVehicle => Boolean(vehicle))
-	);
+	const selection = $derived(resolveGarageVehicles(garage.favorites, catalogue));
+	const vehicles = $derived(selection.available);
 
 	const countLabel = $derived(
 		vehicles.length === 1 ? '1 запазен автомобил' : `${vehicles.length} запазени автомобила`
@@ -44,6 +43,10 @@
 		</section>
 
 		<section class="mobile-favorites-results" aria-live="polite">
+			<GarageUnavailable
+				slugs={selection.unavailable}
+				onRemove={(slug) => garage.toggleFavorite(slug)}
+			/>
 			{#if vehicles.length}
 				<div class="mobile-favorites-list">
 					{#each vehicles as vehicle (vehicle.slug)}

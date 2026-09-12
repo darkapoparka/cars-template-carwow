@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { daynightSite } from '$lib/data/daynight-site';
 	// Native 1:1 rebuild of the localized /team (sale-agents.html) desktop content:
 	// breadcrumb + title + the consultant card grid (photo with social overlay +
 	// name/role/contact row). Self-contained scoped styles reproduce the effective
@@ -9,6 +10,7 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import {
 		daynightTeam,
 		daynightTeamDisclosure,
@@ -150,8 +152,8 @@
 			<li>
 				<a
 					href={`mailto:${member.email}`}
-					title="Имейл към Day Night Auto"
-					aria-label="Имейл към Day Night Auto"
+					title={`Имейл към ${daynightSite.shortName}`}
+					aria-label={`Имейл към ${daynightSite.shortName}`}
 				>
 					{@render mailIcon(24)}
 				</a>
@@ -185,6 +187,16 @@
 {/snippet}
 
 <div class="team-page">
+	<DesktopYellowRouteHero
+		headingId="team-route-title"
+		title={`Екипът на ${daynightSite.shortName}`}
+		copy={daynightTeamDisclosure}
+		panel="light"
+		primaryLabel="Свържете се"
+		primaryHref="/contact"
+		secondaryLabel="Виж автомобилите"
+		secondaryHref="/inventory"
+	/>
 	<section class="background-light mb-32">
 		<div class="container">
 			<ul class="breadcrumb">
@@ -201,7 +213,7 @@
 					<ChevronRight size={14} />
 				</li>
 				<li>
-					<span>Екипът на Day Night Auto</span>
+					<span>Екипът на {daynightSite.shortName}</span>
 				</li>
 			</ul>
 		</div>
@@ -209,7 +221,7 @@
 
 	<section class="pb-100">
 		<div class="container">
-			<h1>Екипът на Day Night Auto</h1>
+			<h1>Екипът на {daynightSite.shortName}</h1>
 			<p class="team-disclosure">{daynightTeamDisclosure}</p>
 		</div>
 		<div class="tf-spacing-style3"></div>
@@ -225,6 +237,18 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.team-page > .background-light,
+		.team-page > .pb-100 > .container > h1,
+		.team-disclosure {
+			display: none;
+		}
+
+		.team-page > .pb-100 > .tf-spacing-style3 {
+			height: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	.team-disclosure {
 		margin-top: 12px;
 		color: var(--sa-muted);

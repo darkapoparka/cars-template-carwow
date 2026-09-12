@@ -145,7 +145,12 @@
 	}
 </script>
 
-<main id="main-content" tabindex="-1" class="desktop-services" aria-label="Услуги Day Night Auto">
+<main
+	id="main-content"
+	tabindex="-1"
+	class="desktop-services"
+	aria-label={`Услуги ${daynightSite.shortName}`}
+>
 	<DesktopYellowRouteHero
 		headingId="daynight-services-title"
 		title="Услуги за твоя автомобил"
@@ -163,16 +168,14 @@
 				{/each}
 			</nav>
 			<p class="services-help">
-				Не знаеш коя услуга ти трябва? <a href={`tel:+359${daynightSite.phone.slice(1)}`}
-					>Обади ни се</a
-				>
+				Не знаеш коя услуга ти трябва? <a href={daynightSite.phoneHref}>Обади ни се</a>
 			</p>
 		</div>
 	</DesktopYellowRouteHero>
 
 	<section class="desktop-services-offers">
 		<div class="container">
-			<h2 class="desktop-services-sr-only">Конкретни услуги от Day Night Auto</h2>
+			<h2 class="desktop-services-sr-only">Конкретни услуги от {daynightSite.shortName}</h2>
 
 			<div class="desktop-services-grid">
 				{#each services as service (service.id)}

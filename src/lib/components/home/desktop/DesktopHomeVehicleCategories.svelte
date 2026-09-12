@@ -79,15 +79,13 @@
 		ctaLabel = 'Виж всички типове',
 		showHeaderCta = true,
 		showBelowCta = false,
-		showEmptyCategories = false,
-		headerCtaPlacement = 'inline'
+		showEmptyCategories = false
 	}: {
 		title?: string;
 		ctaLabel?: string;
 		showHeaderCta?: boolean;
 		showBelowCta?: boolean;
 		showEmptyCategories?: boolean;
-		headerCtaPlacement?: 'inline' | 'stacked';
 	} = $props();
 
 	let vehicleCategories = $derived(
@@ -98,7 +96,13 @@
 </script>
 
 <section class="daynight-home-section daynight-home-section--vehicle-types">
-	<div class="daynight-home-container home-browse-heading"><DesktopSectionHeading title={title} href={showHeaderCta ? resolve('/inventory') : undefined} label={ctaLabel} /></div>
+	<div class="daynight-home-container home-browse-heading">
+		<DesktopSectionHeading
+			{title}
+			href={showHeaderCta ? resolve('/inventory') : undefined}
+			label={ctaLabel}
+		/>
+	</div>
 	<div class="daynight-home-section-content daynight-home-container">
 		<div class="daynight-vehicle-types">
 			<div class="daynight-vehicle-types__grid">
@@ -140,7 +144,9 @@
 </section>
 
 <style>
- .home-browse-heading { padding-top: 36px; }
+	.home-browse-heading {
+		padding-top: 36px;
+	}
 	:global(body.daynight-home-page) .daynight-vehicle-types__grid {
 		gap: 16px !important;
 	}

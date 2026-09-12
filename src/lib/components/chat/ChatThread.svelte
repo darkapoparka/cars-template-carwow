@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { daynightSite } from '$lib/data/daynight-site';
 	import Send from '@lucide/svelte/icons/send';
 
 	export type ChatConversation = {
@@ -79,7 +80,7 @@
 <section class="chat-thread" aria-live="polite">
 	<header class="chat-thread__header">
 		<div>
-			<p class="chat-thread__eyebrow">Day Night Auto</p>
+			<p class="chat-thread__eyebrow">{daynightSite.shortName}</p>
 			<h2 id="daynight-chat-title">Чат с екипа</h2>
 		</div>
 		<span class="chat-thread__status">
@@ -118,7 +119,11 @@
 					>
 						<p>{message.body}</p>
 						<footer>
-							<span>{message.senderType === 'staff' ? 'Day Night Auto' : message.senderName}</span>
+							<span
+								>{message.senderType === 'staff'
+									? `${daynightSite.shortName}`
+									: message.senderName}</span
+							>
 							<time datetime={message.createdAt}>{formatTime(message.createdAt)}</time>
 						</footer>
 					</article>

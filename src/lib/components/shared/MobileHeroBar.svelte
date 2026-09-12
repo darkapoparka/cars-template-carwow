@@ -7,14 +7,18 @@
 	let { onLocation, showLocation = true }: { onLocation?: () => void; showLocation?: boolean } =
 		$props();
 
-	const phoneHref = `tel:+359${daynightSite.phone.slice(1)}`;
+	const phoneHref = daynightSite.phoneHref;
 	const mapHref = daynightSite.mapUrl;
 </script>
 
 <div class="mobile-hero-bar">
-	<a class="mobile-hero-bar__brand" href={resolve('/')} aria-label="Day Night Auto начало">
+	<a
+		class="mobile-hero-bar__brand"
+		href={resolve('/')}
+		aria-label={`${daynightSite.shortName} начало`}
+	>
 		<img
-			src={resolve('/brand/daynight-logo-generated.png')}
+			src={resolve(daynightSite.logoLight)}
 			alt={daynightSite.shortName}
 			width="170"
 			height="44"

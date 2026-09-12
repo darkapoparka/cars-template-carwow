@@ -65,7 +65,7 @@
 	<meta name="robots" content="noindex,nofollow" />
 </svelte:head>
 
-<main class="home3-shell">
+<main id="main-content" tabindex="-1" class="home3-shell">
 	<header class="home3-header" aria-label="Home3 navigation">
 		<a class="home3-logo" href={resolve('/presentation/home3')} aria-label="Day Night Auto Home3">
 			<span>DAY</span>
@@ -318,7 +318,7 @@
 	}
 
 	.home3-shell {
-		--blue: #8A0000;
+		--blue: #8a0000;
 		--blue-dark: #000000;
 		--red: #ed1b2f;
 		--ink: #070b14;

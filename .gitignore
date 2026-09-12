@@ -77,7 +77,6 @@ codex/
 # never served. Keep print-res @2x cutouts on disk only -- never in git history.
 static/assets/spartak-auto-v3/class-a-cutouts/transparent-png/*-2x-*.png
 
-.vercel
 
 # Unused image-generation iterations retained locally for review
 static/assets/images/daynight-premium-banners/*.png
