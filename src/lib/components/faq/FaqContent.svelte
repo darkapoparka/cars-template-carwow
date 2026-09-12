@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { daynightSite } from '$lib/data/daynight-site';
 	// Native 1:1 rebuild of the localized /faq (faqs.html) main content: breadcrumb
 	// + heading + the three grouped FAQ accordions. The Q&A pairs come from the
 	// typed daynight-faq.ts data (the exact strings the template pipeline produced),
@@ -17,6 +18,7 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight } from '@lucide/svelte';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
 	import { daynightFaqGroups } from '$lib/data/daynight-faq';
 
 	// Start with the questions visible; the visitor chooses which answer to expand.
@@ -28,6 +30,16 @@
 </script>
 
 <div class="faq-page">
+	<DesktopYellowRouteHero
+		headingId="faq-route-title"
+		title="Често задавани въпроси"
+		copy={`Отговори на чести въпроси за покупка, продажба, финансиране и контакт с ${daynightSite.shortName}.`}
+		panel="light"
+		primaryLabel="Свържете се"
+		primaryHref="/contact"
+		secondaryLabel="Виж автомобилите"
+		secondaryHref="/inventory"
+	/>
 	<!-- breadcrumb -->
 	<section class="background-light mb-32">
 		<div class="container">
@@ -110,6 +122,18 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.faq-page > .background-light,
+		.faq-page h1,
+		.faq-page .tf-spacing-style3 {
+			display: none;
+		}
+
+		.faq-page > .bg-white {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	.faq-page section > .container + .container {
 		margin-top: 32px;
 	}
@@ -435,6 +459,51 @@
 
 		.toggle-content {
 			padding: 0 18px 18px;
+		}
+	}
+
+	@media (max-width: 991px) {
+		.faq-page .container {
+			width: calc(100% - 2 * var(--sa-mobile-gutter-wide));
+			padding-inline: 0;
+		}
+		.faq-page h1 {
+			font-size: var(--sa-mobile-type-page-title);
+			line-height: 1.2;
+			text-align: left;
+		}
+		.faq-page h2 {
+			font-size: var(--sa-mobile-type-section-title);
+			line-height: 1.25;
+			text-align: left;
+		}
+		.faq-page .breadcrumb {
+			min-height: var(--sa-mobile-action-h);
+			gap: var(--sa-mobile-gap-sm);
+		}
+		.faq-page .toggle-title {
+			min-height: var(--sa-mobile-form-field-h);
+			padding: var(--sa-mobile-gap-lg);
+			align-items: center;
+		}
+		.faq-page .toggle-title .title {
+			font-size: var(--sa-mobile-type-input);
+			font-weight: var(--sa-weight-semibold);
+			line-height: 1.4;
+		}
+		.faq-page .toggle-title .icon {
+			position: static;
+			width: 24px;
+			height: 24px;
+		}
+		.faq-page .toggle-content {
+			padding: 0 var(--sa-mobile-gap-lg) var(--sa-mobile-gap-lg);
+		}
+		.faq-page .toggle-content p {
+			font-size: var(--sa-mobile-type-body);
+			font-weight: var(--sa-weight-regular);
+			line-height: var(--sa-leading-body);
+			color: var(--sa-ink-soft);
 		}
 	}
 </style>

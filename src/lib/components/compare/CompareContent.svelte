@@ -11,7 +11,11 @@
 
 	import { resolve } from '$app/paths';
 	import { ChevronRight, GitCompare } from '@lucide/svelte';
-	import { getDayNightVehicleBySlug, type Car } from '$lib/data/daynight-vehicles';
+	import DesktopYellowRouteHero from '$lib/components/layout/DesktopYellowRouteHero.svelte';
+	import type { Car } from '$lib/data/daynight-vehicles';
+	import { resolveGarageVehicles, MAX_COMPARE_VEHICLES } from '$lib/utils/garage';
+	import GarageUnavailable from '$lib/components/shared/GarageUnavailable.svelte';
+	let { catalogue }: { catalogue: Car[] } = $props();
 	import { daynightSite } from '$lib/data/daynight-site';
 	import { getGarageContext } from '$lib/state/garage.svelte';
 
@@ -19,12 +23,8 @@
 
 	const garage = getGarageContext();
 
-	const garageVehicles = $derived(
-		garage.compare
-			.map((slug) => getDayNightVehicleBySlug(slug))
-			.filter((vehicle): vehicle is Car => Boolean(vehicle))
-	);
-	const vehicles = $derived(garageVehicles);
+	const selection = $derived(resolveGarageVehicles(garage.compare, catalogue));
+	const vehicles = $derived(selection.available);
 
 	function vehicleHref(slug: string): `/inventory/${string}` {
 		return `/inventory/${slug}`;
@@ -49,6 +49,20 @@
 </script>
 
 <div class="compare-page">
+	<GarageUnavailable
+		slugs={selection.unavailable}
+		onRemove={(slug) => garage.toggleCompare(slug)}
+	/>
+	<DesktopYellowRouteHero
+		headingId="compare-route-title"
+		title="Сравнение на автомобили"
+		copy="Сравнете пробег, гориво, оборудване и цена преди оглед."
+		panel="light"
+		primaryLabel="Добави автомобили"
+		primaryHref="/inventory"
+		secondaryLabel="Запазени автомобили"
+		secondaryHref="/favorites"
+	/>
 	<!-- breadcrumb -->
 	<section class="background-light">
 		<div class="container">
@@ -106,8 +120,9 @@
 				<p class="compare-scroll-hint" id="compare-scroll-hint">
 					Плъзнете таблицата наляво и надясно, за да видите всички автомобили.
 				</p>
-				{#if vehicles.length < 3}<a class="compare-add" href={resolve('/inventory')}
-						>Добави автомобил за сравнение</a
+				{#if vehicles.length < MAX_COMPARE_VEHICLES}<a
+						class="compare-add"
+						href={resolve('/inventory')}>Добави автомобил за сравнение</a
 					>{/if}
 				<!-- Keyboard users must be able to focus and scroll this overflow region. -->
 				<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
@@ -177,12 +192,44 @@
 </div>
 
 <style>
+	@media (min-width: 992px) {
+		.compare-page > .background-light,
+		.compare-page > .pb-100 > .tf-spacing-style3,
+		.compare-page > .pb-100 > .container > h1,
+		.compare-page > .pb-100 > .container > h1 + p {
+			display: none;
+		}
+
+		.compare-page > .pb-100 {
+			padding-top: var(--sa-desktop-section-y-md);
+		}
+	}
+
 	@media (max-width: 991px) {
-		.breadcrumb { padding-top: 12px; padding-bottom: 12px; font-size: 12px; }
-		.tf-spacing-style3 { height: 20px; padding: 0; }
-		h1 { font-size: 26px !important; line-height: 1.15 !important; text-align: left !important; margin-bottom: 12px !important; }
-		.h7 { font-size: 15px !important; line-height: 1.5 !important; text-align: left !important; margin-bottom: 20px !important; }
-		.pb-100 { padding-bottom: 32px !important; }
+		.breadcrumb {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			font-size: 12px;
+		}
+		.tf-spacing-style3 {
+			height: 20px;
+			padding: 0;
+		}
+		h1 {
+			font-size: 26px !important;
+			line-height: 1.15 !important;
+			text-align: left !important;
+			margin-bottom: 12px !important;
+		}
+		.h7 {
+			font-size: 15px !important;
+			line-height: 1.5 !important;
+			text-align: left !important;
+			margin-bottom: 20px !important;
+		}
+		.pb-100 {
+			padding-bottom: 32px !important;
+		}
 	}
 
 	/* Self-contained scoped styles for /compare. These reproduce the exact rules the

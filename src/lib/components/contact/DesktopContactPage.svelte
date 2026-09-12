@@ -43,10 +43,10 @@
 	const contactContext = readContactIntent(initialSearchParams);
 	const initialImportFields = readImportIntent(initialSearchParams);
 	const initialEmail = initialSearchParams.get('email')?.trim() ?? '';
-	const initialSubject = initialImportFields.isImport ? 'Внос на автомобил' : contactContext.subject;
-	const importFields = $derived(
-		readImportIntent(appPage.url.searchParams)
-	);
+	const initialSubject = initialImportFields.isImport
+		? 'Внос на автомобил'
+		: contactContext.subject;
+	const importFields = $derived(readImportIntent(appPage.url.searchParams));
 	const isImportMode = $derived(importFields.isImport);
 
 	let name = $state('');
@@ -227,14 +227,16 @@
 						loading="eager"
 						decoding="async"
 					/>
-					<span>Шоурум в София</span>
+					<span>Шоурум в {daynightSite.city}</span>
 				</div>
 
 				<div class="lg-grid-cols-1 grid grid-cols-2 gap-30">
 					<div class="contact-page-info">
 						<div class="daynight-contact-info-body">
 							<h2 class="daynight-contact-title h3">
-								{isImportMode ? 'Заявка за внос на автомобил' : 'Свържете се със Day Night Auto'}
+								{isImportMode
+									? 'Заявка за внос на автомобил'
+									: `Свържете се със ${daynightSite.shortName}`}
 							</h2>
 							<p class="daynight-contact-intro text-body-style-2">
 								{isImportMode
@@ -244,7 +246,7 @@
 
 							<div class="daynight-contact-actions">
 								<a
-									href={`tel:${daynightSite.phone}`}
+									href={daynightSite.phoneHref}
 									class="daynight-contact-action sa-cta sa-cta-primary"
 								>
 									{@render phoneIcon()}
@@ -266,7 +268,7 @@
 								</div>
 								<div class="daynight-contact-detail">
 									<p class="daynight-contact-detail-label">Телефон / Viber</p>
-									<a href={`tel:${daynightSite.phone}`} class="daynight-contact-detail-value">
+									<a href={daynightSite.phoneHref} class="daynight-contact-detail-value">
 										{daynightSite.phoneLabel}
 									</a>
 								</div>
@@ -293,7 +295,10 @@
 						</p>
 
 						{#if !isImportMode && contactContext.vehicle}
-							<p class="mb-20">Автомобил: <strong>{contactContext.vehicle.shortTitle}</strong> · {contactContext.vehicle.year} · {contactContext.vehicle.lot}</p>
+							<p class="mb-20">
+								Автомобил: <strong>{contactContext.vehicle.shortTitle}</strong> · {contactContext
+									.vehicle.year} · {contactContext.vehicle.lot}
+							</p>
 						{/if}
 
 						<form
@@ -436,7 +441,7 @@
 				<div class="widget-gg-map radius-8 daynight-contact-map__frame flex overflow-hidden">
 					<iframe
 						{@attach deferredMapFrame(mapEmbedSrc, '180px')}
-						title="Карта до Day Night Auto София"
+						title={`Карта до ${daynightSite.shortName} ${daynightSite.city}`}
 						data-map-src={mapEmbedSrc}
 						height="520"
 						style="border:0;width: 100%;"
@@ -444,8 +449,11 @@
 						loading="lazy"
 						referrerpolicy="no-referrer-when-downgrade"
 					></iframe>
-					<div class="daynight-contact-map__overlay" aria-label="Локация Day Night Auto">
-						<p class="daynight-contact-map__eyebrow">Day Night Auto</p>
+					<div
+						class="daynight-contact-map__overlay"
+						aria-label={`Локация ${daynightSite.shortName}`}
+					>
+						<p class="daynight-contact-map__eyebrow">{daynightSite.shortName}</p>
 						<p class="daynight-contact-map__address">{daynightSite.location}</p>
 						<a {...mapLinkAttributes}>Отвори в Google Maps</a>
 					</div>

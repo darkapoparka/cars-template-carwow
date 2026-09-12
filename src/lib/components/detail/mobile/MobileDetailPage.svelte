@@ -24,17 +24,18 @@
 	const isCompared = $derived(garage.isCompared(vehicle.slug));
 
 	onMount(() => {
-		enhanceDayNightImageFallbacks();
+		const releaseImages = enhanceDayNightImageFallbacks();
 		syncViewportSnapPoints();
-		detailDrawerOpen = true;
+		return releaseImages;
 	});
 
-	const phoneHref = `tel:+359${daynightSite.phone.slice(1)}`;
-	const viberHref = `viber://chat?number=%2B359${daynightSite.phone.slice(1)}`;
+	const phoneHref = daynightSite.phoneHref;
+	const viberHref = daynightSite.viberHref;
 	let activePhoto = $state(0);
 	const photos = $derived(vehicle.gallery.length > 0 ? vehicle.gallery : [vehicle.image]);
 	const activePhotoSrc = $derived(photos[activePhoto] ?? photos[0] ?? vehicle.image);
-	const visiblePhotos = $derived(photos.slice(0, 6));
+	// Every supplied photo remains reachable; thumbnails load lazily.
+	const visiblePhotos = $derived(photos);
 	const specs = $derived<{ icon: DayNightSpecIconName; label: string; value: string }[]>([
 		{ icon: 'year', label: 'Година', value: String(vehicle.year) },
 		{ icon: 'mileage', label: 'Пробег', value: vehicle.mileage },
@@ -74,7 +75,8 @@
 	let activeSnapPoint = $state<DetailSnapPoint | null>(null);
 	let collapsedSnapPoint = $state<DetailSnapPoint>(initialSnapPoints.collapsed);
 	let contentRef = $state<HTMLElement | null>(null);
-	let detailDrawerOpen = $state(false);
+	// Open on the server too: title, price and contact remain available before hydration.
+	let detailDrawerOpen = $state(true);
 	let fullSnapPoint = $state<DetailSnapPoint>(initialSnapPoints.full);
 	let shareState = $state('');
 	// Two resting positions only: a collapsed peek (sheet edge meets the hero
@@ -125,6 +127,28 @@
 		activeSnapPoint = tab === 'info' ? collapsedSnapPoint : fullSnapPoint;
 		await tick();
 		contentRef?.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+	}
+
+	function handleTabKeydown(event: KeyboardEvent, key: (typeof tabs)[number]['key']) {
+		const index = tabs.findIndex((tab) => tab.key === key);
+		const next =
+			event.key === 'Home'
+				? 0
+				: event.key === 'End'
+					? tabs.length - 1
+					: event.key === 'ArrowRight'
+						? (index + 1) % tabs.length
+						: event.key === 'ArrowLeft'
+							? (index + tabs.length - 1) % tabs.length
+							: -1;
+		if (next < 0) return;
+		event.preventDefault();
+		void selectTab(tabs[next].key);
+		const tablist =
+			event.currentTarget instanceof HTMLElement
+				? event.currentTarget.closest('[role="tablist"]')
+				: null;
+		tablist?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[next]?.focus();
 	}
 
 	function handleActiveSnapPointChange(snapPoint: number | string | null) {
@@ -362,6 +386,8 @@
 						role="tab"
 						aria-controls="mobile-detail-panel"
 						aria-selected={activeTab === tab.key}
+						tabindex={activeTab === tab.key ? 0 : -1}
+						onkeydown={(event) => handleTabKeydown(event, tab.key)}
 						onclick={() => selectTab(tab.key)}
 					>
 						<span class="mobile-detail-tabs__label">{tab.label}</span>
@@ -419,12 +445,12 @@
 				{/if}
 
 				<div class="mobile-detail-sheet__offer">
-					<strong>Day Night Auto предлага</strong>
+					<strong>{daynightSite.shortName} предлага</strong>
 					<ul class="mobile-detail-sheet__offer-list">
 						<li>Финансиране и лизинг</li>
 						<li>Бартер и замяна</li>
 						<li>Съдействие с документите</li>
-						<li>Оглед в София</li>
+						<li>Оглед в {daynightSite.city}</li>
 					</ul>
 				</div>
 
@@ -439,8 +465,10 @@
 		</Drawer.Content>
 	</Drawer.Root>
 
-	{#if shareState}
-		<div class="mobile-detail__toast">{shareState}</div>
+	{#if garage.formMessage}
+		<div class="mobile-detail__toast" role="alert">{garage.formMessage}</div>
+	{:else if shareState}
+		<div class="mobile-detail__toast" role="status">{shareState}</div>
 	{/if}
 </main>
 

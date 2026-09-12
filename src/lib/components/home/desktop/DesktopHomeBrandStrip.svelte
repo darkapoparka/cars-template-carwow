@@ -15,8 +15,7 @@
 		showHeaderCta = true,
 		showBelowCta = false,
 		showHeading = true,
-		layout = 'section',
-		headerCtaPlacement = 'inline'
+		layout = 'section'
 	}: {
 		brands: HomeBrandStripItem[];
 		title?: string;
@@ -25,7 +24,6 @@
 		showBelowCta?: boolean;
 		showHeading?: boolean;
 		layout?: 'section' | 'strip';
-		headerCtaPlacement?: 'inline' | 'stacked';
 	} = $props();
 
 	const isStrip = $derived(layout === 'strip');
@@ -42,7 +40,13 @@
 	aria-label={headingVisible ? undefined : title}
 >
 	{#if headingVisible}
-		<div class="daynight-home-container home-browse-heading"><DesktopSectionHeading title={title} href={showHeaderCta ? resolve('/inventory') : undefined} label={ctaLabel} /></div>
+		<div class="daynight-home-container home-browse-heading">
+			<DesktopSectionHeading
+				{title}
+				href={showHeaderCta ? resolve('/inventory') : undefined}
+				label={ctaLabel}
+			/>
+		</div>
 	{/if}
 	<div class="daynight-home-section-content daynight-home-container">
 		<div class="daynight-brand-grid">
@@ -88,7 +92,9 @@
 </section>
 
 <style>
- .home-browse-heading { padding-top: 36px; }
+	.home-browse-heading {
+		padding-top: 36px;
+	}
 	/* Brand strip layout is owned by this Svelte section. */
 	.daynight-brand-grid,
 	.daynight-brand-grid__items {

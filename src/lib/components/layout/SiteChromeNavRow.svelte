@@ -22,7 +22,7 @@
 		onSearchToggle: () => void;
 	} = $props();
 
-	const phoneHref = `tel:${daynightSite.phone}`;
+	const phoneHref = daynightSite.phoneHref;
 	const logoSrcset = desktopOnlySrcset(daynightSite.logoLight, 570);
 	const logoSizes = desktopOnlySizes('190px');
 	const navToolClasses =
@@ -82,7 +82,10 @@
 						title="Отвори търсене"
 						aria-expanded={searchOpen}
 						aria-controls="searchForm"
-						onclick={onSearchToggle}
+						onclick={(event) => {
+							event.currentTarget.focus({ preventScroll: true });
+							onSearchToggle();
+						}}
 					>
 						<SiteChromeIcon name="search" />
 					</button>

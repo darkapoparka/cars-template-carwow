@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import { MapPin, MessageCircle, PhoneCall, Search } from '@lucide/svelte';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import type { Mode } from '$lib/types/mobile-inventory';
@@ -14,8 +13,8 @@
 		onOpenSearch: () => void;
 	} = $props();
 
-	const phoneHref = `tel:+359${daynightSite.phone.slice(1)}`;
-	const viberHref = `viber://chat?number=%2B359${daynightSite.phone.slice(1)}`;
+	const phoneHref = daynightSite.phoneHref;
+	const viberHref = daynightSite.viberHref;
 	const searchLabel = $derived(query.trim() ? `Търсене: ${query.trim()}` : 'Отвори търсене');
 </script>
 
@@ -30,7 +29,7 @@
 				</div>
 			</div>
 			<div class="mobile-map-card__actions">
-				<a class="is-primary" href={resolve('/contact')}>
+				<a class="is-primary" href={daynightSite.mapUrl} target="_blank" rel="noopener noreferrer">
 					<MapPin size={17} strokeWidth={2.4} />
 					Карта
 				</a>

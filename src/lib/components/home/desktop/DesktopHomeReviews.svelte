@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { daynightSite } from '$lib/data/daynight-site';
 	import Check from '@lucide/svelte/icons/check';
 	import { daynightReviews, daynightReviewDisclosure } from '$lib/data/daynight-reviews';
 	import DesktopSectionHeading from '$lib/components/shared/DesktopSectionHeading.svelte';
@@ -78,7 +79,7 @@
 			titleHref: '/sell-your-car',
 			bullets: [
 				'Изпратете снимки и данни за автомобила.',
-				'Получете обратна връзка от екипа на Day Night Auto.',
+				`Получете обратна връзка от екипа на ${daynightSite.shortName}.`,
 				'Обсъдете продажба, бартер и следващи стъпки.'
 			],
 			balancedBullets: [
@@ -195,7 +196,11 @@
 </section>
 
 <style>
-	.home-reviews-disclosure { margin: 12px 0 0; color: var(--sa-ink-soft); font: 500 var(--sa-text-sm)/1.5 var(--sa-font); }
+	.home-reviews-disclosure {
+		margin: 12px 0 0;
+		color: var(--sa-ink-soft);
+		font: 500 var(--sa-text-sm)/1.5 var(--sa-font);
+	}
 	.home-action-button {
 		margin-top: 22px;
 		display: flex;

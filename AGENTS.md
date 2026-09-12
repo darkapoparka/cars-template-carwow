@@ -20,3 +20,5 @@ Use the release-documented Node runtime and retained npm lockfile. Keep source o
 Check the changed behavior at relevant mobile/desktop widths and run proportionate existing checks. A full source release needs exact-commit evidence; a local success or prior audit does not prove mounted/public behavior. Forms are demos until real delivery is configured and verified. Do not contact leads.
 
 Commit only reviewed task-owned changes when authorized. Template polish does not authorize dealer deployment. Report changed paths/commit, actual checks, preserved work and remaining limits. Workflow command/compatibility changes update their authoritative references and relevant tests together.
+
+The existing frontend refactor awaits owner visual approval; this workflow documentation task does not approve or publish that unfinished source work.

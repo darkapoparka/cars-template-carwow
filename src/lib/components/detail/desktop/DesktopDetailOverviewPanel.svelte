@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { daynightSite } from '$lib/data/daynight-site';
 	import type { DayNightVehicle } from '$lib/data/daynight-vehicles';
 
 	let { vehicle }: { vehicle: DayNightVehicle } = $props();
@@ -32,7 +33,7 @@
 			id: 'location',
 			icon: '/assets/icons/MapPin.svg',
 			label: 'Локация:',
-			value: 'София'
+			value: `${daynightSite.city}`
 		},
 		{
 			id: 'interior',

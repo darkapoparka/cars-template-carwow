@@ -184,7 +184,9 @@
 		isQuickFieldScrollLocked = false;
 	}
 
-	function openQuickField(field: DesktopHomeQuickField) {
+	function openQuickField(field: DesktopHomeQuickField, event: MouseEvent) {
+		if (event.currentTarget instanceof HTMLElement)
+			event.currentTarget.focus({ preventScroll: true });
 		activeQuickFieldName = field.name;
 		quickFilterQuery = '';
 		lockQuickFieldScroll();
@@ -308,7 +310,7 @@
 							aria-haspopup="dialog"
 							aria-expanded={activeQuickFieldName === field.name}
 							title={quickFullLabel(field)}
-							onclick={() => openQuickField(field)}
+							onclick={(event) => openQuickField(field, event)}
 						>
 							<span>{quickDisplayLabel(field)}</span>
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"
@@ -459,7 +461,7 @@
 					aria-haspopup="dialog"
 					aria-expanded={activeQuickFieldName === field.name}
 					title={quickFullLabel(field)}
-					onclick={() => openQuickField(field)}
+					onclick={(event) => openQuickField(field, event)}
 				>
 					<span data-daynight-quick-value="">{quickDisplayLabel(field)}</span>
 				</button>

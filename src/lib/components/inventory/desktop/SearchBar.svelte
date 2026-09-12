@@ -24,8 +24,17 @@
 	// Typing filters live (the store derives the grid reactively); submit/Enter only
 	// closes any open popover and pushes the URL. The outer `.daynight-inventory-quick-form`
 	// is itself a <form>, so this control must NOT nest another form.
-	function submit() {
+	function openFromTrigger(event: MouseEvent) {
+		// Safari does not focus pointer-clicked buttons; give the dialog a real return target.
+		if (event.currentTarget instanceof HTMLElement)
+			event.currentTarget.focus({ preventScroll: true });
+		onOpen?.();
+	}
+
+	function submit(event?: MouseEvent) {
 		if (onOpen) {
+			if (event?.currentTarget instanceof HTMLElement)
+				event.currentTarget.focus({ preventScroll: true });
 			onOpen();
 			return;
 		}
@@ -55,7 +64,7 @@
 					: 'Търсене на автомобили'}
 				aria-haspopup="dialog"
 				disabled={!hydrated}
-				onclick={onOpen}>{filters.store.query || searchPlaceholder}</button
+				onclick={openFromTrigger}>{filters.store.query || searchPlaceholder}</button
 			>
 		{:else}
 			<input

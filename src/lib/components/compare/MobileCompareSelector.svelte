@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { Search, X, Check, Plus } from '@lucide/svelte';
 	import MobileFullSheet from '$lib/components/shared/mobile/MobileFullSheet.svelte';
-	import { daynightVehicles } from '$lib/data/daynight-vehicles';
+	import type { Car } from '$lib/data/daynight-vehicles';
+	import { MAX_COMPARE_VEHICLES } from '$lib/utils/garage';
 	import { getGarageContext } from '$lib/state/garage.svelte';
-	let { onClose }: { onClose: () => void } = $props();
+	let { onClose, catalogue }: { onClose: () => void; catalogue: Car[] } = $props();
 	const garage = getGarageContext();
 	let open = $state(true);
 	let selected = $state([...garage.compare]);
 	let query = $state('');
 	const results = $derived(
-		daynightVehicles.filter((car) =>
+		catalogue.filter((car) =>
 			`${car.shortTitle} ${car.year} ${car.fuel}`
 				.toLocaleLowerCase()
 				.includes(query.trim().toLocaleLowerCase())
@@ -18,7 +19,7 @@
 	function toggle(slug: string) {
 		selected = selected.includes(slug)
 			? selected.filter((item) => item !== slug)
-			: selected.length < 3
+			: selected.length < MAX_COMPARE_VEHICLES
 				? [...selected, slug]
 				: selected;
 	}
@@ -45,9 +46,10 @@
 			/>
 		</div>
 		<p class="status" role="status">
-			{selected.length} от 3 избрани · {selected.length === 3
+			{selected.length} от {MAX_COMPARE_VEHICLES} избрани · {selected.length ===
+			MAX_COMPARE_VEHICLES
 				? 'Премахнете един, за да добавите друг.'
-				: 'Изберете до 3 автомобила.'}
+				: `Изберете до ${MAX_COMPARE_VEHICLES} автомобила.`}
 		</p>
 		<div class="results">
 			{#each results as car (car.slug)}
@@ -55,7 +57,7 @@
 					class="vehicle"
 					class:selected={selected.includes(car.slug)}
 					aria-pressed={selected.includes(car.slug)}
-					disabled={selected.length === 3 && !selected.includes(car.slug)}
+					disabled={selected.length === MAX_COMPARE_VEHICLES && !selected.includes(car.slug)}
 					onclick={() => toggle(car.slug)}
 				>
 					<img src={car.image} alt="" loading="lazy" />
@@ -74,7 +76,11 @@
 					Няма автомобили за „{query}“. Опитайте друга марка или модел.
 				</p>{/each}
 		</div>
-		<footer><button class="done" onclick={apply}>Готово · {selected.length} / 3</button></footer>
+		<footer>
+			<button class="done" onclick={apply}
+				>Готово · {selected.length} / {MAX_COMPARE_VEHICLES}</button
+			>
+		</footer>
 	</div>
 </MobileFullSheet>
 

@@ -11,7 +11,7 @@
 	//
 	// The FAQ accordion is a NATIVE Svelte accordion: open/close is driven by local
 	// $state (no template JS — the markup carries data-daynight-native-accordion so
-	// RouteAccordionBehavior skips it). Single-open behaviour mirrors the template;
+	// retained CSS hooks). Single-open behaviour matches the established page;
 	// the first item starts open, matching the baseline.
 
 	import { resolve } from '$app/paths';
@@ -81,7 +81,7 @@
 		{
 			number: '3',
 			title: 'Изберете подходяща оферта',
-			copy: 'Изберете автомобил от наличността, уточнете условията с екипа и запазете оглед в София.',
+			copy: `Изберете автомобил от наличността, уточнете условията с екипа и запазете оглед в ${daynightSite.city}.`,
 			href: '/inventory'
 		}
 	];
@@ -202,7 +202,7 @@
 							</a>
 							<p class="hero-actions__call">
 								<span>Предпочитате разговор?</span>
-								<a class="text-underline" href={`tel:${daynightSite.phone}`}>Обадете се</a>
+								<a class="text-underline" href={daynightSite.phoneHref}>Обадете се</a>
 							</p>
 						</div>
 					</div>
@@ -275,20 +275,14 @@
 						{#each faqs as faq (faq.id)}
 							{@const open = openId === faq.id}
 							<div class={['flat-toggle', { active: open }]}>
-								<div
+								<button
+									type="button"
 									class={['toggle-title', { active: open }]}
-									role="button"
-									tabindex="0"
 									aria-expanded={open}
+									aria-controls={`finance-faq-${faq.id}`}
 									onclick={() => toggleFaq(faq.id)}
-									onkeydown={(event) => {
-										if (event.key === 'Enter' || event.key === ' ') {
-											event.preventDefault();
-											toggleFaq(faq.id);
-										}
-									}}
 								>
-									<p class="h5 title">{faq.question}</p>
+									<span class="h5 title">{faq.question}</span>
 									<span class="icon">
 										<svg
 											width="24"
@@ -306,8 +300,8 @@
 											/>
 										</svg>
 									</span>
-								</div>
-								<div class="toggle-content">
+								</button>
+								<div id={`finance-faq-${faq.id}`} class="toggle-content">
 									{#each faq.answers as answer, index (answer)}
 										<p
 											class={[
@@ -721,6 +715,14 @@
 	}
 
 	.toggle-title {
+		width: 100%;
+		margin: 0;
+		border: 0;
+		appearance: none;
+		background: transparent;
+		color: inherit;
+		font: inherit;
+		text-align: left;
 		position: relative;
 		display: flex;
 		min-height: 72px;

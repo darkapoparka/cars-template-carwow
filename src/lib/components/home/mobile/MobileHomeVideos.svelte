@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { mobileImageSrc } from '$lib/data/mobile-media';
+	import { daynightSite } from '$lib/data/daynight-site';
 	import { ArrowUpRight, Play, X } from '@lucide/svelte';
 	import { homeVideos, youtubeChannelUrl } from '$lib/data/daynight-videos';
 	import { tick } from 'svelte';
@@ -26,7 +28,7 @@
 				<img src="/assets/brands/youtube-mark.png" alt="" aria-hidden="true" />
 				<span>YouTube</span>
 			</span>
-			<h2 id="mobile-home-videos-title">Гледай Day Night Auto</h2>
+			<h2 id="mobile-home-videos-title">Гледай {daynightSite.shortName}</h2>
 		</div>
 		<a
 			href={youtubeChannelUrl}
@@ -66,7 +68,7 @@
 							aria-label={`Пусни видеото: ${video.title}`}
 						>
 							<img
-								src={video.thumbnail}
+								src={mobileImageSrc(video.thumbnail)}
 								alt=""
 								width="720"
 								height="404"

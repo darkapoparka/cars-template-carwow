@@ -20,7 +20,13 @@
 	>
 		<svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
 			<path d="M4.25 10H15.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-			<path d="M10.75 5.5L15.25 10L10.75 14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+			<path
+				d="M10.75 5.5L15.25 10L10.75 14.5"
+				stroke="currentColor"
+				stroke-width="1.8"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
 		</svg>
 	</a>
 </div>
@@ -92,7 +98,9 @@
 	}
 
 	:global(
-		.inventory-template-shell .card-box.card-box-style-1[data-daynight-vehicle-card] .card-box__price
+		.inventory-template-shell
+			.card-box.card-box-style-1[data-daynight-vehicle-card]
+			.card-box__price
 	) {
 		align-items: flex-end !important;
 		column-gap: 12px !important;

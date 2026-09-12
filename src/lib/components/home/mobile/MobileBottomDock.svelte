@@ -25,7 +25,7 @@
 	const inventoryHref = resolve('/inventory');
 	const importHref = resolve('/contact?intent=import');
 	const sellHref = resolve('/sell-your-car');
-	const phoneHref = `tel:+359${daynightSite.phone.slice(1)}`;
+	const phoneHref = daynightSite.phoneHref;
 	const mapHref = daynightSite.mapUrl;
 	const currentPath = $derived(appPage.url.pathname);
 	const garage = getOptionalGarageContext();
@@ -87,9 +87,12 @@
 		window.open(mapHref, '_blank', 'noopener,noreferrer');
 	}
 
-	async function openMenu() {
+	async function openMenu(event: MouseEvent) {
+		if (event.currentTarget instanceof HTMLElement)
+			event.currentTarget.focus({ preventScroll: true });
 		menuOpen = true;
 		await tick();
+		if (!menuOpen) return;
 		document
 			.querySelector<HTMLElement>('#mobile-menu-sheet [data-mobile-drawer-initial-focus]')
 			?.focus({ preventScroll: true });
@@ -244,7 +247,7 @@
 			<div class="mobile-menu-sheet__brand">
 				<img
 					class="mobile-menu-sheet__logo"
-					src={resolve('/brand/daynight-logo-generated.png')}
+					src={resolve(daynightSite.logoLight)}
 					alt={daynightSite.shortName}
 				/>
 			</div>
@@ -258,7 +261,7 @@
 			</button>
 		</div>
 
-		<div class="mobile-menu-sheet__quick" aria-label="Бързи действия">
+		<div class="mobile-menu-sheet__quick" role="group" aria-label="Бързи действия">
 			<a
 				class="mobile-menu-sheet__quick-action mobile-menu-sheet__quick-action--call"
 				href={phoneHref}
@@ -436,6 +439,9 @@
 	}
 
 	.mobile-menu-sheet {
+		min-height: 0;
+		flex: 1;
+		grid-template-rows: auto auto minmax(0, 1fr);
 		display: grid;
 		gap: 9px;
 		color: #111315;
@@ -452,9 +458,11 @@
 	}
 
 	:global(.mobile-drawer:has(#mobile-menu-sheet)) {
-		max-height: none;
+		display: flex;
+		flex-direction: column;
+		max-height: calc(var(--sa-vvh, 100dvh) - env(safe-area-inset-top) - var(--sa-mobile-gap-sm));
 		overflow: hidden;
-		overscroll-behavior: none;
+		overscroll-behavior: contain;
 	}
 
 	.mobile-menu-sheet__head {
@@ -561,6 +569,9 @@
 	}
 
 	.mobile-menu-sheet__nav {
+		min-height: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 8px;

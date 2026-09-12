@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { mobileImageSrc } from '$lib/data/mobile-media';
 	import { ChevronRight } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
 
@@ -41,7 +42,7 @@
 <section class="mobile-home-promos" aria-label={sectionLabel}>
 	{#each visiblePromos as promo (promo.href)}
 		<a class={`mobile-home-promo mobile-home-promo--${promo.tone}`} href={resolve(promo.href)}>
-			<img src={resolve(promo.image)} alt="" loading="lazy" decoding="async" />
+			<img src={mobileImageSrc(resolve(promo.image))} alt="" loading="lazy" decoding="async" />
 			<span class="mobile-home-promo__shade" aria-hidden="true"></span>
 			<span class="mobile-home-promo__copy">
 				<strong>{promo.title}</strong>

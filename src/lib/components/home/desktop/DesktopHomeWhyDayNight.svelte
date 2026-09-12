@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { daynightSite } from '$lib/data/daynight-site';
 	import DesktopBrowseLink from '$lib/components/shared/DesktopBrowseLink.svelte';
 	import { resolve } from '$app/paths';
 	import {
@@ -67,7 +68,7 @@
 		{
 			id: 'location',
 			value: '1',
-			label: 'локация в София',
+			label: `локация в ${daynightSite.city}`,
 			hasDivider: true
 		},
 		{
