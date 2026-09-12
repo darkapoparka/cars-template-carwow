@@ -70,3 +70,6 @@ The reusable entry points are `npm run audit:mobile`, `npm run check:architectur
 This is a public-storefront and repository verification, not a claim of authenticated admin end-to-end coverage. Client tests intercept lead responses; they do not prove real staff delivery or provider credentials. A local production build does not prove a deployed origin, physical iOS/Android keyboards, VoiceOver/TalkBack or field performance. Sample inventory/reviews/editorial content does not become verified dealer data through a refactor.
 
 Owner visual approval remains the next gate. Do not commit or push this working tree until that approval is explicit.
+## Source consolidation, 13 September 2026
+
+The owner requested integration of all preserved source into main and removal of obsolete branches. Existing implementation checkpoints are committed on main; earlier reports describing an uncommitted checkout are historical. Owner visual review and an approved Cars template release remain separate requirements.
