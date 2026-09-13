@@ -1,16 +1,56 @@
 <script lang="ts">
+	import { MapPin, Phone, Plus } from '@lucide/svelte';
+	import {
+		daynightDealerFooterGroups,
+		daynightFooterBottomLinks
+	} from '$lib/components/layout/daynight-footer-data';
 	import { resolve } from '$app/paths';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import { footerSocialLinks, type FooterSocialIcon } from './mobile-home-data';
+	let { showContact = true }: { showContact?: boolean } = $props();
 </script>
 
 <footer class="mh-footer">
-	<div class="mh-footer__brand">
-		<img class="mh-footer__logo" src={resolve(daynightSite.logoLight)} alt={daynightSite.name} />
-		<p>
-			Автокъща в {daynightSite.city} с подбрани употребявани автомобили. Съдействие за документи, регистрация,
-			финансиране и доставка.
-		</p>
+	<a
+		class="mh-footer__brand"
+		href={resolve('/')}
+		aria-label={`${daynightSite.shortName} — начална страница`}
+	>
+		<img
+			class="mh-footer__logo"
+			src={resolve(daynightSite.logoLight)}
+			alt={daynightSite.name}
+			loading="lazy"
+		/>
+	</a>
+	{#if showContact}
+		<div class="mh-footer__contact">
+			<a class="mh-footer__phone" href={daynightSite.phoneHref}
+				><Phone size={19} strokeWidth={2} /><span>{daynightSite.phoneLabel}</span></a
+			>
+			<a
+				class="mh-footer__loc"
+				href={daynightSite.mapUrl}
+				target="_blank"
+				rel="external noopener noreferrer"
+				><MapPin size={19} strokeWidth={2} /><span>{daynightSite.location}</span></a
+			>
+		</div>
+		<div class="mh-footer__hours">
+			<span>Работно време</span>
+			<p>{daynightSite.hoursLabel}</p>
+		</div>
+	{/if}
+	<div class="mh-footer__groups">
+		{#each daynightDealerFooterGroups as group (group.title)}
+			<details>
+				<summary>{group.title}<Plus size={18} strokeWidth={2} /></summary>
+				<nav aria-label={group.title}>
+					{#each group.links as link (link.href)}<a href={resolve(link.href)}>{link.label}</a
+						>{/each}
+				</nav>
+			</details>
+		{/each}
 	</div>
 	<nav class="mh-footer__social" aria-label="Социални канали и обяви">
 		{#snippet footerSocialIcon(icon: FooterSocialIcon)}
@@ -95,159 +135,156 @@
 			{/if}
 		{/each}
 	</nav>
-	<div class="mh-footer__contact">
-		<a class="mh-footer__phone" href={daynightSite.phoneHref}>
-			<strong>{daynightSite.phoneLabel}</strong>
-			<span>Обаждане / Viber</span>
-		</a>
-		<a
-			class="mh-footer__loc"
-			href={daynightSite.mapUrl}
-			target="_blank"
-			rel="external noopener noreferrer"
-		>
-			{daynightSite.location}
-		</a>
+	<div class="mh-footer__bottom">
+		<span>© {new Date().getFullYear()} {daynightSite.shortName}</span>
+		<nav aria-label="Правна информация">
+			{#each daynightFooterBottomLinks as link (link.href)}<a href={resolve(link.href)}
+					>{link.label}</a
+				>{/each}
+		</nav>
 	</div>
-	<span class="mh-footer__copy"
-		>© {new Date().getFullYear()}
-		{daynightSite.shortName}
-		{daynightSite.city}. Всички права запазени.</span
-	>
 </footer>
 
 <style>
+	/* Keep this dark surface independent of the home page's blanket text colour. */
+	.mh-footer :global(*) {
+		color: inherit;
+	}
+	.mh-footer {
+		display: grid;
+		gap: 20px;
+		margin-top: 24px;
+		padding: 28px var(--sa-mobile-gutter-wide) calc(24px + 62px + env(safe-area-inset-bottom));
+		background: #1c1c1c;
+		color: #fff;
+		font-size: var(--sa-type-body);
+		font-weight: var(--sa-weight-regular);
+		line-height: var(--sa-mobile-leading-body);
+	}
 	.mh-footer a {
 		color: inherit;
 		text-decoration: none;
 	}
-
-	.mh-footer {
-		display: grid;
-		justify-items: stretch;
-		gap: 16px;
-		margin-top: 14px;
-		border: 0;
-		border-radius: 20px 20px 0 0;
-		background: #171b1e;
-		color: #fff;
-		padding: 24px 18px calc(28px + 62px + env(safe-area-inset-bottom));
+	.mh-footer a:focus-visible,
+	.mh-footer summary:focus-visible {
+		outline: 2px solid white;
+		outline-offset: 3px;
 	}
-
 	.mh-footer__brand {
-		display: grid;
-		justify-items: start;
-		gap: 10px;
-	}
-
-	.mh-footer__logo {
-		width: 142px;
-		height: auto;
-		object-fit: contain;
-	}
-
-	.mh-footer p {
-		margin: 0;
-		color: #c5c9ce;
-		font-size: var(--sa-text-sm);
-		font-weight: var(--sa-weight-medium);
-		line-height: 1.5;
-	}
-
-	.mh-footer__social {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 9px;
+		align-items: center;
+		justify-self: start;
+		min-height: var(--sa-mobile-action-h);
 	}
-
-	.mh-footer__social-link {
-		display: grid;
-		width: var(--sa-mobile-action-h);
-		height: var(--sa-mobile-action-h);
-		place-items: center;
-		border: 1px solid #4b5156;
-		border-radius: 50%;
-		background: transparent;
-		color: #fff !important;
-		transition:
-			background 0.2s ease,
-			border-color 0.2s ease,
-			color 0.2s ease;
+	.mh-footer__logo {
+		display: block;
+		width: 180px;
+		height: auto;
 	}
-
-	.mh-footer__social-link:focus-visible,
-	.mh-footer__social-link:hover {
-		border-color: var(--sa-yellow);
-		background: var(--sa-yellow);
-		color: #171b1e !important;
-	}
-
 	.mh-footer__contact {
 		display: grid;
 		gap: 8px;
 	}
-
-	.mh-footer__phone {
-		display: grid;
-		gap: 2px;
-		justify-items: start;
-		color: #fff !important;
-	}
-
-	.mh-footer__phone strong {
-		font-size: var(--sa-text-base);
-		font-weight: var(--sa-weight-strong);
-		line-height: 1.1;
-	}
-
-	.mh-footer__phone span {
-		color: #c5c9ce;
-		font-size: var(--sa-text-xs);
-		font-weight: var(--sa-weight-medium);
-	}
-
+	.mh-footer__phone,
 	.mh-footer__loc {
-		display: inline-flex;
-		min-height: var(--sa-mobile-action-h);
+		display: flex;
 		align-items: center;
-		color: #c5c9ce !important;
-		font-size: var(--sa-text-xs);
-		font-weight: var(--sa-weight-medium);
-		line-height: 1.45;
+		gap: 12px;
+		min-height: 48px;
+		padding: 12px 16px;
+		border-radius: var(--sa-r-md);
 	}
-
-	.mh-footer__copy {
-		max-width: calc(100% - 64px);
-		color: #c5c9ce;
-		font-size: var(--sa-text-xs);
+	.mh-footer__phone {
+		justify-content: center;
+		background: var(--sa-red);
 		font-weight: var(--sa-weight-medium);
 	}
-
-	.mh-footer__social-link svg,
-	.mh-footer__social-link svg * {
-		color: inherit !important;
-		stroke: currentColor !important;
+	.mh-footer__loc {
+		background: #242424;
 	}
-
-	.mh-footer__phone strong {
-		color: #fff;
+	.mh-footer__contact :global(svg) {
+		flex-shrink: 0;
 	}
-
-	.mh-footer a:focus-visible {
-		outline: 2px solid var(--sa-yellow);
-		outline-offset: 3px;
+	.mh-footer__hours {
+		display: grid;
+		gap: 4px;
 	}
-
-	.mh-footer p {
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-body);
-	}
-
-	.mh-footer__phone span,
-	.mh-footer__loc,
-	.mh-footer__copy {
+	.mh-footer__hours > span {
+		color: #b7bec5;
 		font-size: var(--sa-mobile-type-meta);
+	}
+	.mh-footer__hours p {
+		margin: 0;
+	}
+	.mh-footer__groups {
+		display: grid;
+		gap: 8px;
+	}
+	.mh-footer__groups details {
+		background: #242424;
+		border-radius: var(--sa-r-md);
+		overflow: hidden;
+	}
+	.mh-footer__groups summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		min-height: 48px;
+		padding: 12px 16px;
+		list-style: none;
+		cursor: pointer;
 		font-weight: var(--sa-weight-medium);
+	}
+	.mh-footer__groups summary::-webkit-details-marker {
+		display: none;
+	}
+	.mh-footer__groups summary :global(svg) {
+		flex-shrink: 0;
+	}
+	.mh-footer__groups details[open] summary :global(svg) {
+		transform: rotate(45deg);
+	}
+	.mh-footer__groups nav {
+		display: grid;
+		padding: 0 16px 8px;
+	}
+	.mh-footer__groups nav a {
+		display: flex;
+		align-items: center;
+		min-height: var(--sa-mobile-action-h);
+		padding: 8px 0;
+		color: #d2d7dc;
+	}
+	.mh-footer__social {
+		display: flex;
+		gap: 12px;
+	}
+	.mh-footer__social-link {
+		display: grid;
+		place-items: center;
+		width: var(--sa-mobile-action-h);
+		height: var(--sa-mobile-action-h);
+		border: 1px solid #464646;
+		border-radius: 50%;
+	}
+	.mh-footer__social-link:hover {
+		background: #303030;
+	}
+	.mh-footer__bottom {
+		display: grid;
+		gap: 4px;
+		color: #b7bec5;
+		font-size: var(--sa-mobile-type-meta);
+	}
+	.mh-footer__bottom nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+	}
+	.mh-footer__bottom a {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--sa-mobile-action-h);
 	}
 </style>

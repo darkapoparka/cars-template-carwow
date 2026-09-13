@@ -1,9 +1,15 @@
 import { routeSeo } from '$lib/server/daynight-seo';
 import { daynightSite } from '$lib/data/daynight-site';
+import { buildFeaturedMobileVehicles } from '$lib/server/home-page-data';
+import { getPublishedPublicInventory } from '$lib/server/repositories/public-inventory';
 import type { PageServerLoad } from './$types';
 
 export const prerender = false;
-export const load: PageServerLoad = ({ url }) => ({
+export const load: PageServerLoad = async ({ url }) => ({
+	importExamples:
+		url.searchParams.get('intent') === 'import'
+			? buildFeaturedMobileVehicles(await getPublishedPublicInventory())
+			: [],
 	seo:
 		url.searchParams.get('intent') === 'import'
 			? {

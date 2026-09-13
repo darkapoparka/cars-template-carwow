@@ -52,7 +52,7 @@
 		place-items: center;
 		background: #fff;
 		padding: 48px 18px;
-		font-family: var(--sa-font, 'Manrope', sans-serif);
+		font-family: var(--sa-font);
 	}
 
 	.daynight-error__brand {
@@ -76,24 +76,24 @@
 
 	.daynight-error__code {
 		color: #b00000;
-		font-size: 0.875rem;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		letter-spacing: 2px;
 	}
 
 	.daynight-error h1 {
 		margin: 0;
 		color: #111827;
-		font-size: 1.4rem;
-		font-weight: 700;
+		font-size: var(--sa-text-2xl);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.2;
 	}
 
 	.daynight-error p {
 		margin: 0;
 		color: #526071;
-		font-size: 0.94rem;
-		font-weight: 500;
+		font-size: var(--sa-type-body);
+		font-weight: var(--sa-weight-medium);
 		line-height: 1.4;
 	}
 
@@ -114,8 +114,8 @@
 		background: #eef1f6;
 		padding: 0 18px;
 		color: #111827;
-		font-size: 0.9rem;
-		font-weight: 700;
+		font-size: var(--sa-button-font-size);
+		font-weight: var(--sa-button-font-weight);
 		text-decoration: none;
 	}
 

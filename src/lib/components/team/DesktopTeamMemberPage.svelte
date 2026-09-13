@@ -210,9 +210,9 @@
 
 	.team-member-page {
 		color: #1c1c1c;
-		font-family: var(--sa-font, 'Manrope', ui-sans-serif, system-ui, sans-serif);
-		font-size: 16px;
-		font-weight: 400;
+		font-family: var(--sa-font);
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 	}
 
@@ -237,16 +237,16 @@
 	   32-48 -> 46.08, left). */
 	.team-member-page h1 {
 		color: #111827;
-		font-size: clamp(36px, 4vw, 56px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 		text-align: center;
 	}
 
 	.team-member-page h2 {
 		color: #111827;
-		font-size: clamp(32px, 3.2vw, 48px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 	}
 
@@ -296,7 +296,7 @@
 	}
 
 	.font-weight-600 {
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 	}
 
 	.text-secondary {
@@ -312,22 +312,22 @@
 	}
 
 	.h7 {
-		font-size: 18px;
-		font-weight: 500;
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-medium);
 		line-height: var(--sa-leading-body);
 	}
 
 	.h5 {
-		font-size: 20px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-xl);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.35;
 	}
 
 	.eyebrow {
 		margin-bottom: 12px;
 		color: var(--sa-red);
-		font-size: 13px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 1;
 		text-transform: uppercase;
 	}
@@ -361,9 +361,9 @@
 		border-radius: 8px;
 		background: #fff;
 		color: #1c1c1c;
-		font-size: 18px;
+		font-size: var(--sa-text-lg);
 		padding: 0 24px;
-		font-weight: 700;
+		font-weight: var(--sa-weight-strong);
 		line-height: 1;
 	}
 
@@ -403,16 +403,16 @@
 		margin: 0;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 22px;
 		list-style: none;
 	}
 
 	.breadcrumb a,
 	.breadcrumb span {
-		font-size: 14px;
-		font-weight: 400;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-button-font-weight);
 		line-height: 22px;
 	}
 
@@ -494,7 +494,7 @@
 	.team-review-card span {
 		color: #6b7280;
 		display: block;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		margin-bottom: 4px;
 	}
 
@@ -560,7 +560,7 @@
 			border-radius: 12px;
 		}
 		.team-member-profile__content .h7 {
-			font-size: 16px;
+			font-size: var(--sa-text-base);
 			line-height: 1.6;
 		}
 		.team-member-profile__facts {
@@ -589,7 +589,7 @@
 		}
 		.team-vehicle-card .h5,
 		.team-teammate-card .h5 {
-			font-size: 18px;
+			font-size: var(--sa-text-lg);
 		}
 		.gap-24 {
 			gap: 16px;
@@ -601,7 +601,7 @@
 		}
 
 		.team-member-profile__content h1 {
-			font-size: 34px;
+			font-size: var(--sa-type-page);
 			line-height: 1.12;
 		}
 

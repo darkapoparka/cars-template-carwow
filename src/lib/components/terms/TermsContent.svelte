@@ -230,14 +230,14 @@
 		gap: 10px;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 22px;
 	}
 
 	.breadcrumb a,
 	.breadcrumb span {
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 22px;
 	}
 
@@ -266,8 +266,8 @@
 	.terms-main h1 {
 		margin-bottom: 0;
 		color: #1c1c1c;
-		font-size: 68px;
-		font-weight: 600;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 76px;
 	}
 
@@ -301,8 +301,8 @@
 		border-left: 3px solid transparent;
 		padding-left: 12px;
 		color: #1c1c1c;
-		font-size: 20px;
-		font-weight: 600;
+		font-size: var(--sa-text-xl);
+		font-weight: var(--sa-button-font-weight);
 		line-height: 28px;
 		transition:
 			border-color 0.3s ease,
@@ -330,15 +330,15 @@
 	.terms-section h2 {
 		margin-bottom: 12px;
 		color: #1c1c1c;
-		font-size: 24px;
-		font-weight: 600;
+		font-size: var(--sa-text-2xl);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.333;
 	}
 
 	.terms-body {
 		color: #4b4b4b;
-		font-size: 18px;
-		font-weight: 400;
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-regular);
 		line-height: 28px;
 	}
 

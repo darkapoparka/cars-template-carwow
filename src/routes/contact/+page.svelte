@@ -31,7 +31,7 @@
 {#if showMobileShell}
 	{#key page.url.search}
 		{#if isImport}
-			<MobileImportPage />
+			<MobileImportPage vehicles={data.importExamples} />
 		{:else}
 			<MobileContactPage />
 		{/if}

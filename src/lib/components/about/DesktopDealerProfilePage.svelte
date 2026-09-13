@@ -205,8 +205,8 @@
 
 	.dealer-page {
 		color: #1c1c1c;
-		font-size: 16px;
-		font-weight: 400;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 	}
 
@@ -232,16 +232,16 @@
 
 	.dealer-page h1 {
 		color: #111827;
-		font-size: clamp(36px, 4vw, 56px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 		text-align: center;
 	}
 
 	.dealer-page h2 {
 		color: #111827;
-		font-size: clamp(32px, 3.2vw, 48px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 	}
 
@@ -303,16 +303,16 @@
 	}
 
 	.h7 {
-		font-size: 18px;
-		font-weight: 500;
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-medium);
 		line-height: var(--sa-leading-body);
 	}
 
 	.eyebrow {
 		margin-bottom: 12px;
 		color: var(--sa-blue);
-		font-size: 13px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 1;
 		text-transform: uppercase;
 	}
@@ -339,16 +339,16 @@
 		margin: 0;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 22px;
 		list-style: none;
 	}
 
 	.breadcrumb a,
 	.breadcrumb span {
-		font-size: 14px;
-		font-weight: 400;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-button-font-weight);
 		line-height: 22px;
 	}
 
@@ -446,7 +446,7 @@
 	.dealer-profile-card__title {
 		color: #111827;
 		font-size: var(--sa-text-xl);
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-leading-tight);
 	}
 
@@ -476,7 +476,7 @@
 	.dealer-review-card span {
 		color: #6b7280;
 		display: block;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		margin-top: 4px;
 	}
 
@@ -517,7 +517,7 @@
 		}
 		.dealer-vehicle-card__title,
 		.dealer-team-card__name {
-			font-size: 18px;
+			font-size: var(--sa-text-lg);
 		}
 		.gap-24 {
 			gap: 16px;
@@ -529,7 +529,7 @@
 		}
 
 		.dealer-profile-hero__content h1 {
-			font-size: 34px;
+			font-size: var(--sa-type-page);
 			line-height: 1.12;
 		}
 

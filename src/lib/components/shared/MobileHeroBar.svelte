@@ -1,6 +1,6 @@
 <script lang="ts">
 	import MapPin from '@lucide/svelte/icons/map-pin';
-	import Phone from '@lucide/svelte/icons/phone';
+	import PhoneCall from '@lucide/svelte/icons/phone-call';
 	import { resolve } from '$app/paths';
 	import { daynightSite } from '$lib/data/daynight-site';
 
@@ -34,7 +34,7 @@
 					title="Локация"
 					onclick={onLocation}
 				>
-					<MapPin size={26} strokeWidth={2.4} aria-hidden="true" />
+					<MapPin size={20} strokeWidth={2} aria-hidden="true" />
 				</button>
 			{:else}
 				<a
@@ -45,7 +45,7 @@
 					aria-label={`Отвори локацията: ${daynightSite.locationShort}`}
 					title="Локация"
 				>
-					<MapPin size={26} strokeWidth={2.4} aria-hidden="true" />
+					<MapPin size={20} strokeWidth={2} aria-hidden="true" />
 				</a>
 			{/if}
 		{/if}
@@ -55,7 +55,7 @@
 			aria-label={`Обади се на ${daynightSite.phoneLabel}`}
 			title="Обади се"
 		>
-			<Phone size={26} strokeWidth={2.4} aria-hidden="true" />
+			<PhoneCall size={20} strokeWidth={2} aria-hidden="true" />
 		</a>
 	</div>
 </div>
@@ -92,13 +92,13 @@
 	.mobile-hero-bar__action {
 		display: grid;
 		place-items: center;
-		width: 48px;
-		height: 48px;
-		flex: 0 0 48px;
+		width: var(--sa-mobile-action-h);
+		height: var(--sa-mobile-action-h);
+		flex: 0 0 var(--sa-mobile-action-h);
 		padding: 0;
-		border: 0;
-		border-radius: 12px;
-		background: transparent;
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: var(--sa-r-pill);
+		background: rgba(255, 255, 255, 0.08);
 		color: #fff !important;
 		box-shadow: none;
 		text-decoration: none;

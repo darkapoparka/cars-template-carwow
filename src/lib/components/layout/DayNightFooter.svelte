@@ -30,7 +30,7 @@
 
 	const containerClasses = 'mx-auto w-full max-w-[1440px] px-[15px] max-[767px]:px-4';
 	const footerLinkClasses =
-		'relative inline-block !text-[16px] font-medium !leading-6 text-sa-surface/68 no-underline transition duration-150 ease-sa hover:text-sa-surface focus-visible:text-sa-surface';
+		'relative inline-block !text-[length:var(--sa-text-base)] font-medium !leading-6 text-sa-surface/68 no-underline transition duration-150 ease-sa hover:text-sa-surface focus-visible:text-sa-surface';
 	const socialLinkClasses =
 		'flex size-11 items-center justify-center rounded-sa-pill border border-sa-surface/20 text-sa-surface/70 no-underline transition duration-150 ease-sa hover:border-sa-surface hover:bg-sa-surface hover:text-sa-ink focus-visible:border-sa-surface focus-visible:bg-sa-surface focus-visible:text-sa-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sa-blue [&_svg]:size-5 [&_svg_circle]:stroke-current [&_svg_path]:stroke-current';
 </script>
@@ -283,12 +283,12 @@
 		}
 		.compact-mobile-footer a {
 			color: inherit;
-			font-size: 14px;
+			font-size: var(--sa-text-caption);
 			line-height: 1.5;
 		}
 		.compact-mobile-footer__phone {
-			font-size: 20px !important;
-			font-weight: 600;
+			font-size: var(--sa-button-font-size) !important;
+			font-weight: var(--sa-button-font-weight);
 		}
 		.compact-mobile-footer nav {
 			display: flex;
@@ -302,7 +302,7 @@
 		}
 		.compact-mobile-footer small {
 			color: #b5bbc3;
-			font-size: 12px;
+			font-size: var(--sa-text-caption);
 		}
 	}
 

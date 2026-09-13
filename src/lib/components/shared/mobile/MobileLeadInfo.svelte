@@ -71,7 +71,7 @@
 	.lead-explainer__header h2 {
 		margin: 0;
 		font-size: var(--sa-mobile-type-section-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-mobile-leading-heading);
 	}
 	.lead-explainer__close {
@@ -118,13 +118,13 @@
 		margin: 0 0 var(--sa-space-1);
 		color: var(--sa-ink);
 		font-size: var(--sa-text-body-sm);
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-mobile-leading-meta);
 	}
 	.lead-explainer__steps p {
 		margin: 0;
 		color: var(--sa-ink-soft);
-		font-size: var(--sa-text-caption);
+		font-size: var(--sa-type-body);
 		line-height: var(--sa-mobile-leading-body);
 		overflow-wrap: anywhere;
 	}

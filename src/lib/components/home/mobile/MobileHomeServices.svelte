@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { mobileImageSrc } from '$lib/data/mobile-media';
-	import { ChevronRight } from '@lucide/svelte';
+	import MobileActionCardContent from '$lib/components/shared/mobile/MobileActionCardContent.svelte';
 	import { resolve } from '$app/paths';
 
 	type PromoKind = 'sell' | 'import' | 'all';
@@ -10,20 +10,20 @@
 		{
 			kind: 'sell',
 			title: 'Продай / Бартер',
-			text: 'Бърза оценка на автомобила',
 			cta: 'Заяви оценка',
 			href: '/sell-your-car' as const,
-			tone: 'light',
-			image: '/assets/images/home-promos/sell-studio-v1.webp'
+			tone: 'dark',
+			image:
+				'/assets/daynight-auto-v3/class-a-cutouts/transparent-webp/bmw-x5-dark-grey-left-hero-1400.webp'
 		},
 		{
 			kind: 'import',
 			title: 'Внос от Европа',
-			text: 'Проверка, транспорт и документи',
 			cta: 'Заяви внос',
 			href: '/contact?intent=import' as const,
-			tone: 'dark',
-			image: '/assets/images/import/import-delivery-handoff-banner-v1.webp'
+			tone: 'red',
+			image:
+				'/assets/daynight-auto-v3/class-a-cutouts/transparent-webp/audi-q5-silver-left-hero-1200.webp'
 		}
 	] as const;
 
@@ -41,17 +41,14 @@
 
 <section class="mobile-home-promos" aria-label={sectionLabel}>
 	{#each visiblePromos as promo (promo.href)}
-		<a class={`mobile-home-promo mobile-home-promo--${promo.tone}`} href={resolve(promo.href)}>
-			<img src={mobileImageSrc(resolve(promo.image))} alt="" loading="lazy" decoding="async" />
-			<span class="mobile-home-promo__shade" aria-hidden="true"></span>
-			<span class="mobile-home-promo__copy">
-				<strong>{promo.title}</strong>
-				<small>{promo.text}</small>
-				<span class="mobile-home-promo__cta">
-					{promo.cta}
-					<ChevronRight size={15} strokeWidth={2.6} aria-hidden="true" />
-				</span>
-			</span>
+		<a class="mobile-home-promo" href={resolve(promo.href)}>
+			<MobileActionCardContent
+				title={promo.title}
+				image={mobileImageSrc(resolve(promo.image))}
+				action={promo.cta}
+				tone={promo.tone}
+				artwork="cutout"
+			/>
 		</a>
 	{/each}
 </section>
@@ -62,128 +59,15 @@
 		gap: 10px;
 		padding: 0 var(--sa-mobile-gutter);
 	}
-
 	.mobile-home-promo {
-		position: relative;
 		display: block;
-		min-height: 146px;
-		overflow: hidden;
 		border-radius: 14px;
+		color: inherit;
 		text-decoration: none;
-		isolation: isolate;
 	}
-	.mobile-home-promo > img {
-		position: absolute;
-		inset: 0;
-		z-index: -2;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
+	.mobile-home-promo:active {
+		opacity: 0.9;
 	}
-
-	.mobile-home-promo--light > img {
-		object-position: 64% 65%;
-	}
-
-	.mobile-home-promo--dark > img {
-		object-position: 72% 80%;
-	}
-
-	.mobile-home-promo__shade {
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-	}
-
-	.mobile-home-promo--light .mobile-home-promo__shade {
-		background: linear-gradient(
-			90deg,
-			rgba(247, 238, 236, 0.98) 0%,
-			rgba(247, 238, 236, 0.9) 44%,
-			rgba(247, 238, 236, 0.05) 78%
-		);
-	}
-
-	.mobile-home-promo--dark .mobile-home-promo__shade {
-		background: linear-gradient(
-			90deg,
-			rgba(10, 12, 15, 0.98) 0%,
-			rgba(10, 12, 15, 0.9) 46%,
-			rgba(10, 12, 15, 0.18) 80%
-		);
-	}
-	.mobile-home-promo__copy {
-		display: flex;
-		min-height: 146px;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: center;
-		gap: 5px;
-		padding: 17px 16px;
-	}
-
-	.mobile-home-promo strong {
-		max-width: 14ch;
-		font-size: var(--sa-mobile-type-feature-title);
-		font-weight: var(--sa-weight-strong);
-		line-height: var(--sa-mobile-leading-heading);
-	}
-
-	.mobile-home-promo small {
-		max-width: 21ch;
-		font-size: var(--sa-mobile-type-meta);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-meta);
-	}
-
-	.mobile-home-promo--light {
-		color: #17191d !important;
-	}
-
-	.mobile-home-promo--dark {
-		color: #fff !important;
-	}
-	.mobile-home-promo strong,
-	.mobile-home-promo small {
-		color: inherit !important;
-		-webkit-text-fill-color: currentColor !important;
-	}
-
-	.mobile-home-promo--dark .mobile-home-promo__copy > strong,
-	.mobile-home-promo--dark .mobile-home-promo__copy > small {
-		color: #fff !important;
-		-webkit-text-fill-color: #fff !important;
-	}
-
-	.mobile-home-promo__cta {
-		display: inline-flex;
-		min-height: 40px;
-		align-items: center;
-		justify-content: center;
-		gap: 4px;
-		margin-top: 6px;
-		border-radius: 999px;
-		padding: 0 13px;
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1;
-	}
-
-	.mobile-home-promo--light .mobile-home-promo__cta {
-		background: #111315;
-		color: #fff;
-	}
-
-	.mobile-home-promo--dark .mobile-home-promo__cta {
-		background: #fff;
-		color: #111315;
-	}
-
-	.mobile-home-promo :global(svg),
-	.mobile-home-promo :global(svg *) {
-		stroke: currentColor !important;
-	}
-
 	.mobile-home-promo:focus-visible {
 		outline: 3px solid var(--sa-red);
 		outline-offset: 3px;
@@ -191,15 +75,6 @@
 	@media (max-width: 370px) {
 		.mobile-home-promos {
 			padding-inline: 12px;
-		}
-
-		.mobile-home-promo,
-		.mobile-home-promo__copy {
-			min-height: 140px;
-		}
-
-		.mobile-home-promo__copy {
-			padding: 15px 14px;
 		}
 	}
 </style>

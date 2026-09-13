@@ -425,9 +425,9 @@
 	.calculator-page {
 		box-sizing: border-box;
 		color: #1c1c1c;
-		font-family: var(--sa-font, 'Manrope', ui-sans-serif, system-ui, sans-serif);
-		font-size: 16px;
-		font-weight: 400;
+		font-family: var(--sa-font);
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 		letter-spacing: 0;
 	}
@@ -609,16 +609,16 @@
 	}
 
 	.text-56 {
-		font-size: clamp(38px, 5vw, 56px);
+		font-size: var(--sa-text-desktop-hero-title);
 		line-height: 1;
 	}
 
 	.font-weight-500 {
-		font-weight: 500;
+		font-weight: var(--sa-weight-medium);
 	}
 
 	.font-weight-600 {
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 	}
 
 	/* Headings. app.css forced font-weight 600 on the .h4…h7,h1…h6 group;
@@ -627,32 +627,32 @@
 	.calculator-page h1,
 	.calculator-page h2 {
 		color: #111827;
-		font-size: clamp(32px, 3.2vw, 48px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 	}
 
 	.h3 {
-		font-size: clamp(24px, 2.4vw, 32px);
-		font-weight: 700;
+		font-size: var(--sa-type-page);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.16;
 	}
 
 	.h4 {
-		font-size: 22px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-card-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.25;
 	}
 
 	.h5 {
-		font-size: 18px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.35;
 	}
 
 	.h7 {
-		font-size: 16px;
-		font-weight: 600;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-semibold);
 		line-height: 1.6;
 	}
 
@@ -665,16 +665,16 @@
 		gap: 10px;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 22px;
 		list-style: none;
 	}
 
 	.breadcrumb a,
 	.breadcrumb span {
-		font-size: 14px;
-		font-weight: 400;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-button-font-weight);
 		line-height: 22px;
 	}
 
@@ -725,7 +725,7 @@
 	/* Calculator form fields */
 	.calculate-form label {
 		display: block;
-		font-weight: 500;
+		font-weight: var(--sa-weight-medium);
 	}
 
 	.input-large {
@@ -736,7 +736,7 @@
 		background: #fff;
 		color: #111827;
 		font: inherit;
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 		outline: 0;
 		padding: 0 16px;
 	}

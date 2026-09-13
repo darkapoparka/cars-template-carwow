@@ -274,7 +274,7 @@
 	}
 
 	.about-hero-primary strong {
-		font: 600 18px/1.35 var(--sa-font);
+		font: var(--sa-weight-semibold) var(--sa-text-lg)/1.35 var(--sa-font);
 		text-align: left;
 	}
 
@@ -299,7 +299,7 @@
 		border-radius: 8px;
 		background: var(--desktop-field);
 		color: var(--sa-ink);
-		font: 600 14px/1.35 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-text-caption)/1.35 var(--sa-font);
 		padding: 0 12px;
 	}
 
@@ -355,20 +355,20 @@
 		padding: 40px 0;
 	}
 	.about-page h2 {
-		font: 700 var(--sa-text-desktop-section-title)/1.1 var(--sa-font);
+		font: var(--sa-weight-strong) var(--sa-text-desktop-section-title)/1.1 var(--sa-font);
 		letter-spacing: -0.025em;
 		color: var(--sa-ink);
 		margin: 0;
 	}
 	.about-page p {
-		font: 400 18px/1.5 var(--sa-font);
+		font: var(--sa-weight-regular) var(--sa-text-lg)/1.5 var(--sa-font);
 		color: var(--sa-ink);
 		margin: 20px 0 0;
 	}
 	.about-page .sa-cta-primary {
 		color: #fff;
 		--sa-cta-height: 48px;
-		--sa-cta-font-size: 16px;
+		--sa-cta-font-size: var(--sa-button-font-size);
 		gap: 12px;
 		padding-inline: 22px;
 	}
@@ -393,7 +393,7 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 12px;
-		font: 600 16px/1.4 var(--sa-font);
+		font: var(--sa-weight-semibold) var(--sa-text-base)/1.4 var(--sa-font);
 		min-height: 44px;
 	}
 	.about-story :global(.desktop-browse-link) {
@@ -407,7 +407,7 @@
 	}
 	.about-story p {
 		color: #d9dcde;
-		font-size: 17px;
+		font-size: var(--sa-type-body);
 		margin-top: 16px;
 	}
 	.about-section-heading {
@@ -455,7 +455,7 @@
 		align-content: start;
 	}
 	.about-team-card h3 {
-		font: 700 18px/1.3 var(--sa-font);
+		font: var(--sa-weight-strong) var(--sa-text-lg)/1.3 var(--sa-font);
 		color: #fff;
 		margin: 0;
 	}
@@ -472,7 +472,7 @@
 		min-height: 44px;
 		width: 100%;
 		justify-content: center;
-		font: 600 15px/1.4 var(--sa-font);
+		font: var(--sa-weight-semibold) var(--sa-text-base)/1.4 var(--sa-font);
 		color: var(--sa-ink);
 		background: #fff;
 		border-radius: 8px;
@@ -486,12 +486,12 @@
 	}
 	.about-page .about-team-card__role {
 		grid-column: 1;
-		font: 400 14px/1.4 var(--sa-font);
+		font: var(--sa-weight-regular) var(--sa-text-caption)/1.4 var(--sa-font);
 		margin: 6px 0 0;
 		color: #d9dcde;
 	}
 	.about-page .about-demo-label {
-		font: 400 14px/1.4 var(--sa-font);
+		font: var(--sa-weight-regular) var(--sa-text-caption)/1.4 var(--sa-font);
 		color: #59616c;
 		margin: -20px 0 24px;
 	}
@@ -517,7 +517,7 @@
 		background: #e9ecee;
 		padding: 12px 8px;
 		min-height: 64px;
-		font: 600 14px/1.4 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-text-caption)/1.4 var(--sa-font);
 	}
 	.about-brands img {
 		width: 36px;
@@ -536,12 +536,12 @@
 		padding: 28px;
 	}
 	.about-support-card h3 {
-		font: 700 21px/1.3 var(--sa-font);
+		font: var(--sa-weight-strong) var(--sa-text-card-title)/1.3 var(--sa-font);
 		color: var(--sa-ink);
 		margin: 20px 0 0;
 	}
 	.about-support-card p {
-		font: 400 16px/1.5 var(--sa-font);
+		font: var(--sa-weight-regular) var(--sa-text-base)/1.5 var(--sa-font);
 		color: #444c52;
 		margin: 10px 0 24px;
 		flex: 1;
@@ -550,7 +550,8 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 12px;
-		font: 600 15px/1.4 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-button-font-size) / var(--sa-button-line-height)
+			var(--sa-font);
 		margin-top: auto;
 		color: var(--sa-ink);
 	}
@@ -597,7 +598,7 @@
 		display: flex;
 		align-items: flex-start;
 		gap: 12px;
-		font: 400 16px/1.5 var(--sa-font);
+		font: var(--sa-weight-regular) var(--sa-text-base)/1.5 var(--sa-font);
 		margin-top: 24px;
 	}
 	.about-visit-address :global(svg),
@@ -613,7 +614,7 @@
 		font: inherit;
 	}
 	.about-visit-hours strong {
-		font-weight: 600;
+		font-weight: var(--sa-weight-heading);
 	}
 	.about-visit__map {
 		padding: 24px 24px 24px 0;
@@ -638,7 +639,7 @@
 		background: #25292b;
 		color: #fff;
 		cursor: pointer;
-		font: 600 18px/1.4 var(--sa-font);
+		font: var(--sa-weight-semibold) var(--sa-text-lg)/1.4 var(--sa-font);
 	}
 	.about-map-preview strong {
 		font: inherit;
@@ -649,7 +650,7 @@
 		align-items: center;
 		gap: 8px;
 		color: var(--sa-yellow);
-		font: 600 15px/1.4 var(--sa-font);
+		font: var(--sa-weight-semibold) var(--sa-text-base)/1.4 var(--sa-font);
 	}
 	.about-map-preview:hover {
 		background: #343a3d;
@@ -661,7 +662,7 @@
 		gap: 10px;
 		background: #fff;
 		min-height: 48px;
-		font: 600 16px/1.4 var(--sa-font);
+		font: var(--sa-weight-semibold) var(--sa-text-base)/1.4 var(--sa-font);
 		border-radius: 0 0 10px 10px;
 	}
 	@media (max-width: 1199px) {

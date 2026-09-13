@@ -128,8 +128,8 @@
 
 <style>
 	.site-chrome-topbar__inventory {
-		font-size: 13px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		letter-spacing: -0.01em;
 	}
 
@@ -140,22 +140,22 @@
 	}
 
 	.site-chrome-topbar__location {
-		font-size: 13px;
-		font-weight: 500;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-medium);
 		opacity: 1;
 	}
 
 	.site-chrome-topbar__phone {
-		font-size: 13px;
+		font-size: var(--sa-text-caption);
 		font-variant-numeric: tabular-nums;
-		font-weight: 700;
+		font-weight: var(--sa-weight-strong);
 		letter-spacing: 0.02em;
 	}
 
 	.site-chrome-topbar__dot {
 		color: #fff;
 		flex: none;
-		font-size: 15px;
+		font-size: var(--sa-text-base);
 		line-height: 1;
 		opacity: 0.4;
 		padding: 0 10px;
@@ -187,8 +187,8 @@
 	}
 
 	.site-chrome-topbar__language {
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		letter-spacing: 0 !important;
 	}
 	.site-chrome-topbar__language span {

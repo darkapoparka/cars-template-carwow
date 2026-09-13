@@ -267,9 +267,9 @@
 
 	.team-page {
 		color: #1c1c1c;
-		font-family: var(--sa-font, 'Manrope', ui-sans-serif, system-ui, sans-serif);
-		font-size: 16px;
-		font-weight: 400;
+		font-family: var(--sa-font);
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 	}
 
@@ -294,8 +294,8 @@
 	/* Section title (verified #111827, clamp 32-48 -> 46.08 at 1440, weight 700). */
 	.team-page h1 {
 		color: #111827;
-		font-size: clamp(32px, 3.2vw, 48px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 	}
 
@@ -349,7 +349,7 @@
 	}
 
 	.font-weight-600 {
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 	}
 
 	.text-secondary {
@@ -357,13 +357,13 @@
 	}
 
 	.text-sm {
-		font-size: 16px;
+		font-size: var(--sa-text-base);
 		line-height: 1.45;
 	}
 
 	.h5 {
-		font-size: 20px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-xl);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.35;
 	}
 
@@ -390,16 +390,16 @@
 		margin: 0;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 22px;
 		list-style: none;
 	}
 
 	.breadcrumb a,
 	.breadcrumb span {
-		font-size: 14px;
-		font-weight: 400;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-button-font-weight);
 		line-height: 22px;
 	}
 
@@ -524,7 +524,7 @@
 			padding: 0;
 		}
 		.team-page h1 {
-			font-size: 32px;
+			font-size: var(--sa-type-page);
 			line-height: 1.12;
 			text-align: left;
 		}
@@ -562,7 +562,7 @@
 			display: none;
 		}
 		.sale-agent-title {
-			font-size: 18px;
+			font-size: var(--sa-text-lg);
 		}
 
 		.sm-grid-cols-1.lg-grid-cols-2.gap-30.grid.grid-cols-4 {

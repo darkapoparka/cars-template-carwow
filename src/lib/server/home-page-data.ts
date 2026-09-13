@@ -157,6 +157,10 @@ function buildBudgetTiles(vehicles: Car[]) {
 	}));
 }
 
+export function buildFeaturedMobileVehicles(vehicles: Car[]): HomeMobileVehicle[] {
+	return buildFeaturedCars(vehicles).map(toMobileVehicle);
+}
+
 export function buildHomePageData(home: HomePageHeadData, vehicles: Car[]) {
 	return {
 		home,
@@ -169,7 +173,7 @@ export function buildHomePageData(home: HomePageHeadData, vehicles: Car[]) {
 			models: Array.from(new Set(vehicles.map((car) => car.model))).slice(0, 12),
 			modelOptions: buildModelOptions(vehicles),
 			bodyTypes: Array.from(new Set(vehicles.map((car) => car.body))).slice(0, 8),
-			featuredCars: buildFeaturedCars(vehicles).map(toMobileVehicle),
+			featuredCars: buildFeaturedMobileVehicles(vehicles),
 			bodyTiles: buildBodyTiles(vehicles),
 			brandTiles: buildBrandTiles(vehicles),
 			budgetTiles: buildBudgetTiles(vehicles),

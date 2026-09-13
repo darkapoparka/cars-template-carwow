@@ -6,10 +6,8 @@
 		type LeadIssue
 	} from '$lib/utils/lead-validation';
 	import { CircleCheck, Globe2, Phone } from '@lucide/svelte';
-	import { resolve } from '$app/paths';
 	import { page as appPage } from '$app/state';
 	import { submitImportRequest } from '$lib/client/import-request-submit';
-	import MobileLeadManualCard from '$lib/components/shared/mobile/MobileLeadManualCard.svelte';
 	import MobileLeadInfo from '$lib/components/shared/mobile/MobileLeadInfo.svelte';
 	import { importOrigins, DEFAULT_IMPORT_ORIGIN } from '$lib/data/lead-content';
 	import MobileLeadForm from '$lib/components/shared/mobile/MobileLeadForm.svelte';
@@ -17,6 +15,8 @@
 	import MobileLeadHero from '$lib/components/shared/mobile/MobileLeadHero.svelte';
 	import MobileLeadContactCard from '$lib/components/shared/mobile/MobileLeadContactCard.svelte';
 	import { daynightSite } from '$lib/data/daynight-site';
+	import type { HomeMobileVehicle } from '$lib/types/home';
+	import MobileImportExamples from './MobileImportExamples.svelte';
 	import {
 		buildImportNotes,
 		parseBudgetAmount,
@@ -25,6 +25,7 @@
 	} from '$lib/utils/import-intent';
 
 	type ImportSubmitState = 'idle' | 'submitting' | 'success' | 'error';
+	let { vehicles = [] }: { vehicles?: HomeMobileVehicle[] } = $props();
 
 	const initial = readImportIntent(appPage.url.searchParams);
 	const initialQuery = initial.query || [initial.make, initial.model].filter(Boolean).join(' ');
@@ -37,7 +38,9 @@
 	let importBudget = $state(initial.budget);
 	let contact = $state(initial.phone);
 	let message = $state('');
-	let quickValue = $state(initial.sourceUrl || initialQuery);
+	let quickValue = $state(initial.sourceUrl);
+	let quickVin = $state('');
+	let quickMode = $state<'primary' | 'secondary'>('primary');
 	let companyWebsite = $state('');
 	let formOpen = $state(
 		Boolean(
@@ -63,6 +66,11 @@
 	const selectedOriginLabel = $derived(
 		originOptions.find((option) => option.code === selectedOrigin)?.label ?? 'Всички'
 	);
+	const originSearchLabel = $derived(
+		selectedOrigin === DEFAULT_IMPORT_ORIGIN
+			? 'Търсене без предпочитана държава'
+			: `Търсене от ${selectedOriginLabel}`
+	);
 
 	const phoneHref = daynightSite.phoneHref;
 	const requestTitle = $derived(
@@ -80,18 +88,26 @@
 	);
 
 	function applyQuickValue() {
-		const value = quickValue.trim();
+		const value = (quickMode === 'secondary' ? quickVin : quickValue).trim();
 		if (!value) return;
-		if (/^https?:\/\//i.test(value)) {
+		if (quickMode === 'primary') {
 			sourceUrl = value;
+			importQuery = '';
+			importMake = '';
+			importModel = '';
 		} else {
+			sourceUrl = '';
+			if (value !== importQuery.trim()) {
+				importMake = '';
+				importModel = '';
+			}
 			importQuery = value;
 		}
 	}
 
-	function openForm() {
+	function openForm(applyQuick = true) {
 		issue = null;
-		applyQuickValue();
+		if (applyQuick) applyQuickValue();
 		formStep = 1;
 		submitMessage = '';
 		if (submitState === 'error') submitState = 'idle';
@@ -99,9 +115,18 @@
 	}
 
 	function openManualForm() {
+		openForm(false);
+	}
+
+	function chooseExample(car: HomeMobileVehicle) {
 		sourceUrl = '';
-		quickValue = '';
-		openForm();
+		importQuery = `${car.brand} ${car.model}`;
+		importMake = car.brand;
+		importModel = car.model;
+		importYear = String(car.year);
+		// A sample stock price is not an import quote or the customer's budget.
+		importBudget = '';
+		openManualForm();
 	}
 
 	function closeForm() {
@@ -218,6 +243,7 @@
 		contact = '';
 		message = '';
 		quickValue = '';
+		quickVin = '';
 		companyWebsite = '';
 		submitState = 'idle';
 		submitMessage = '';
@@ -230,8 +256,10 @@
 		kind="import"
 		title="Внос на автомобил"
 		bind:value={quickValue}
-		placeholder="Линк към обява или VIN"
+		bind:vinValue={quickVin}
+		bind:mode={quickMode}
 		onSubmit={openForm}
+		onManual={openManualForm}
 		onInfo={() => (infoOpen = true)}
 	/>
 
@@ -269,13 +297,7 @@
 					</button>
 				{/each}
 			</nav>
-			<MobileLeadManualCard
-				title="Нямам линк"
-				copy="Опиши автомобила и бюджета."
-				image={resolve('/assets/images/import/import-manual-art.webp')}
-				label="Нямам линк. Опиши автомобила и бюджета"
-				onOpen={openManualForm}
-			/>
+			<MobileImportExamples {vehicles} onSelect={chooseExample} />
 			<MobileLeadContactCard
 				{phoneHref}
 				title="Искаш съдействие?"
@@ -295,6 +317,7 @@
 			onBack={goBack}
 			onClose={closeForm}
 		>
+			<p class="import-origin-summary import-origin-summary--form">{originSearchLabel}</p>
 			{#if formStep === 1}
 				<section class="lead-fields" aria-label="Автомобил за внос">
 					<label class="lead-field">
@@ -319,6 +342,10 @@
 							aria-invalid={issue?.field === 'query' ? true : undefined}
 							aria-describedby={issue?.field === 'query' ? 'import-sheet-title-error' : undefined}
 							bind:value={importQuery}
+							oninput={() => {
+								importMake = '';
+								importModel = '';
+							}}
 							type="text"
 							placeholder="BMW X5, дизел..."
 							autocomplete="off"
@@ -404,6 +431,7 @@
 
 	<MobileFullSheet
 		presentation="content"
+		draggable
 		bind:open={infoOpen}
 		labelledBy="import-info-title"
 		onClose={() => (infoOpen = false)}
@@ -413,6 +441,17 @@
 </div>
 
 <style>
+	.import-origin-summary {
+		margin: 0;
+		color: var(--sa-ink-soft);
+		font-size: var(--sa-text-caption);
+		line-height: 1.35;
+	}
+	.import-origin-summary--form {
+		margin-bottom: 16px;
+		color: var(--sa-ink);
+		font-weight: var(--sa-weight-semibold);
+	}
 	.mobile-import {
 		display: none;
 		min-height: 100svh;
@@ -428,22 +467,11 @@
 		flex: 1;
 		align-content: start;
 		gap: 10px;
-		margin-top: -14px;
-		border-radius: 24px 24px 0 0;
+		margin-top: calc(-1 * var(--sa-mobile-panel-overlap));
+		border-radius: var(--sa-r-xl) var(--sa-r-xl) 0 0;
 		background: var(--sa-surface);
-		padding: 27px var(--sa-mobile-gutter) calc(86px + env(safe-area-inset-bottom));
+		padding: 18px var(--sa-mobile-gutter) calc(86px + env(safe-area-inset-bottom));
 		box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.18);
-	}
-	.mobile-lead-main::before {
-		position: absolute;
-		top: 9px;
-		left: 50%;
-		width: 38px;
-		height: 4px;
-		border-radius: 999px;
-		background: #c4ccd5;
-		content: '';
-		transform: translateX(-50%);
 	}
 
 	.import-origins {
@@ -469,7 +497,8 @@
 		border-radius: var(--sa-pill-radius);
 		background: var(--sa-fill);
 		color: #25303b;
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-button-font-size) / var(--sa-button-line-height)
+			var(--sa-font);
 		padding: 0 13px;
 		cursor: pointer;
 		white-space: nowrap;
@@ -507,7 +536,7 @@
 		position: absolute;
 		inset: 0;
 		color: #ffd43b;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 11px;
 		text-align: center;
 	}
@@ -545,7 +574,7 @@
 		top: -2px;
 		left: 2px;
 		color: #ffde00;
-		font-size: 8px;
+		font-size: var(--sa-text-xs);
 	}
 
 	.import-success {
@@ -572,12 +601,12 @@
 	}
 	.import-success h2 {
 		font-size: var(--sa-mobile-type-card-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 	}
 	.import-success p {
 		margin-top: 4px;
 		color: var(--sa-muted);
-		font-size: var(--sa-mobile-type-meta);
+		font-size: var(--sa-type-body);
 		line-height: var(--sa-mobile-leading-meta);
 	}
 	.import-success__actions {
@@ -595,7 +624,8 @@
 		gap: 6px;
 		border: 0;
 		border-radius: 10px;
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-button-font-size) / var(--sa-button-line-height)
+			var(--sa-font);
 		text-decoration: none;
 		cursor: pointer;
 	}

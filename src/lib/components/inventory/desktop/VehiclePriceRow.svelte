@@ -50,8 +50,8 @@
 
 	.daynight-card-price__value {
 		color: #101828;
-		font-size: 28px;
-		font-weight: 800;
+		font-size: var(--sa-text-panel-title);
+		font-weight: var(--sa-weight-strong);
 		letter-spacing: -0.025em;
 		line-height: 0.98;
 		white-space: nowrap;
@@ -59,8 +59,8 @@
 
 	.daynight-card-price__monthly {
 		color: #667085;
-		font-size: 13px;
-		font-weight: 600;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-semibold);
 		letter-spacing: 0;
 		line-height: 1.2;
 		white-space: nowrap;
@@ -116,8 +116,8 @@
 			.daynight-card-price__value
 	) {
 		color: #101828 !important;
-		font-size: 28px !important;
-		font-weight: 800 !important;
+		font-size: var(--sa-text-panel-title) !important;
+		font-weight: var(--sa-weight-strong) !important;
 		letter-spacing: -0.025em !important;
 		line-height: 0.98 !important;
 	}
@@ -129,8 +129,8 @@
 			.daynight-card-price__monthly
 	) {
 		color: #667085 !important;
-		font-size: 13px !important;
-		font-weight: 600 !important;
+		font-size: var(--sa-text-caption) !important;
+		font-weight: var(--sa-weight-semibold) !important;
 		line-height: 1.2 !important;
 	}
 

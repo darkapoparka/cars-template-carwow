@@ -154,7 +154,7 @@
 	   answers, breadcrumb spans) override it below. */
 	.faq-page {
 		color: #1c1c1c;
-		font-family: var(--sa-font, 'Manrope', ui-sans-serif, system-ui, sans-serif);
+		font-family: var(--sa-font);
 		letter-spacing: 0;
 	}
 
@@ -277,14 +277,14 @@
 
 	/* Typography scale */
 	.h3 {
-		font-size: clamp(24px, 2.4vw, 32px);
-		font-weight: 700;
+		font-size: var(--sa-type-page);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.16;
 	}
 
 	.h5 {
-		font-size: 18px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.35;
 	}
 
@@ -293,16 +293,16 @@
 	   text rendered at 600 (verified via matched-rule inspection of the baseline).
 	   Reproduce it here or the answers wrap to fewer lines and the page shrinks. */
 	.h7 {
-		font-size: 18px;
-		font-weight: 500;
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-medium);
 		line-height: var(--sa-leading-body);
 	}
 
 	.faq-page h1 {
 		margin-bottom: 0;
 		color: #111827;
-		font-size: clamp(36px, 4vw, 56px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		letter-spacing: 0;
 		line-height: 1.08;
 		text-align: center;
@@ -318,8 +318,8 @@
 		margin: 0;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		list-style: none;
 	}
 
@@ -500,7 +500,7 @@
 			padding: 0 var(--sa-mobile-gap-lg) var(--sa-mobile-gap-lg);
 		}
 		.faq-page .toggle-content p {
-			font-size: var(--sa-mobile-type-body);
+			font-size: var(--sa-type-body);
 			font-weight: var(--sa-weight-regular);
 			line-height: var(--sa-leading-body);
 			color: var(--sa-ink-soft);

@@ -2,6 +2,8 @@
 
 The current native compositions are the reference. A code refactor must not turn into an unrequested redesign.
 
+The shared typography scale and action hierarchy are defined in [docs/TYPOGRAPHY.md](docs/TYPOGRAPHY.md). The September 13 typography pass standardizes those roles while retaining the separate native compositions.
+
 Desktop and mobile deliberately use different information density and layout. Desktop's yellow home/support heroes, compact control hierarchy and existing card grammar remain independent from mobile's header, home, inventory cards, task sheets and bottom navigation. Use `DESKTOP_STYLE_GUIDE.md` and `docs/COMPONENT-PATTERNS.md` for ownership, not the old source-era backlog.
 
 Preserve typography, spacing, icons, borders, color roles, open-panel geometry, keyboard focus, and route/content order. Test the 991/992px composition boundary as well as phone and desktop widths. Never use a broad token or global selector change to repair one route.

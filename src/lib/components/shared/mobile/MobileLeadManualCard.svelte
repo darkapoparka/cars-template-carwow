@@ -1,82 +1,111 @@
 <script lang="ts">
+	import MobileActionCardContent from './MobileActionCardContent.svelte';
+	import { ArrowRight } from '@lucide/svelte';
 	let {
 		title,
 		copy,
 		image,
 		label,
+		action,
+		photo = false,
 		onOpen
 	}: {
 		title: string;
 		copy: string;
 		image: string;
 		label: string;
+		action: string;
+		photo?: boolean;
 		onOpen: () => void;
 	} = $props();
 </script>
 
-<button class="lead-manual-card" type="button" onclick={onOpen} aria-label={label}>
-	<span class="copy"><strong>{title}</strong><small>{copy}</small></span>
-	<img src={image} alt="" aria-hidden="true" />
+<button
+	class="lead-manual-card"
+	class:lead-manual-card--photo={photo}
+	type="button"
+	onclick={onOpen}
+	aria-label={label}
+>
+	{#if photo}
+		<img src={image} alt="" width="960" height="640" />
+		<span class="lead-manual-card__copy">
+			<strong>{title}</strong>
+			<span>{copy}</span>
+			<span class="lead-manual-card__action"
+				>{action} <ArrowRight size={16} aria-hidden="true" /></span
+			>
+		</span>
+	{:else}
+		<MobileActionCardContent {title} {copy} {image} {action} />
+	{/if}
 </button>
 
 <style>
 	.lead-manual-card {
-		position: relative;
-		display: grid;
+		display: block;
 		width: 100%;
-		min-height: 156px;
-		align-items: center;
-		overflow: hidden;
-		text-align: left;
+		border: 0;
+		border-radius: 14px;
+		padding: 0;
+		background: transparent;
 		cursor: pointer;
-		border: 1px solid var(--sa-line-strong);
-		border-radius: var(--sa-r-md);
-		background: var(--sa-bg);
-		padding: var(--sa-mobile-gap-lg);
 		-webkit-tap-highlight-color: transparent;
 	}
-	.copy {
-		position: relative;
-		z-index: 2;
-		display: grid;
-		gap: var(--sa-mobile-gap-xs);
-		width: 48%;
-		min-width: 0;
-	}
-	strong {
-		max-width: 12ch;
-		color: var(--sa-ink);
-		font-size: var(--sa-mobile-type-feature-title);
-		font-weight: var(--sa-weight-strong);
-		line-height: var(--sa-mobile-leading-heading);
-	}
-	small {
-		max-width: 20ch;
-		color: var(--sa-ink-soft);
-		font-size: var(--sa-mobile-type-meta);
-		line-height: var(--sa-mobile-leading-meta);
-	}
-	img {
-		position: absolute;
-		top: var(--sa-mobile-gap-xs);
-		right: var(--sa-mobile-gap-xs);
-		bottom: var(--sa-mobile-gap-xs);
-		width: 53%;
-		height: calc(100% - 2 * var(--sa-mobile-gap-xs));
-		border-radius: var(--sa-r-sm);
-		object-fit: cover;
-		object-position: right center;
-	}
-	.lead-manual-card::after {
-		position: absolute;
-		inset: 0 40% 0 0;
-		z-index: 1;
-		background: linear-gradient(90deg, var(--sa-bg) 72%, transparent);
-		content: '';
-		pointer-events: none;
-	}
 	.lead-manual-card:active {
-		transform: scale(0.995);
+		opacity: 0.9;
+	}
+	.lead-manual-card--photo {
+		position: relative;
+		min-height: 190px;
+		overflow: hidden;
+		background: #efede9;
+		text-align: left;
+		color: var(--sa-ink);
+	}
+	.lead-manual-card--photo > img {
+		position: absolute;
+		inset: 0 auto 0 36px;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		mask-image: linear-gradient(to right, transparent, #000 36px);
+	}
+	.lead-manual-card__copy {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 9px;
+		width: 57%;
+		padding: 18px 0 18px 16px;
+	}
+	.lead-manual-card__copy > strong {
+		max-width: 140px;
+		font-size: var(--sa-text-card-title);
+		line-height: 1.1;
+		letter-spacing: -0.5px;
+	}
+	.lead-manual-card__copy > span:not(.lead-manual-card__action) {
+		max-width: 135px;
+		font-size: var(--sa-text-caption);
+		line-height: 1.35;
+		color: #45505b;
+	}
+	.lead-manual-card__action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		min-height: 42px;
+		margin-top: 5px;
+		padding: 0 14px;
+		border-radius: 999px;
+		background: var(--sa-red);
+		color: #fff;
+		font-size: var(--sa-button-font-size);
+		font-weight: var(--sa-button-font-weight);
 	}
 	.lead-manual-card:focus-visible {
 		outline: 2px solid var(--sa-red);

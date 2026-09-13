@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { leadInfoContent } from '../src/lib/data/lead-content';
 
 const flows = [
-	{ kind: 'import', route: '/contact?intent=import', manual: /Нямам линк/ },
+	{ kind: 'import', route: '/contact?intent=import', manual: /Филтри за внос/ },
 	{ kind: 'sell', route: '/sell-your-car', manual: /Нямам номер или VIN/ }
 ] as const;
 const viewports = [
@@ -72,7 +72,11 @@ for (const flow of flows) {
 		await expect(dialog).toBeVisible();
 		await dialog.getByRole('button', { name: 'Затвори' }).focus();
 		await page.keyboard.press('Shift+Tab');
+		await expect(dialog.getByRole('button', { name: 'Прибери панела', exact: true })).toBeFocused();
+		await page.keyboard.press('Shift+Tab');
 		await expect(dialog.getByRole('button', { name: 'Разбрах' })).toBeFocused();
+		await page.keyboard.press('Tab');
+		await expect(dialog.getByRole('button', { name: 'Прибери панела', exact: true })).toBeFocused();
 		await page.keyboard.press('Tab');
 		await expect(dialog.getByRole('button', { name: 'Затвори' })).toBeFocused();
 		await dialog.getByRole('button', { name: 'Разбрах' }).click();
@@ -87,6 +91,7 @@ for (const flow of flows) {
 	test(`${flow.kind} actual form keeps the full viewport and its draft`, async ({ page }) => {
 		await page.setViewportSize({ width: 390, height: 844 });
 		await page.goto(flow.route, { waitUntil: 'networkidle' });
+		if (flow.kind === 'sell') await page.getByRole('tab', { name: 'Данни', exact: true }).click();
 		await page.getByRole('button', { name: flow.manual }).click();
 		const form = page.locator('.mobile-fullsheet:not(.mobile-fullsheet--content)[open]');
 		await expect(form).toBeVisible();

@@ -150,7 +150,7 @@
 		color: #8a94a0 !important;
 		font: inherit !important;
 		font-size: inherit !important;
-		font-weight: 500 !important;
+		font-weight: var(--sa-weight-medium) !important;
 		line-height: inherit !important;
 		opacity: 1;
 	}

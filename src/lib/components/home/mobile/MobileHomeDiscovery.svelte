@@ -20,7 +20,6 @@
 	const inventoryPath = '/inventory' as const;
 	const importRequestPath = '/contact' as const;
 	const inventoryHref = resolve(inventoryPath);
-	const phoneHref = daynightSite.phoneHref;
 	type InventoryHref = '/inventory' | `/inventory?${string}`;
 	type ImportLeadHref = '/contact' | `/contact?${string}`;
 
@@ -83,7 +82,14 @@
 					/>
 				</span>
 				<span class="mh-budget-card__copy">
-					<strong>{tile.label.replace('EUR', '€')}</strong>
+					<strong
+						>{tile.label
+							.replace('EUR', '€')
+							.replace(
+								/ (\d[\d ]* €)$/,
+								(_, amount: string) => ' ' + amount.replaceAll(' ', '\u00a0')
+							)}</strong
+					>
 					<span>{tile.caption ?? `${tile.count} коли`}</span>
 				</span>
 			</a>
@@ -139,6 +145,8 @@
 			<a
 				class="mh-brandcard"
 				data-brand={tile.brand}
+				aria-label={`${tile.label}, ${brandCountLabel(tile.count)}`}
+				title={tile.count === 0 ? 'Внос по заявка' : undefined}
 				href={resolve(
 					tile.count > 0
 						? brandHref(tile.brand)
@@ -159,20 +167,27 @@
 				</span>
 				<span class="mh-brandcard__copy">
 					<span class="mh-brandcard__name">{tile.label}</span>
-					<span class="mh-brandcard__count">{brandCountLabel(tile.count)}</span>
+					<span class="mh-brandcard__count" aria-hidden="true">
+						{tile.count > 0 ? `(${tile.count})` : '(?)'}
+					</span>
 				</span>
 			</a>
 		{/each}
-		<a class="mh-brandcard mh-brandcard--all" href={inventoryHref}>
+		<a
+			class="mh-brandcard mh-brandcard--all"
+			href={inventoryHref}
+			aria-label={`Всички марки, ${brandCountLabel(total)}`}
+		>
 			<span class="mh-brandcard__icon mh-brandcard__icon--all" aria-hidden="true">
 				<img src={resolve(daynightSite.logoLight)} alt="" loading="lazy" />
 			</span>
 			<span class="mh-brandcard__copy">
-				<span class="mh-brandcard__name">Всички марки</span>
-				<span class="mh-brandcard__count">{total} автомобила</span>
+				<span class="mh-brandcard__name">Всички</span>
+				<span class="mh-brandcard__count" aria-hidden="true">({total})</span>
 			</span>
 		</a>
 	</div>
+	<p class="mh-brand-note">(?) Внос по заявка</p>
 </section>
 
 <MobileHomeServices kind="sell" />
@@ -206,31 +221,8 @@
 
 <MobileHomeVideos />
 
-<section class="mh-cta-wrap" aria-label="Призив за действие">
-	<div class="mh-cta">
-		<img
-			class="mh-cta__art"
-			src={resolve('/assets/images/home-promos/kristian-financing-campaign-v1.webp')}
-			alt=""
-			aria-hidden="true"
-			loading="lazy"
-		/>
-		<span class="mh-cta__shade" aria-hidden="true"></span>
-		<div class="mh-cta__copy">
-			<small>{total} автомобила · {daynightSite.city}</small>
-			<strong>Хареса си автомобил?</strong>
-			<span>Оглед, финансиране, бартер и документи — с един екип.</span>
-		</div>
-		<div class="mh-cta__actions">
-			<a class="is-browse" href={inventoryHref}>Всички автомобили</a>
-			<a class="is-call" href={phoneHref}>Обади се</a>
-		</div>
-	</div>
-</section>
-
 <style>
-	.mh-section a,
-	.mh-cta a {
+	.mh-section a {
 		color: inherit;
 		text-decoration: none;
 	}
@@ -259,9 +251,9 @@
 	.mh-section__head h2 {
 		margin: 0;
 		color: var(--sa-ink);
-		font-size: var(--sa-text-xl);
-		font-weight: var(--sa-weight-strong);
-		line-height: var(--sa-leading-tight);
+		font-size: var(--sa-mobile-type-section-title);
+		font-weight: var(--sa-weight-medium);
+		line-height: var(--sa-mobile-leading-heading);
 		letter-spacing: var(--sa-tracking-tight);
 	}
 
@@ -273,8 +265,8 @@
 		align-items: center;
 		gap: 2px;
 		color: var(--sa-blue-strong) !important;
-		font-size: var(--sa-text-xs);
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 1;
 	}
 
@@ -367,7 +359,7 @@
 	.mh-budget-card__copy strong {
 		color: var(--sa-ink);
 		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.1;
 	}
 
@@ -455,10 +447,19 @@
 
 	.mh-cat__count {
 		color: #4f5966;
-		font-size: 11px;
+		font-size: var(--sa-text-xs);
 		font-weight: var(--sa-weight-medium);
 		line-height: 1.1;
 		white-space: nowrap;
+	}
+
+	.mh-brand-note {
+		margin: 0;
+		padding: 0 16px;
+		color: var(--sa-ink-soft);
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-regular);
+		line-height: var(--sa-mobile-leading-meta);
 	}
 
 	.mh-brand-grid {
@@ -537,26 +538,21 @@
 	.mh-brandcard__name {
 		max-width: 100%;
 		color: var(--sa-ink);
-		font-size: 14px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 1.15;
 	}
 
 	.mh-brandcard__count {
 		color: #5f6876;
-		font-size: 12px;
-		font-weight: var(--sa-weight-medium);
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-regular);
 		line-height: 1.2;
 		white-space: nowrap;
 	}
 
 	.mh-brandcard--all {
 		background: #e9edf2;
-	}
-
-	.mh-brandcard--all .mh-brandcard__name {
-		font-size: 13px;
-		white-space: nowrap;
 	}
 
 	.mh-brandcard__icon--all {
@@ -649,7 +645,7 @@
 		overflow: hidden;
 		color: var(--sa-ink);
 		font-size: var(--sa-text-base);
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -711,124 +707,8 @@
 		stroke: #fff !important;
 	}
 
-	.mh-cta-wrap {
-		display: grid;
-		gap: 10px;
-		padding: 0 var(--sa-mobile-gutter);
-	}
-
-	.mh-cta {
-		position: relative;
-		display: grid;
-		min-height: 196px;
-		align-content: space-between;
-		gap: 14px;
-		overflow: hidden;
-		border-radius: 18px;
-		background: #07184d;
-		padding: 18px 16px 16px;
-		color: #fff;
-		isolation: isolate;
-	}
-
-	.mh-cta__art,
-	.mh-cta__shade {
-		position: absolute;
-		inset: 0;
-		z-index: -2;
-		width: 100%;
-		height: 100%;
-	}
-
-	.mh-cta__art {
-		object-fit: cover;
-		object-position: right center;
-	}
-
-	.mh-cta__shade {
-		z-index: -1;
-		background: linear-gradient(
-			90deg,
-			rgba(4, 14, 48, 0.98) 0%,
-			rgba(4, 14, 48, 0.92) 45%,
-			rgba(4, 14, 48, 0.22) 76%,
-			rgba(4, 14, 48, 0.06) 100%
-		);
-	}
-
-	.mh-cta__copy {
-		display: grid;
-		max-width: 66%;
-		gap: 4px;
-	}
-
-	.mh-cta__copy small {
-		color: rgba(255, 255, 255, 0.72);
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1.2;
-		text-transform: uppercase;
-	}
-
-	.mh-cta__copy strong {
-		color: #fff !important;
-		font-size: var(--sa-mobile-type-section-title);
-		font-weight: var(--sa-weight-strong);
-		line-height: var(--sa-mobile-leading-heading);
-	}
-
-	.mh-cta__copy span {
-		color: rgba(255, 255, 255, 0.84) !important;
-		font-size: var(--sa-mobile-type-meta);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-meta);
-	}
-
-	.mh-cta__actions {
-		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-		gap: 8px;
-	}
-
-	.mh-cta__actions a {
-		display: inline-flex;
-		min-width: 0;
-		min-height: 46px;
-		align-items: center;
-		justify-content: center;
-		border-radius: 10px;
-		padding: 0 10px;
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		box-shadow: none;
-	}
-
-	.mh-cta__actions .is-browse {
-		background: #fff;
-		color: #111827 !important;
-	}
-
-	.mh-cta__actions .is-call {
-		background: var(--sa-red);
-		color: #fff !important;
-	}
-
-	@media (hover: hover) and (pointer: fine) {
-		.mh-cta__actions .is-browse:hover {
-			background: #eef1f5;
-		}
-		.mh-cta__actions .is-call:hover {
-			background: #b90f1f;
-		}
-	}
-
-	.mh-cta__actions a:focus-visible {
-		outline: 3px solid #fff;
-		outline-offset: 2px;
+	.mh-cta:active {
+		opacity: 0.9;
 	}
 
 	.mh-car__go :global(svg),
@@ -849,43 +729,11 @@
 			gap: 3px;
 			padding: 8px 4px;
 		}
-
-		.mh-brandcard__name {
-			font-size: 13px;
-		}
-
-		.mh-cta-wrap {
-			padding-right: 12px;
-			padding-left: 12px;
-		}
-
-		.mh-cta {
-			padding: 14px;
-		}
-
-		.mh-cta__actions {
-			gap: 8px;
-		}
-
-		.mh-cta__actions a {
-			font-size: var(--sa-text-xs);
-		}
-	}
-
-	.mh-section__head h2 {
-		font-size: var(--sa-mobile-type-section-title);
-		font-weight: var(--sa-weight-strong);
-		line-height: var(--sa-mobile-leading-heading);
-	}
-
-	.mh-section__head a {
-		font-size: var(--sa-mobile-type-meta);
-		font-weight: var(--sa-weight-semibold);
 	}
 
 	.mh-budget-card__copy strong {
-		font-size: var(--sa-mobile-type-feature-title);
-		font-weight: var(--sa-weight-strong);
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-mobile-leading-heading);
 	}
 
@@ -893,16 +741,6 @@
 		font-size: var(--sa-mobile-type-meta);
 		font-weight: var(--sa-weight-medium);
 		line-height: var(--sa-mobile-leading-meta);
-	}
-
-	.mh-brandcard__name {
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
-	}
-
-	.mh-brandcard__count {
-		font-size: var(--sa-mobile-type-meta);
-		font-weight: var(--sa-weight-medium);
 	}
 
 	.mh-car__brand,
@@ -913,7 +751,7 @@
 
 	.mh-car__title {
 		font-size: var(--sa-mobile-type-card-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-mobile-leading-heading);
 	}
 
@@ -926,20 +764,5 @@
 	.mh-car__price {
 		font-size: var(--sa-mobile-type-feature-title);
 		font-weight: var(--sa-weight-strong);
-	}
-
-	.mh-cta__copy strong {
-		font-size: var(--sa-mobile-type-card-title);
-		font-weight: var(--sa-weight-strong);
-	}
-
-	.mh-cta__copy span {
-		font-size: var(--sa-mobile-type-meta);
-		font-weight: var(--sa-weight-medium);
-	}
-
-	.mh-cta__actions a {
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
 	}
 </style>

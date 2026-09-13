@@ -135,6 +135,7 @@ for (const kind of ['sell', 'import'] as const) {
 		await page.goto(kind === 'sell' ? '/sell-your-car' : '/contact?intent=import', {
 			waitUntil: 'networkidle'
 		});
+		if (kind === 'sell') await page.getByRole('tab', { name: 'Данни', exact: true }).click();
 		await page
 			.getByRole('button', { name: kind === 'sell' ? /Нямам номер или VIN/ : /Нямам линк/ })
 			.click();

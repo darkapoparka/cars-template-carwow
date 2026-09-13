@@ -25,7 +25,7 @@
 	}
 	p {
 		margin: 0 0 var(--sa-mobile-gap-sm);
-		font-size: var(--sa-text-sm);
+		font-size: var(--sa-type-body);
 		line-height: var(--sa-leading-body);
 	}
 	button {

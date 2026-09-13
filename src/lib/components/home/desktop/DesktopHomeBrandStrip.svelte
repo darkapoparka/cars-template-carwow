@@ -131,8 +131,8 @@
 		box-sizing: border-box;
 		color: #c91620;
 		display: inline-flex;
-		font-size: 15px;
-		font-weight: 650;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-semibold);
 		justify-content: center;
 		min-height: 42px;
 		padding: 0 18px;
@@ -201,8 +201,8 @@
 
 	:global(body.daynight-home-page) .daynight-brand-grid .daynight-brand-card__name {
 		color: #151923 !important;
-		font-size: 18px !important;
-		font-weight: 650;
+		font-size: var(--sa-text-lg) !important;
+		font-weight: var(--sa-weight-semibold);
 		line-height: 1.2;
 		margin: 0 0 3px;
 	}
@@ -234,7 +234,7 @@
 
 	:global(body.daynight-home-page) .daynight-brand-grid .daynight-brand-card__count {
 		color: #475569 !important;
-		font-size: 13px !important;
+		font-size: var(--sa-text-caption) !important;
 		line-height: 1.3;
 		margin: 0;
 		text-align: center;

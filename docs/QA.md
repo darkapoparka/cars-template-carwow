@@ -12,6 +12,7 @@ Use Node 24, `npm ci`, then `npm run dev -- --host 127.0.0.1 --port 6463 --stric
 npm run check
 npm run lint
 npm run check:architecture
+npm run check:typography
 npm run test:tooling
 npm run test:unit -- --run
 npm run build
@@ -40,6 +41,8 @@ The existing visual-baseline suite is separate and platform-sensitive. Do not up
 Run the browser tests for menu/keyboard behavior, home search/import draft separation, inventory filtering and history, detail tabs and save/compare, garage limits, native accordions, content-sheet focus/backdrop/escape, form validation/error/success with intercepted responses, and the 991/992px resize boundary. Check the phone SSR/no-JavaScript path. Also inspect 568px landscape and short keyboard-visible viewports for sheets, and 1280/1920px for affected desktop families.
 
 ## Visual and content verification
+
+Typography roles and the source guard are documented in [TYPOGRAPHY](TYPOGRAPHY.md). Check computed sizes and weights as well as screenshots: token use alone does not prove that a component selected the right role.
 
 Preserve the intended separate compositions, typography, spacing, colors, icons, card actions, hero/control order, and open-panel geometry. Check bottom controls, tap targets, horizontal rails, lazy images and focus return. Before/after screenshots should use matching viewport, browser, route/query, data, scroll, motion and storage state. Investigate differences rather than replacing baselines.
 

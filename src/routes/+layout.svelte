@@ -135,7 +135,7 @@
 		border-radius: 10px;
 		background: var(--sa-blue);
 		color: var(--sa-surface);
-		font-weight: 700;
+		font-weight: var(--sa-weight-strong);
 		text-decoration: none;
 		transform: translateY(-160%);
 		transition: transform 0.16s ease;

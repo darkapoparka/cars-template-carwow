@@ -82,7 +82,8 @@
 		border-radius: 8px;
 		color: var(--discovery-filter-foreground);
 		background: var(--discovery-filter-background);
-		font: 500 15px/1.3 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-button-font-size) / var(--sa-button-line-height)
+			var(--sa-font);
 		cursor: pointer;
 	}
 	button span {
@@ -125,7 +126,7 @@
 		align-self: start;
 	}
 	h2 {
-		font: 700 22px/1.2 var(--sa-font);
+		font: var(--sa-weight-strong) var(--sa-text-card-title)/1.2 var(--sa-font);
 		margin: 0 0 8px;
 	}
 </style>

@@ -589,7 +589,7 @@
 	.mobile-service-sheet header div:nth-child(2) > span {
 		color: var(--sa-blue);
 		font-size: var(--sa-text-xs);
-		font-weight: 800;
+		font-weight: var(--sa-weight-strong);
 		line-height: 1;
 		text-transform: uppercase;
 	}
@@ -622,7 +622,7 @@
 		padding: 10px;
 		color: #111827;
 		font-size: var(--sa-text-sm);
-		font-weight: 800;
+		font-weight: var(--sa-weight-strong);
 		line-height: 1.25;
 	}
 
@@ -654,7 +654,7 @@
 	.mobile-service-sheet__field span {
 		color: #74808c;
 		font-size: var(--sa-text-xs);
-		font-weight: 800;
+		font-weight: var(--sa-weight-strong);
 		line-height: 1;
 		text-transform: uppercase;
 	}
@@ -670,7 +670,7 @@
 		background: transparent !important;
 		box-shadow: none !important;
 		color: var(--sa-ink) !important;
-		font: 700 var(--sa-text-base) / 1.18 var(--sa-font) !important;
+		font: var(--sa-weight-strong) var(--sa-text-base) / 1.18 var(--sa-font) !important;
 		outline: 0 !important;
 		padding: 0 !important;
 	}
@@ -688,8 +688,8 @@
 		border-radius: 11px;
 		background: var(--sa-red);
 		color: #fff !important;
-		font-size: var(--sa-text-sm);
-		font-weight: 800;
+		font-size: var(--sa-button-font-size);
+		font-weight: var(--sa-button-font-weight);
 	}
 
 	.mobile-service-sheet__submit:disabled {
@@ -704,7 +704,7 @@
 		padding: 10px 11px;
 		color: #b42318;
 		font-size: var(--sa-text-xs);
-		font-weight: 800;
+		font-weight: var(--sa-weight-strong);
 		line-height: 1.35;
 	}
 
@@ -737,14 +737,14 @@
 
 	.mobile-service-sheet__success strong {
 		font-size: var(--sa-text-sm);
-		font-weight: 800;
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.12;
 	}
 
 	.mobile-service-sheet__success small {
 		color: #647084;
 		font-size: var(--sa-text-xs);
-		font-weight: 700;
+		font-weight: var(--sa-weight-strong);
 		line-height: 1.28;
 	}
 
@@ -802,8 +802,8 @@
 			var(--sa-font) !important;
 	}
 	.mobile-service-sheet__submit {
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-button-font-size);
+		font-weight: var(--sa-button-font-weight);
 	}
 	.mobile-service-sheet__error {
 		font-size: var(--sa-mobile-type-meta);
@@ -812,7 +812,7 @@
 	}
 	.mobile-service-sheet__success strong {
 		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 	}
 	.mobile-service-sheet__success small {
 		font-size: var(--sa-mobile-type-meta);

@@ -45,7 +45,8 @@
 		"lint:code": "node ./node_modules/eslint/bin/eslint.js .",
 		"check:format": "prettier --check .",
 		"test:install-browsers": "playwright install",
-		"check:architecture": "node scripts/check-architecture.mjs",
+		"check:architecture": "node scripts/check-architecture.mjs && npm run check:typography",
+		"check:typography": "node scripts/check-typography.mjs",
 		"test:tooling": "node --test scripts/lib/*.test.mjs",
 		"audit:mobile": "node scripts/audit-mobile.mjs"
 	},

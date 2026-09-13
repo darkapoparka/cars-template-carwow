@@ -197,15 +197,15 @@
 	}
 
 	:global(body.daynight-home-page) .daynight-vehicle-type-card__title {
-		font-size: 20px !important;
-		font-weight: 650 !important;
+		font-size: var(--sa-text-xl) !important;
+		font-weight: var(--sa-weight-heading) !important;
 		line-height: 1.2 !important;
 		margin: 0 0 4px !important;
 	}
 
 	:global(body.daynight-home-page) .daynight-vehicle-type-card__count {
 		color: #64748b !important;
-		font-size: 13px !important;
+		font-size: var(--sa-text-caption) !important;
 		line-height: 1.3 !important;
 		margin: 0 !important;
 	}
@@ -224,8 +224,8 @@
 		box-sizing: border-box;
 		color: #c91620;
 		display: inline-flex;
-		font-size: 15px;
-		font-weight: 650;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-semibold);
 		justify-content: center;
 		min-height: 42px;
 		padding: 0 18px;

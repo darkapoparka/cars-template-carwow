@@ -5,10 +5,11 @@
 		interactive = true;
 	});
 	import { onDestroy } from 'svelte';
-	import { resolve } from '$app/paths';
 	import { page as appPage } from '$app/state';
-	import { CarFront, Clock, MapPin, MessageCircle, PhoneCall, Send } from '@lucide/svelte';
-	import MobileHeroBar from '$lib/components/shared/MobileHeroBar.svelte';
+	import { Clock, MapPin, MessageCircle, PhoneCall, Send } from '@lucide/svelte';
+	import MobileInfoHero from '$lib/components/shared/mobile/MobileInfoHero.svelte';
+	import MobileHomeFooter from '$lib/components/home/mobile/MobileHomeFooter.svelte';
+	import '$lib/styles/mobile-info-page.css';
 	import { submitLead } from '$lib/client/lead-submit';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import { readContactIntent, buildContactMessage } from '$lib/utils/contact-intent';
@@ -74,12 +75,6 @@
 			icon: PhoneCall
 		},
 		{
-			id: 'email',
-			title: 'Писмен контакт',
-			value: 'Използвайте формата за запитване',
-			icon: MessageCircle
-		},
-		{
 			id: 'address',
 			title: 'Адрес',
 			value: daynightSite.location,
@@ -95,37 +90,16 @@
 	] as const;
 </script>
 
-<div class="mobile-contact-app">
-	<header class="mobile-contact-hero">
-		<img
-			class="mobile-contact-hero__bg"
-			src={resolve('/assets/images/pages/daynight-about-showroom-suv-v1.webp')}
-			alt=""
-			aria-hidden="true"
-		/>
-		<MobileHeroBar showLocation={false} />
-
-		<div class="mobile-contact-hero__copy">
-			<span class="mobile-contact-hero__label">Контакти</span>
-			<h1>
-				Свържете се с {daynightSite.shortName}
-			</h1>
-			<p>Огледи, въпроси за налични автомобили, бартер, документи и посещение на място.</p>
-		</div>
-
-		<div class="mobile-contact-actions">
-			<a class="mobile-contact-action mobile-contact-action--call" href={phoneHref}>
-				<PhoneCall size={20} strokeWidth={2.5} />
-				<span>Обади се</span>
-			</a>
-			<a
-				class="mobile-contact-action mobile-contact-action--map"
-				href={daynightSite.mapUrl}
-				target="_blank"
-				rel="noopener noreferrer"><MapPin size={20} strokeWidth={2.5} /><span>Карта</span></a
-			>
-		</div>
-	</header>
+<div class="mobile-contact-app mobile-info-page">
+	<MobileInfoHero
+		title="Контакти"
+		description="За оглед, въпрос или съдействие — обадете се или ни пишете."
+	>
+		<a href={phoneHref}><PhoneCall size={18} strokeWidth={2} /> Обади се</a>
+		<a href={daynightSite.mapUrl} target="_blank" rel="noopener noreferrer"
+			><MapPin size={18} strokeWidth={2} /> Карта</a
+		>
+	</MobileInfoHero>
 
 	<main id="main-content" tabindex="-1">
 		<section
@@ -141,9 +115,8 @@
 				</p></noscript
 			>
 			<div class="mobile-contact-heading">
-				<span>Запитване</span>
 				<h2 id="mobile-contact-form-title">
-					{contactContext.subject || 'Пишете ни за автомобил'}
+					{contactContext.subject || 'Пишете ни'}
 				</h2>
 			</div>
 
@@ -156,7 +129,7 @@
 
 			{#if leadSubmitState === 'success'}
 				<div class="mobile-contact-success" role="status" aria-live="polite">
-					<MessageCircle size={23} strokeWidth={2.45} />
+					<MessageCircle size={23} strokeWidth={2} />
 					<span>
 						<strong>Запитването е изпратено</strong>
 						<small>{leadSubmitMessage}</small>
@@ -232,7 +205,7 @@
 						></textarea>
 					</label>
 					<button type="submit" disabled={leadSubmitState === 'submitting' || !interactive}>
-						<Send size={18} strokeWidth={2.55} />
+						<Send size={18} strokeWidth={2} />
 						<span>
 							{leadSubmitState === 'submitting' ? 'Изпращаме...' : 'Изпрати запитване'}
 						</span>
@@ -253,18 +226,24 @@
 
 		<section class="mobile-contact-section" aria-labelledby="mobile-contact-info-title">
 			<div class="mobile-contact-heading">
-				<span>Инфо</span>
-				<h2 id="mobile-contact-info-title">Данни за контакт</h2>
+				<h2 id="mobile-contact-info-title">Посетете ни</h2>
 			</div>
 
 			<div class="mobile-contact-cards">
 				{#each contactCards as card (card.id)}
 					{@const Icon = card.icon}
 					<div class="mobile-contact-card">
-						<span class="mobile-contact-card__icon"><Icon size={21} strokeWidth={2.45} /></span>
+						<span class="mobile-contact-card__icon"><Icon size={21} strokeWidth={2} /></span>
 						<span>
 							<strong>{card.title}</strong>
-							<small>{card.value}</small>
+							<small
+								>{#if card.id === 'phone'}<a href={phoneHref}>{card.value}</a
+									>{:else if card.id === 'address'}<a
+										href={daynightSite.mapUrl}
+										target="_blank"
+										rel="noopener noreferrer">{card.value}</a
+									>{:else}{card.value}{/if}</small
+							>
 						</span>
 					</div>
 				{/each}
@@ -274,13 +253,8 @@
 		<section class="mobile-contact-map" aria-label="Карта">
 			<div class="mobile-contact-map__head">
 				<div>
-					<span>Локация</span>
 					<h2>Шоурум в {daynightSite.city}</h2>
 				</div>
-				<a href={resolve('/inventory')}>
-					<CarFront size={18} strokeWidth={2.45} />
-					<span>Коли</span>
-				</a>
 			</div>
 			<iframe
 				{@attach deferredMapFrame(mapEmbedSrc, '120px')}
@@ -296,516 +270,155 @@
 				class="mobile-contact-map__fallback"
 				href={daynightSite.mapUrl}
 				target="_blank"
-				rel="noopener noreferrer">Отвори картата и упътванията</a
+				rel="noopener noreferrer">Отвори упътвания</a
 			>
 		</section>
 	</main>
+	<MobileHomeFooter showContact={false} />
 </div>
 
 <style>
-	.mobile-contact-app {
-		display: none;
-		min-height: 100svh;
-		background: #fff;
-		color: var(--sa-ink);
-		font-family: var(--sa-font);
-		-webkit-font-smoothing: antialiased;
-		text-rendering: optimizeLegibility;
-	}
-
-	.mobile-contact-app :where(a) {
-		color: inherit;
-		text-decoration: none;
-	}
-
-	.mobile-contact-app :where(button) {
-		appearance: none;
-		border: 0;
-		background: transparent;
-		color: inherit;
-		cursor: pointer;
-		font: inherit;
-		letter-spacing: 0;
-		padding: 0;
-	}
-
-	.mobile-contact-app :global(svg),
-	.mobile-contact-app :global(svg *) {
-		stroke: currentColor !important;
-	}
-
-	.mobile-contact-hero {
-		position: relative;
-		display: grid;
-		gap: var(--sa-mobile-gap-md);
-		overflow: hidden;
-		background: var(--sa-blue);
-		padding: calc(env(safe-area-inset-top) + 12px) var(--sa-mobile-gutter-wide) 15px;
-		color: #fff;
-		isolation: isolate;
-	}
-
-	.mobile-contact-hero::after {
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background: rgba(5, 7, 10, 0.9);
-		content: '';
-	}
-
-	.mobile-contact-hero__bg {
-		position: absolute;
-		inset: 0;
-		z-index: -2;
-		width: 100%;
-		height: 100%;
-		opacity: 0.42;
-		object-fit: cover;
-		object-position: center;
-	}
-
-	.mobile-contact-hero__copy {
-		display: grid;
-		gap: var(--sa-mobile-gap-xs);
-		max-width: 330px;
-	}
-
-	.mobile-contact-heading span,
-	.mobile-contact-map__head span {
-		color: rgba(255, 255, 255, 0.76);
-		font-size: var(--sa-text-xs);
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1.2;
-		text-transform: none;
-	}
-
-	.mobile-contact-hero__label {
-		color: rgba(255, 255, 255, 0.76);
-		font-size: var(--sa-text-xs);
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1.2;
-		text-transform: none;
-	}
-
-	.mobile-contact-hero h1 {
-		margin: 0;
-		color: #fff;
-		font-size: var(--sa-text-2xl);
-		font-weight: 800;
-		letter-spacing: 0;
-		line-height: 1.07;
-	}
-
-	.mobile-contact-hero p {
-		margin: 0;
-		color: rgba(255, 255, 255, 0.88);
-		font-size: var(--sa-text-sm);
-		font-weight: 700;
-		line-height: 1.3;
-	}
-
-	.mobile-contact-actions {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: var(--sa-mobile-gap-sm);
-	}
-
-	.mobile-contact-action {
-		display: inline-flex;
-		min-height: var(--sa-mobile-action-h);
-		align-items: center;
-		justify-content: center;
-		gap: var(--sa-mobile-gap-xs);
-		border-radius: 8px;
-		color: #fff !important;
-		font-size: var(--sa-text-sm);
-		font-weight: 800;
-		line-height: 1;
-	}
-
-	.mobile-contact-action span,
-	.mobile-contact-action :global(svg),
-	.mobile-contact-action :global(svg *) {
-		color: #fff !important;
-		-webkit-text-fill-color: #fff !important;
-		stroke: #fff !important;
-	}
-
-	.mobile-contact-action--call {
-		background: var(--sa-red);
-	}
-
-	.mobile-contact-action--map {
-		background: rgba(255, 255, 255, 0.14);
-	}
-
-	.mobile-contact-app main {
-		display: grid;
-		gap: var(--sa-mobile-page-gap);
-		padding: 13px var(--sa-mobile-gutter) calc(84px + env(safe-area-inset-bottom));
-	}
-
 	.mobile-contact-section,
-	.mobile-contact-form-section {
-		display: grid;
-		gap: var(--sa-mobile-section-gap);
-	}
-
-	.mobile-contact-heading {
-		display: grid;
-		gap: 5px;
-	}
-
-	.mobile-contact-heading span,
-	.mobile-contact-map__head span {
-		color: var(--sa-blue);
-	}
-
-	.mobile-contact-heading h2,
-	.mobile-contact-map__head h2 {
-		margin: 0;
-		color: #111827;
-		font-size: var(--sa-text-xl);
-		font-weight: 800;
-		letter-spacing: 0;
-		line-height: 1.1;
-	}
-
+	.mobile-contact-form-section,
+	.mobile-contact-form,
 	.mobile-contact-cards,
-	.mobile-contact-form {
-		display: grid;
-		gap: var(--sa-mobile-gap-sm);
-	}
-
-	.mobile-contact-card {
-		display: grid;
-		grid-template-columns: 42px minmax(0, 1fr) 18px;
-		min-height: 72px;
-		align-items: center;
-		gap: var(--sa-mobile-gap-sm);
-		border-radius: 8px;
-		background: #f4f6f9;
-		padding: 10px 12px;
-	}
-
-	.mobile-contact-card:not(a) {
-		grid-template-columns: 42px minmax(0, 1fr);
-	}
-
-	.mobile-contact-card__icon {
-		display: grid;
-		width: var(--sa-mobile-pill-h);
-		height: var(--sa-mobile-pill-h);
-		place-items: center;
-		border-radius: 50%;
-		background: #fff;
-		color: var(--sa-blue);
-	}
-
-	.mobile-contact-card > span:nth-child(2) {
-		display: grid;
-		min-width: 0;
-		gap: 4px;
-	}
-
-	.mobile-contact-card strong {
-		color: #111827;
-		font-size: var(--sa-text-base);
-		font-weight: 800;
-		line-height: 1.1;
-	}
-
-	.mobile-contact-card small {
-		overflow: hidden;
-		color: #66707a;
-		font-size: var(--sa-text-xs);
-		font-weight: 700;
-		line-height: 1.28;
-		text-overflow: ellipsis;
-	}
-
-	.mobile-contact-card > :global(svg) {
-		justify-self: end;
-		color: #6b7280;
-	}
-
-	.mobile-contact-form label {
-		display: grid;
-		gap: var(--sa-mobile-gap-xs);
-		min-width: 0;
-		border: 1px solid #dfe5ec;
-		border-radius: 12px;
-		background: #eef1f6;
-		padding: 8px 11px;
-	}
-
-	.mobile-contact-form label:focus-within {
-		border-color: rgba(176, 0, 0, 0.52);
-		box-shadow: none;
-	}
-
-	.mobile-contact-form label span {
-		color: #56616e;
-		font-size: var(--sa-text-xs);
-		font-weight: var(--sa-weight-semibold);
-		line-height: 1.2;
-		text-transform: none;
-	}
-
-	.mobile-contact-form input,
-	.mobile-contact-form textarea {
-		width: 100%;
-		min-width: 0;
-		min-height: 44px;
-		appearance: none;
-		-webkit-appearance: none;
-		border: 0 !important;
-		border-radius: 0 !important;
-		background: transparent !important;
-		box-shadow: none !important;
-		color: var(--sa-ink) !important;
-		font: 400 var(--sa-text-base) / 1.4 var(--sa-font) !important;
-		outline: 0 !important;
-		padding: 0 !important;
-		resize: vertical;
-	}
-
-	.mobile-contact-form input::placeholder,
-	.mobile-contact-form textarea::placeholder {
-		color: #626d7a;
-		opacity: 1;
-	}
-
-	.mobile-contact-form button {
-		display: inline-flex;
-		min-height: var(--sa-mobile-action-h);
-		align-items: center;
-		justify-content: center;
-		gap: var(--sa-mobile-gap-xs);
-		border-radius: 8px;
-		background: var(--sa-red);
-		color: #fff !important;
-		font-size: var(--sa-text-sm);
-		font-weight: 800;
-	}
-
-	.mobile-contact-form button:disabled {
-		cursor: wait;
-		opacity: 0.72;
-	}
-
-	.mobile-contact-error {
-		margin: 0;
-		border-radius: 8px;
-		background: #fff1f2;
-		padding: 10px 11px;
-		color: #b91c1c;
-		font-size: var(--sa-text-xs);
-		font-weight: 800;
-		line-height: 1.32;
-	}
-
-	.mobile-contact-success {
-		display: grid;
-		grid-template-columns: 34px minmax(0, 1fr);
-		align-items: center;
-		gap: 10px;
-		border-radius: 8px;
-		background: #eef4ff;
-		padding: 13px 12px;
-		color: #111827;
-	}
-
-	.mobile-contact-success :global(svg) {
-		color: var(--sa-blue);
-	}
-
-	.mobile-contact-success span {
-		display: grid;
-		gap: 3px;
-	}
-
-	.mobile-contact-success strong {
-		font-size: var(--sa-text-sm);
-		font-weight: 800;
-		line-height: 1.12;
-	}
-
-	.mobile-contact-success small {
-		color: #647084;
-		font-size: var(--sa-text-xs);
-		font-weight: 700;
-		line-height: 1.28;
-	}
-
-	@keyframes mobile-import-sheet-in {
-		from {
-			opacity: 0.94;
-			transform: translateY(28px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
 	.mobile-contact-map {
 		display: grid;
-		gap: var(--sa-mobile-gap-sm);
-		overflow: hidden;
-		border-radius: 8px;
-		background: #f4f6f9;
-		padding: 12px;
+		gap: 14px;
 	}
-
-	.mobile-contact-map__head {
+	.mobile-contact-card {
+		display: grid;
+		grid-template-columns: 44px minmax(0, 1fr);
+		align-items: center;
+		gap: 12px;
+		padding-bottom: 14px;
+		border-bottom: 1px solid var(--sa-line);
+	}
+	.mobile-contact-card:last-child {
+		border-bottom: 0;
+		padding-bottom: 0;
+	}
+	.mobile-contact-card__icon {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border: 1px solid var(--sa-line);
+		border-radius: 50%;
+	}
+	.mobile-contact-card > span:nth-child(2) {
+		display: grid;
+		gap: 2px;
+		min-width: 0;
+	}
+	.mobile-contact-card strong {
+		font-size: var(--sa-mobile-type-meta);
+		font-weight: var(--sa-weight-regular);
+		color: var(--sa-ink-soft);
+	}
+	.mobile-contact-card small {
+		font-size: var(--sa-type-body);
+	}
+	.mobile-contact-card a {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		gap: var(--sa-mobile-gap-sm);
+		min-height: var(--sa-mobile-action-h);
 	}
-
-	.mobile-contact-map__head > div {
+	.mobile-contact-form label {
 		display: grid;
 		gap: 4px;
 		min-width: 0;
+		border: 1px solid var(--sa-line);
+		border-radius: var(--sa-r-md);
+		background: var(--sa-surface);
+		padding: 10px 12px;
 	}
-
-	.mobile-contact-map__head a {
-		display: inline-flex;
-		min-height: var(--sa-mobile-hero-cta-h);
-		align-items: center;
-		justify-content: center;
-		gap: 6px;
-		border-radius: 999px;
-		background: #fff;
-		padding: 0 12px;
-		color: var(--sa-blue) !important;
-		font-size: var(--sa-text-xs);
-		font-weight: 800;
-		white-space: nowrap;
-	}
-
-	.mobile-contact-map iframe {
-		display: block;
-		overflow: hidden;
-		border-radius: 8px;
-		background: #dbe3ec;
-	}
-
-	@media (max-width: 430px) {
-		.mobile-contact-section,
-		.mobile-contact-form-section {
-			gap: 8px;
-		}
-
-		.mobile-contact-cards {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-
-		.mobile-contact-card,
-		.mobile-contact-card:not(a) {
-			grid-template-columns: minmax(0, 1fr);
-			min-height: 88px;
-			align-content: center;
-			gap: 6px;
-			padding: 9px 10px;
-		}
-
-		.mobile-contact-card__icon {
-			width: 36px;
-			height: 36px;
-		}
-
-		.mobile-contact-form {
-			grid-template-columns: minmax(0, 1fr);
-			gap: 8px;
-		}
-
-		.mobile-contact-form > label:nth-of-type(3),
-		.mobile-contact-form > button,
-		.mobile-contact-form > .mobile-contact-error {
-			grid-column: 1 / -1;
-		}
-
-		.mobile-contact-form label {
-			padding: 6px 11px;
-		}
-
-		.mobile-contact-form input,
-		.mobile-contact-form textarea {
-			min-height: 36px;
-		}
-	}
-
-	@media (max-width: 991px) {
-		.mobile-contact-app {
-			display: block;
-		}
-	}
-
-	/* Mobile typography contract */
-	.mobile-contact-heading span,
-	.mobile-contact-map__head span,
-	.mobile-contact-hero__label {
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-semibold);
-	}
-	.mobile-contact-hero h1 {
-		font-size: var(--sa-mobile-type-page-title);
-		font-weight: var(--sa-weight-display);
-		line-height: var(--sa-mobile-leading-heading);
-	}
-	.mobile-contact-hero p {
-		font-size: var(--sa-mobile-type-body);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-body);
-	}
-	.mobile-contact-action,
-	.mobile-contact-form button {
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
-	}
-	.mobile-contact-heading h2,
-	.mobile-contact-map__head h2 {
-		font-size: var(--sa-mobile-type-section-title);
-		font-weight: var(--sa-weight-strong);
-		line-height: var(--sa-mobile-leading-heading);
-	}
-	.mobile-contact-card strong {
-		font-size: var(--sa-mobile-type-card-title);
-		font-weight: var(--sa-weight-strong);
-	}
-	.mobile-contact-card small,
-	.mobile-contact-success small {
-		font-size: var(--sa-mobile-type-meta);
-		font-weight: var(--sa-weight-medium);
-		line-height: var(--sa-mobile-leading-meta);
+	.mobile-contact-form label:focus-within {
+		border-color: var(--sa-ink);
 	}
 	.mobile-contact-form label span {
-		font-size: var(--sa-mobile-type-micro);
-		font-weight: var(--sa-weight-semibold);
+		color: var(--sa-ink-soft);
+		font-size: var(--sa-mobile-type-meta);
 	}
 	.mobile-contact-form input,
 	.mobile-contact-form textarea {
-		font: var(--sa-weight-regular) var(--sa-mobile-type-input) / var(--sa-mobile-leading-body)
-			var(--sa-font) !important;
+		width: 100%;
+		min-width: 0;
+		min-height: 36px;
+		appearance: none;
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+		color: var(--sa-ink);
+		font: inherit;
+		outline: 0;
+		padding: 0;
+		resize: vertical;
+	}
+	.mobile-contact-form input::placeholder,
+	.mobile-contact-form textarea::placeholder {
+		color: var(--sa-ink-soft);
+		opacity: 0.8;
+	}
+	.mobile-contact-form button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		min-height: var(--sa-mobile-action-h);
+		border: 0;
+		border-radius: 999px;
+		background: var(--sa-red);
+		color: white;
+		font: inherit;
+		cursor: pointer;
+	}
+	.mobile-contact-form button:focus-visible {
+		outline: 2px solid var(--sa-ink);
+		outline-offset: 3px;
+	}
+	.mobile-contact-form button:disabled {
+		cursor: wait;
+		opacity: 0.7;
 	}
 	.mobile-contact-error {
-		font-size: var(--sa-mobile-type-meta);
-		font-weight: var(--sa-weight-semibold);
-		line-height: var(--sa-mobile-leading-meta);
+		border-radius: var(--sa-r-md);
+		padding: 12px;
+		background: #fff1f2;
+		color: #b91c1c !important;
+	}
+	.mobile-contact-success {
+		display: flex;
+		align-items: start;
+		gap: 12px;
+		border-radius: var(--sa-r-md);
+		padding: 16px;
+		background: var(--sa-fill);
+	}
+	.mobile-contact-success > span {
+		display: grid;
+		gap: 4px;
 	}
 	.mobile-contact-success strong {
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-strong);
+		font-size: var(--sa-type-body);
+		font-weight: var(--sa-weight-medium);
+	}
+	.mobile-contact-success small {
+		font-size: var(--sa-type-body);
+		color: var(--sa-ink-soft);
+	}
+	.mobile-contact-map iframe {
+		display: block;
+		border-radius: var(--sa-r-md);
+		background: var(--sa-fill);
 	}
 	.mobile-contact-map__fallback {
 		display: inline-flex;
-		min-height: var(--sa-mobile-action-h);
 		align-items: center;
-		color: var(--sa-ink);
-		font-size: var(--sa-mobile-type-control-sm);
-		text-decoration: underline;
+		justify-self: start;
+		min-height: var(--sa-mobile-action-h);
+		padding: 0 16px;
+		border: 1px solid var(--sa-line);
+		border-radius: 999px;
 	}
 </style>

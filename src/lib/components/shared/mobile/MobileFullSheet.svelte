@@ -24,15 +24,43 @@
 		open = $bindable(false),
 		labelledBy,
 		presentation = 'full',
+		draggable = false,
 		onClose,
 		children
 	}: {
 		open?: boolean;
 		labelledBy?: string;
 		presentation?: 'full' | 'content';
+		draggable?: boolean;
 		onClose?: () => void;
 		children?: Snippet;
 	} = $props();
+
+	let pull = $state(0);
+	let dragging = $state(false);
+	let startY = 0;
+	let dragged = false;
+	function startDrag(event: PointerEvent) {
+		if (event.button !== 0) return;
+		startY = event.clientY;
+		dragged = false;
+		dragging = true;
+		(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
+	}
+	function moveDrag(event: PointerEvent) {
+		if (dragging) {
+			pull = Math.max(0, event.clientY - startY);
+			if (Math.abs(event.clientY - startY) > 5) dragged = true;
+		}
+	}
+	function endDrag(event: PointerEvent) {
+		if (!dragging) return;
+		const dismiss = event.type !== 'pointercancel' && pull > 88;
+		dragging = false;
+		(event.currentTarget as HTMLElement).releasePointerCapture(event.pointerId);
+		pull = 0;
+		if (dismiss) closeSheet();
+	}
 
 	const fullSheetPanel: Attachment<HTMLDialogElement> = (node) => {
 		const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -112,6 +140,8 @@
 	function closeSheet() {
 		if (!open) return;
 		open = false;
+		pull = 0;
+		dragging = false;
 		onClose?.();
 	}
 
@@ -129,6 +159,9 @@
 	<dialog
 		class="mobile-fullsheet"
 		class:mobile-fullsheet--content={presentation === 'content'}
+		class:mobile-fullsheet--draggable={draggable && presentation === 'content'}
+		class:mobile-fullsheet--dragging={dragging}
+		style:translate={`0 ${pull}px`}
 		{@attach fullSheetPanel}
 		aria-modal="true"
 		aria-labelledby={labelledBy}
@@ -139,6 +172,23 @@
 			closeSheet();
 		}}
 	>
+		{#if draggable && presentation === 'content'}
+			<button
+				class="mobile-fullsheet__handle"
+				type="button"
+				aria-label="Прибери панела"
+				onclick={() => {
+					if (!dragged) closeSheet();
+					dragged = false;
+				}}
+				onpointerdown={startDrag}
+				onpointermove={moveDrag}
+				onpointerup={endDrag}
+				onpointercancel={endDrag}
+			>
+				<span></span>
+			</button>
+		{/if}
 		{@render children?.()}
 	</dialog>
 {/if}
@@ -182,5 +232,37 @@
 	}
 	.mobile-fullsheet--content::backdrop {
 		background: color-mix(in srgb, var(--sa-dark) 52%, transparent);
+	}
+	.mobile-fullsheet--draggable {
+		grid-template-rows: 44px minmax(0, 1fr);
+		transition: translate 180ms ease-out;
+	}
+	.mobile-fullsheet--dragging {
+		transition: none;
+	}
+	.mobile-fullsheet__handle {
+		display: grid;
+		place-items: center;
+		border: 0;
+		padding: 0;
+		background: transparent;
+		cursor: grab;
+		touch-action: none;
+	}
+	.mobile-fullsheet__handle span {
+		display: block;
+		width: 36px;
+		height: 4px;
+		border-radius: 4px;
+		background: #c4c9cf;
+	}
+	.mobile-fullsheet__handle:focus-visible {
+		outline: 2px solid var(--sa-red);
+		outline-offset: -3px;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.mobile-fullsheet--draggable {
+			transition: none;
+		}
 	}
 </style>

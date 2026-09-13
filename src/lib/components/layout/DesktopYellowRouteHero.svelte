@@ -287,7 +287,7 @@
 		color: var(--sa-ink);
 		font-family: var(--sa-font);
 		font-size: var(--sa-text-desktop-hero-title);
-		font-weight: 900;
+		font-weight: var(--sa-weight-heading);
 		letter-spacing: var(--sa-tracking-desktop-hero-title);
 		line-height: var(--sa-leading-desktop-hero-title);
 		margin: 0 !important;
@@ -297,8 +297,8 @@
 
 	p {
 		color: #282313;
-		font-size: clamp(17px, 1.35vw, 20px);
-		font-weight: 650;
+		font-size: var(--sa-type-body);
+		font-weight: var(--sa-weight-semibold);
 		line-height: 1.4;
 		margin: 18px 0 0 !important;
 		max-width: 720px;
@@ -411,8 +411,8 @@
 
 	:global(.daynight-yellow-route-hero .daynight-inventory-searchbar__label) {
 		color: #fff;
-		font-size: 13px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		margin: 0 0 7px;
 		text-align: left;
 	}
@@ -432,8 +432,8 @@
 		box-sizing: border-box;
 		color: var(--sa-ink);
 		font-family: var(--sa-font);
-		font-size: 16px;
-		font-weight: 600;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-semibold);
 		height: 54px;
 		min-width: 0;
 		outline: 0;
@@ -446,8 +446,8 @@
 		border-radius: 0;
 		color: #fff;
 		font-family: var(--sa-font);
-		font-size: 15px;
-		font-weight: 800;
+		font-size: var(--sa-button-font-size);
+		font-weight: var(--sa-button-font-weight);
 	}
 
 	:global(.daynight-yellow-route-hero .daynight-inventory-searchbar__submit img) {
@@ -463,7 +463,7 @@
 		}
 
 		h1 {
-			font-size: clamp(44px, 5.2vw, 62px);
+			font-size: var(--sa-text-desktop-hero-title);
 		}
 	}
 

@@ -146,7 +146,7 @@
 
 	.mobile-home-videos__eyebrow span {
 		color: #fff !important;
-		font-size: 15px;
+		font-size: var(--sa-text-base);
 		font-weight: var(--sa-weight-strong);
 		letter-spacing: -0.01em;
 	}
@@ -155,7 +155,7 @@
 		margin: 0;
 		color: #fff !important;
 		font-size: var(--sa-mobile-type-section-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-mobile-leading-heading);
 	}
 
@@ -251,7 +251,7 @@
 		display: -webkit-box;
 		overflow: hidden;
 		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.3;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
@@ -327,7 +327,7 @@
 	.mobile-video-card--all strong {
 		color: #fff !important;
 		font-size: var(--sa-mobile-type-feature-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 	}
 	.mobile-video-card--all > span:last-child {
 		display: inline-flex;

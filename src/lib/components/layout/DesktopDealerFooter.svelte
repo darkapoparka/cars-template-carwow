@@ -3,7 +3,10 @@
 	import { ArrowUpRight, Mail, MapPin, Phone } from '@lucide/svelte';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import { youtubeChannelUrl } from '$lib/data/daynight-videos';
-	import { daynightFooterBottomLinks } from './daynight-footer-data';
+	import {
+		daynightFooterBottomLinks,
+		daynightDealerFooterGroups as groups
+	} from './daynight-footer-data';
 	const mapLink = {
 		href: daynightSite.mapUrl,
 		target: '_blank',
@@ -14,31 +17,6 @@
 		target: '_blank',
 		rel: 'noopener noreferrer'
 	} as const;
-
-	const groups = [
-		{
-			title: 'Бързи връзки',
-			links: [
-				{ href: '/about', label: 'За нас' },
-				{ href: '/team', label: 'Нашият екип' },
-				{ href: '/services', label: 'Услуги' },
-				{ href: '/faq', label: 'Често задавани въпроси' },
-				{ href: '/blog', label: 'Блог' },
-				{ href: '/contact', label: 'Контакти' }
-			]
-		},
-		{
-			title: 'Покупка и продажба',
-			links: [
-				{ href: '/inventory', label: 'Намери автомобил' },
-				{ href: '/sell-your-car', label: 'Продай или замени' },
-				{ href: '/financing', label: 'Лизинг и финансиране' },
-				{ href: '/inventory/map', label: 'Карта на автомобилите' },
-				{ href: '/calculator', label: 'Калкулатор за финансиране' },
-				{ href: '/reviews', label: 'Отзиви от клиенти' }
-			]
-		}
-	] as const;
 </script>
 
 <footer class="dealer-footer" data-desktop-dealer-footer>
@@ -148,18 +126,18 @@
 		color: #fff;
 	}
 	.dealer-footer .dealer-footer__hours span {
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 	}
 	.dealer-footer .dealer-footer__contact-row {
 		color: #c5c7cb;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 	}
 	.dealer-footer .dealer-footer__bottom p {
 		color: #b8bbc0;
-		font-size: 12px;
+		font-size: var(--sa-type-body);
 	}
 	.dealer-footer .dealer-footer__bottom a {
-		font-size: 12px;
+		font-size: var(--sa-text-caption);
 	}
 	.dealer-footer a:hover {
 		color: #fff;
@@ -177,7 +155,7 @@
 	}
 	.dealer-footer__hours {
 		margin-top: 28px;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.8;
 	}
 	.dealer-footer__hours p {
@@ -189,9 +167,9 @@
 	}
 	.dealer-footer h2 {
 		margin: 4px 0 20px;
-		font-size: 13px;
+		font-size: var(--sa-text-caption);
 		line-height: 20px;
-		font-weight: 700;
+		font-weight: var(--sa-weight-heading);
 		text-transform: uppercase;
 		letter-spacing: 0;
 		color: #fff;
@@ -205,7 +183,7 @@
 		display: flex;
 		align-items: center;
 		min-height: 40px;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.5;
 	}
 	.dealer-footer li a:hover {
@@ -224,12 +202,12 @@
 		gap: 10px;
 		align-items: center;
 		min-height: 48px;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.65;
 	}
 	.dealer-footer__contact-row strong {
 		color: #fff;
-		font-weight: 700;
+		font-weight: var(--sa-weight-heading);
 	}
 	.dealer-footer__socials {
 		display: flex;
@@ -261,7 +239,7 @@
 		border-top: 1px solid #3a3a3d;
 		margin-top: 36px;
 		padding-top: 22px;
-		font-size: 12px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.6;
 		color: #b8bbc0;
 	}

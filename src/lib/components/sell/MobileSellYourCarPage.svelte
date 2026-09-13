@@ -10,7 +10,7 @@
 	import { resolve } from '$app/paths';
 	import { page as appPage } from '$app/state';
 	import { submitLead } from '$lib/client/lead-submit';
-	import MobileLeadManualCard from '$lib/components/shared/mobile/MobileLeadManualCard.svelte';
+	import MobileLeadSteps from '$lib/components/shared/mobile/MobileLeadSteps.svelte';
 	import MobileLeadInfo from '$lib/components/shared/mobile/MobileLeadInfo.svelte';
 	import MobileLeadForm from '$lib/components/shared/mobile/MobileLeadForm.svelte';
 	import MobileFullSheet from '$lib/components/shared/mobile/MobileFullSheet.svelte';
@@ -80,9 +80,9 @@
 		}
 	}
 
-	function openForm() {
+	function openForm(applyQuick = true) {
 		issue = null;
-		applyQuickIdentifier();
+		if (applyQuick) applyQuickIdentifier();
 		formStep = 1;
 		sellSubmitMessage = '';
 		if (sellSubmitState === 'error') sellSubmitState = 'idle';
@@ -92,8 +92,7 @@
 	function openManualForm() {
 		plate = '';
 		vin = '';
-		quickValue = '';
-		openForm();
+		openForm(false);
 	}
 
 	function closeForm() {
@@ -200,8 +199,8 @@
 		kind="sell"
 		title="Продай автомобила"
 		bind:value={quickValue}
-		placeholder="Рег. номер или VIN"
 		onSubmit={openForm}
+		onManual={openManualForm}
 		onInfo={() => (infoOpen = true)}
 	/>
 
@@ -229,23 +228,13 @@
 				</div>
 			</section>
 		{:else}
-			<div class="sell-trust-row" role="group" aria-label="Условия за оценка">
-				<span>Безплатна оценка</span>
-				<span aria-hidden="true">·</span>
-				<span>До 1 работен ден</span>
-			</div>
-			<MobileLeadManualCard
-				title="Нямам номер или VIN"
-				copy="Въведи данните за автомобила ръчно."
-				image={resolve('/assets/images/sell/sell-manual-art-v1.webp')}
-				label="Нямам номер или VIN. Въведи данните за автомобила ръчно"
-				onOpen={openManualForm}
-			/>
 			<MobileLeadContactCard
 				{phoneHref}
 				title="Предпочиташ разговор?"
 				copy="Ще помогнем с оценката и следващите стъпки."
+				image={resolve('/assets/images/home-promos/phone-portrait-generated-v7.webp')}
 			/>
+			<MobileLeadSteps kind="sell" onOpen={() => (infoOpen = true)} />
 		{/if}
 	</main>
 
@@ -262,30 +251,6 @@
 		>
 			{#if formStep === 1}
 				<section class="lead-fields" aria-label="Данни за автомобила">
-					<label class="lead-field">
-						<span>Регистрационен номер</span>
-						<input
-							name="plate"
-							aria-invalid={issue?.field === 'plate' ? true : undefined}
-							aria-describedby={issue?.field === 'plate' ? 'sell-sheet-title-error' : undefined}
-							bind:value={plate}
-							type="text"
-							placeholder="CB 1234 AB"
-							autocomplete="off"
-						/>
-					</label>
-					<label class="lead-field">
-						<span>VIN <small>по желание</small></span>
-						<input
-							name="vin"
-							aria-invalid={issue?.field === 'vin' ? true : undefined}
-							aria-describedby={issue?.field === 'vin' ? 'sell-sheet-title-error' : undefined}
-							bind:value={vin}
-							type="text"
-							placeholder="WBA..."
-							autocomplete="off"
-						/>
-					</label>
 					<div class="lead-field-grid">
 						<label class="lead-field">
 							<span>Марка</span>
@@ -338,6 +303,30 @@
 							/>
 						</label>
 					</div>
+					<label class="lead-field">
+						<span>Регистрационен номер <small>по желание</small></span>
+						<input
+							name="plate"
+							aria-invalid={issue?.field === 'plate' ? true : undefined}
+							aria-describedby={issue?.field === 'plate' ? 'sell-sheet-title-error' : undefined}
+							bind:value={plate}
+							type="text"
+							placeholder="CB 1234 AB"
+							autocomplete="off"
+						/>
+					</label>
+					<label class="lead-field">
+						<span>VIN <small>по желание</small></span>
+						<input
+							name="vin"
+							aria-invalid={issue?.field === 'vin' ? true : undefined}
+							aria-describedby={issue?.field === 'vin' ? 'sell-sheet-title-error' : undefined}
+							bind:value={vin}
+							type="text"
+							placeholder="WBA..."
+							autocomplete="off"
+						/>
+					</label>
 				</section>
 			{:else}
 				<section class="lead-fields" aria-label="Контакт">
@@ -379,6 +368,7 @@
 
 	<MobileFullSheet
 		presentation="content"
+		draggable
 		bind:open={infoOpen}
 		labelledBy="sell-info-title"
 		onClose={() => (infoOpen = false)}
@@ -403,33 +393,11 @@
 		flex: 1;
 		align-content: start;
 		gap: 12px;
-		margin-top: -14px;
-		border-radius: 24px 24px 0 0;
+		margin-top: calc(-1 * var(--sa-mobile-panel-overlap));
+		border-radius: var(--sa-r-xl) var(--sa-r-xl) 0 0;
 		background: var(--sa-surface);
-		padding: 27px var(--sa-mobile-gutter) calc(86px + env(safe-area-inset-bottom));
+		padding: 18px var(--sa-mobile-gutter) calc(86px + env(safe-area-inset-bottom));
 		box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.18);
-	}
-	.mobile-lead-main::before {
-		position: absolute;
-		top: 9px;
-		left: 50%;
-		width: 38px;
-		height: 4px;
-		border-radius: 999px;
-		background: #c4ccd5;
-		content: '';
-		transform: translateX(-50%);
-	}
-
-	.sell-trust-row {
-		display: flex;
-		min-height: 28px;
-		align-items: center;
-		justify-content: center;
-		gap: 6px;
-		color: var(--sa-muted);
-		font-size: 12px;
-		font-weight: var(--sa-weight-medium);
 	}
 
 	.sell-success {
@@ -458,12 +426,12 @@
 	}
 	.sell-success h2 {
 		font-size: var(--sa-mobile-type-card-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 	}
 	.sell-success p {
 		margin-top: 4px;
 		color: var(--sa-muted);
-		font-size: var(--sa-mobile-type-meta);
+		font-size: var(--sa-type-body);
 		line-height: var(--sa-mobile-leading-meta);
 	}
 	.sell-success dl {
@@ -507,7 +475,8 @@
 		gap: 6px;
 		border: 0;
 		border-radius: 10px;
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-button-font-size) / var(--sa-button-line-height)
+			var(--sa-font);
 		text-decoration: none;
 		cursor: pointer;
 	}

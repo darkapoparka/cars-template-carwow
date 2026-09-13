@@ -240,9 +240,9 @@
 	.blog-article-page {
 		box-sizing: border-box;
 		color: #1c1c1c;
-		font-family: var(--sa-font, 'Manrope', ui-sans-serif, system-ui, sans-serif);
-		font-size: 16px;
-		font-weight: 400;
+		font-family: var(--sa-font);
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 		letter-spacing: 0;
 	}
@@ -420,12 +420,12 @@
 	}
 
 	.text-sm {
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.45;
 	}
 
 	.text-xs {
-		font-size: 12px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.35;
 	}
 
@@ -434,50 +434,50 @@
 	}
 
 	.font-weight-500 {
-		font-weight: 500;
+		font-weight: var(--sa-weight-medium);
 	}
 
 	.font-weight-600 {
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 	}
 
 	/* Heading utilities — app.css forced 600 on the heading group; StorefrontTemplate
 	   Content re-set .h4/.h5 to 650 (winning at source order) while .h7 stayed 600. */
 	.h4 {
-		font-size: 22px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-card-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.25;
 	}
 
 	.h5 {
-		font-size: 18px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.35;
 	}
 
 	.h7 {
-		font-size: 16px;
-		font-weight: 600;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-semibold);
 		line-height: 1.6;
 	}
 
 	.title-2 {
-		font-size: clamp(34px, 4vw, 54px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-strong);
 		line-height: 1.08;
 	}
 
 	.blog-article-page h1 {
 		color: #111827;
-		font-weight: 700;
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 		text-align: center;
 	}
 
 	.blog-article-page h2:not(.h4) {
 		color: #111827;
-		font-size: clamp(32px, 3.2vw, 48px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 	}
 
@@ -490,16 +490,16 @@
 		gap: 10px;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 22px;
 		list-style: none;
 	}
 
 	.breadcrumb a,
 	.breadcrumb span {
-		font-size: 14px;
-		font-weight: 400;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-button-font-weight);
 		line-height: 22px;
 	}
 
@@ -558,7 +558,7 @@
 		background: #fff;
 		color: #344054;
 		padding: 10px 12px;
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-button-font-weight);
 	}
 
 	.blog-detail-tags a:hover {

@@ -404,7 +404,7 @@
 		border: 0;
 		background: transparent;
 		color: var(--sa-ink);
-		font: 400 16px/1.4 var(--sa-font);
+		font: var(--sa-weight-regular) var(--sa-text-base)/1.4 var(--sa-font);
 		outline: 0;
 		padding: 0 12px;
 	}
@@ -448,7 +448,7 @@
 		justify-content: center;
 		border-radius: 6px;
 		color: var(--sa-muted);
-		font: 650 14px/1.2 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-text-caption)/1.2 var(--sa-font);
 	}
 
 	.blog-category-switch a:hover,
@@ -486,13 +486,13 @@
 		border-radius: 8px;
 		background: #fff;
 		color: var(--sa-ink);
-		font: 600 14px/1.2 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-text-caption)/1.2 var(--sa-font);
 	}
 
 	.blog-quick-topics a span {
 		color: var(--sa-muted);
-		font-size: 11px;
-		font-weight: 700;
+		font-size: var(--sa-text-xs);
+		font-weight: var(--sa-button-font-weight);
 	}
 
 	.blog-quick-topics a.active {
@@ -511,7 +511,7 @@
 		gap: 10px;
 		margin-left: auto;
 		color: var(--sa-muted);
-		font: 650 13px/1.3 var(--sa-font);
+		font: var(--sa-weight-semibold) var(--sa-text-caption)/1.3 var(--sa-font);
 		white-space: nowrap;
 	}
 
@@ -566,9 +566,9 @@
 		padding-top: 0;
 		box-sizing: border-box;
 		color: #1c1c1c;
-		font-family: var(--sa-font, 'Manrope', ui-sans-serif, system-ui, sans-serif);
-		font-size: 16px;
-		font-weight: 400;
+		font-family: var(--sa-font);
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 		letter-spacing: 0;
 	}
@@ -612,7 +612,7 @@
 		text-align: center;
 	}
 	.blog-empty h2 {
-		font-size: var(--sa-text-xl, 20px);
+		font-size: var(--sa-text-xl, var(--sa-text-xl));
 		line-height: 1.4;
 	}
 	.blog-empty p {
@@ -666,26 +666,26 @@
 	   group; StorefrontTemplateContent re-set .h3/.h4/.h5 weights (winning at source
 	   order) while .h7 kept the 600. Reproduce the computed result. */
 	.h3 {
-		font-size: clamp(24px, 2.4vw, 32px);
-		font-weight: 700;
+		font-size: var(--sa-type-page);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.16;
 	}
 
 	.h4 {
-		font-size: 22px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-card-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.25;
 	}
 
 	.h5 {
-		font-size: 18px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.35;
 	}
 
 	.h7 {
-		font-size: 18px;
-		font-weight: 500;
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-medium);
 		line-height: var(--sa-leading-body);
 	}
 
@@ -701,8 +701,8 @@
 
 	.blog-page h1 {
 		color: #111827;
-		font-size: clamp(36px, 4vw, 56px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 		text-align: center;
 	}
@@ -819,7 +819,7 @@
 	}
 
 	.blog-featured-card__content > p {
-		font-size: 16px;
+		font-size: var(--sa-type-body);
 		line-height: 1.55;
 	}
 
@@ -857,7 +857,7 @@
 
 	.blog-meta__category {
 		color: var(--sa-red);
-		font-weight: 700;
+		font-weight: var(--sa-weight-strong);
 		text-transform: uppercase;
 	}
 
@@ -874,7 +874,7 @@
 		background: #fff;
 		color: #111827;
 		font: inherit;
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 		outline: 0;
 		padding: 0 16px;
 	}
@@ -924,7 +924,7 @@
 		background: var(--desktop-field, var(--sa-fill));
 		color: #344054;
 		padding: 9px 12px;
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-button-font-weight);
 	}
 
 	.widget-categories a:hover {
@@ -987,7 +987,7 @@
 		}
 
 		.blog-page-title h1 {
-			font-size: 32px;
+			font-size: var(--sa-type-page);
 			line-height: 1.12;
 		}
 	}
@@ -995,7 +995,7 @@
 	@media (max-width: 767px) {
 		.blog-page-title h1 {
 			text-align: left;
-			font-size: 28px;
+			font-size: var(--sa-text-panel-title);
 		}
 		.blog-page-title {
 			margin-bottom: 24px;
@@ -1044,7 +1044,7 @@
 			padding: 12px;
 		}
 		.post-style-6 .h4 {
-			font-size: 18px;
+			font-size: var(--sa-text-lg);
 		}
 		.post-style-6 .blog-meta {
 			gap: 4px 8px;

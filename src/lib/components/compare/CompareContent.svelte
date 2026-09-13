@@ -209,20 +209,20 @@
 		.breadcrumb {
 			padding-top: 12px;
 			padding-bottom: 12px;
-			font-size: 12px;
+			font-size: var(--sa-text-caption);
 		}
 		.tf-spacing-style3 {
 			height: 20px;
 			padding: 0;
 		}
 		h1 {
-			font-size: 26px !important;
+			font-size: var(--sa-text-2xl) !important;
 			line-height: 1.15 !important;
 			text-align: left !important;
 			margin-bottom: 12px !important;
 		}
 		.h7 {
-			font-size: 15px !important;
+			font-size: var(--sa-text-base) !important;
 			line-height: 1.5 !important;
 			text-align: left !important;
 			margin-bottom: 20px !important;
@@ -249,7 +249,7 @@
 	   sub-paragraph, price, breadcrumb spans) override it below. */
 	.compare-page {
 		color: #1c1c1c;
-		font-family: var(--sa-font, 'Manrope', ui-sans-serif, system-ui, sans-serif);
+		font-family: var(--sa-font);
 		letter-spacing: 0;
 	}
 
@@ -348,8 +348,8 @@
 	   StorefrontTemplateContent's `.h7` declared no weight — so the legacy sub-paragraph
 	   text rendered at 600 (verified: font-weight 600, line-height 1.6). */
 	.h7 {
-		font-size: 16px;
-		font-weight: 600;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-semibold);
 		line-height: 1.6;
 	}
 
@@ -362,8 +362,8 @@
 	   bottom margin. Leaving it off lets `.mb-12` win and reproduces that 12px gap. */
 	.compare-page h1 {
 		color: #111827;
-		font-size: clamp(32px, 3.2vw, 48px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		letter-spacing: 0;
 		line-height: 1.08;
 	}
@@ -378,8 +378,8 @@
 		margin: 0;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 22px;
 		list-style: none;
 	}
@@ -389,8 +389,8 @@
 	   line-height 22px comes from app.css's `.breadcrumb a, .breadcrumb span`. */
 	.breadcrumb a,
 	.breadcrumb span {
-		font-size: 14px;
-		font-weight: 400;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-button-font-weight);
 		line-height: 22px;
 	}
 
@@ -442,7 +442,7 @@
 		border-radius: 8px;
 	}
 	.compare-selection li > a {
-		font-weight: 650;
+		font-weight: var(--sa-button-font-weight);
 	}
 	.compare-selection li > div {
 		display: flex;
@@ -496,8 +496,8 @@
 	.compare-empty h3 {
 		margin: 0;
 		color: #111827;
-		font-size: 22px;
-		font-weight: 750;
+		font-size: var(--sa-text-card-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.2;
 	}
 
@@ -505,8 +505,8 @@
 		max-width: 390px;
 		margin: 0;
 		color: #667085;
-		font-size: 15px;
-		font-weight: 600;
+		font-size: var(--sa-type-body);
+		font-weight: var(--sa-weight-semibold);
 		line-height: 1.5;
 	}
 
@@ -519,8 +519,8 @@
 		background: var(--sa-red);
 		padding: 0 18px;
 		color: #fff !important;
-		font-size: 14px;
-		font-weight: 800;
+		font-size: var(--sa-button-font-size);
+		font-weight: var(--sa-button-font-weight);
 	}
 
 	.compare-empty__cta:focus-visible {
@@ -550,8 +550,8 @@
 		padding: 18px;
 		border: 1px solid #e7e7e7;
 		color: #1c1c1c;
-		font-size: 18px;
-		font-weight: 500;
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-medium);
 		text-align: center;
 		vertical-align: top;
 	}
@@ -562,7 +562,7 @@
 	.card-details--table td:nth-child(1) {
 		width: 210px;
 		background: #f8fafc;
-		font-weight: 700;
+		font-weight: var(--sa-weight-strong);
 		text-align: left;
 	}
 
@@ -580,7 +580,7 @@
 	.card-details--table tr:first-child td {
 		border: none;
 		background: transparent;
-		font-weight: 500;
+		font-weight: var(--sa-weight-medium);
 		text-align: center;
 	}
 
@@ -628,8 +628,8 @@
 	/* Vehicle title (.h4): 22px / 650 / 1.25, neutral #1c1c1c, centered, no margin. */
 	.h4 {
 		margin: 0;
-		font-size: 22px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-card-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.25;
 	}
 
@@ -637,8 +637,8 @@
 	   #667085 from `.text-secondary`; line-height 26px from the body/`*` default
 	   (verified 16px / 400 / 26px / #667085). */
 	.card-details--table .top p.text-secondary {
-		font-size: 16px;
-		font-weight: 400;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 	}
 
@@ -653,8 +653,8 @@
 	   pinned every label to app.css's universal 26px line box (verified 26px). The
 	   wrapping "Локация" rows depend on this 26px to land at the baseline row height. */
 	.card-details--table td:nth-child(1) span {
-		font-size: 18px;
-		font-weight: 500;
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-medium);
 		line-height: 26px;
 	}
 
@@ -672,14 +672,14 @@
 		}
 		.compare-scroll-hint {
 			display: block;
-			font-size: 14px;
+			font-size: var(--sa-text-caption);
 		}
 		.card-details--table {
 			min-width: calc(96px + var(--vehicle-count) * 190px);
 		}
 		.card-details--table td {
 			padding: 10px;
-			font-size: 14px;
+			font-size: var(--sa-text-caption);
 			overflow-wrap: anywhere;
 		}
 		.card-details--table td:nth-child(1),
@@ -691,7 +691,7 @@
 			z-index: 1;
 		}
 		.card-details--table td:nth-child(1) span {
-			font-size: 13px;
+			font-size: var(--sa-text-caption);
 			line-height: 1.35;
 		}
 		.card-details--table td:nth-child(1) img {
@@ -703,7 +703,7 @@
 			border-radius: 8px;
 		}
 		.h4 {
-			font-size: 16px;
+			font-size: var(--sa-text-base);
 		}
 
 		.pb-100 {

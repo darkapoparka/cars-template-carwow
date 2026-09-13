@@ -397,14 +397,14 @@
 	}
 
 	.daynight-inventory-map-panel__card strong {
-		font-size: 20px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-xl);
+		font-weight: var(--sa-weight-heading);
 		letter-spacing: 0;
 	}
 
 	.daynight-inventory-map-panel__card span {
 		color: #536176;
-		font-size: 16px;
+		font-size: var(--sa-text-base);
 		line-height: 1.45;
 	}
 
@@ -415,8 +415,8 @@
 		box-shadow: 0 16px 40px rgba(25, 100, 216, 0.22);
 		color: #fff;
 		display: inline-flex;
-		font-size: 16px;
-		font-weight: 600;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-semibold);
 		gap: 8px;
 		padding: 13px 18px;
 		position: absolute;

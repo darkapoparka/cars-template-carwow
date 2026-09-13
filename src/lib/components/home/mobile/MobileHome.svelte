@@ -13,6 +13,7 @@
 	import MobileHomeImportSheet from './MobileHomeImportSheet.svelte';
 	import MobileHomeLocationSheet from './MobileHomeLocationSheet.svelte';
 	import './mobile-home-sheets.css';
+	import '$lib/styles/mobile-hero-pill.css';
 
 	let {
 		data,
@@ -135,12 +136,16 @@
 				</span>
 			</button>
 			{#if heroMode === 'buy'}
-				<a class="mh-hero__all mh-hero__all--browse" href={inventoryHref}>
-					<span>Виж всички {total} коли</span>
+				<a class="mobile-hero-pill mh-hero__all mh-hero__all--browse" href={inventoryHref}>
+					<span>Виж всички ({total})</span>
 					<ChevronRight size={12} strokeWidth={2.8} aria-hidden="true" />
 				</a>
 			{:else}
-				<button class="mh-hero__all mh-hero__all--import" type="button" onclick={openSearch}>
+				<button
+					class="mobile-hero-pill mh-hero__all mh-hero__all--import"
+					type="button"
+					onclick={openSearch}
+				>
 					<span>Заяви внос</span>
 					<ChevronRight size={12} strokeWidth={2.8} aria-hidden="true" />
 				</button>
@@ -198,16 +203,16 @@
 		z-index: 2;
 		display: grid;
 		gap: 18px;
-		margin-top: -14px;
-		border-radius: 22px 22px 0 0;
+		margin-top: calc(-1 * var(--sa-mobile-panel-overlap));
+		border-radius: var(--sa-r-xl) var(--sa-r-xl) 0 0;
 		background: #fff;
 		padding-top: 16px;
 		padding-bottom: 12px;
 	}
 	.mh-hero {
 		display: grid;
-		gap: 8px;
-		padding: calc(env(safe-area-inset-top) + 12px) var(--mh-gutter) 24px;
+		gap: var(--sa-mobile-hero-gap);
+		padding: calc(env(safe-area-inset-top) + 12px) var(--mh-gutter) var(--sa-mobile-hero-bottom);
 		background: var(--sa-blue);
 		color: #fff;
 	}
@@ -224,7 +229,7 @@
 
 	.mh-hero__box {
 		display: grid;
-		gap: 9px;
+		gap: var(--sa-mobile-hero-gap);
 		margin: 0;
 		border: 0;
 		border-radius: 0;
@@ -286,7 +291,8 @@
 		border: 0;
 		background: transparent;
 		color: var(--mh-hero-tab-color, rgba(255, 255, 255, 0.76));
-		font: 700 19px / 1.15 var(--sa-font);
+		font: var(--sa-weight-medium) var(--sa-mobile-type-primary-tab) / var(--sa-leading-snug)
+			var(--sa-font);
 		padding: 8px 8px 10px;
 		cursor: pointer;
 		transition: color 0.18s ease;
@@ -305,7 +311,7 @@
 
 	.mh-hero__modes button.is-active {
 		color: var(--mh-hero-tab-active, #fff);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-button-font-weight);
 	}
 
 	.mh-hero__modes button.is-active::after {
@@ -341,8 +347,8 @@
 		min-height: 38px;
 		border-radius: var(--sa-r-pill);
 		padding: 2px 8px;
-		font-size: var(--sa-text-base);
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-button-font-size);
+		font-weight: var(--sa-button-font-weight);
 		transition:
 			background-color 0.18s ease,
 			color 0.18s ease;
@@ -371,7 +377,7 @@
 		padding: 4px 4px 4px 17px;
 		color: var(--sa-muted);
 		font-size: var(--sa-text-base);
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-weight-medium);
 		text-align: left;
 		cursor: pointer;
 		box-shadow: 0 12px 32px rgba(0, 45, 110, 0.18);
@@ -402,62 +408,6 @@
 		stroke: #fff !important;
 	}
 
-	.mh-hero__all {
-		display: inline-flex;
-		justify-self: center;
-		min-height: var(--sa-mobile-action-h);
-		align-items: center;
-		justify-content: center;
-		gap: 4px;
-		border: 1px solid rgba(255, 255, 255, 0.16);
-		border-radius: var(--sa-r-pill);
-		background: rgba(255, 255, 255, 0.08);
-		padding: 0 13px;
-		color: rgba(255, 255, 255, 0.92) !important;
-		font-family: var(--sa-font);
-		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
-		line-height: var(--sa-leading-none);
-		text-decoration: none;
-		cursor: pointer;
-		box-shadow: none;
-		margin-top: -1px;
-		transition:
-			color 120ms ease-out,
-			background-color 120ms ease-out;
-	}
-
-	.mh-hero__all span {
-		color: inherit !important;
-		-webkit-text-fill-color: currentColor !important;
-	}
-
-	.mh-hero__all :global(svg),
-	.mh-hero__all :global(svg *) {
-		width: 14px;
-		height: 14px;
-		color: currentColor !important;
-		stroke: currentColor !important;
-	}
-
-	@media (hover: hover) and (pointer: fine) {
-		.mh-hero__all:hover {
-			background: rgba(255, 255, 255, 0.13);
-			color: #fff !important;
-		}
-	}
-
-	.mh-hero__all:active {
-		background: rgba(255, 255, 255, 0.17);
-		color: #fff !important;
-	}
-
-	.mh-hero__all:focus-visible {
-		background: rgba(255, 255, 255, 0.08);
-		color: #fff !important;
-		outline: 2px solid rgba(255, 255, 255, 0.72);
-		outline-offset: 2px;
-	}
 	.mh-quick {
 		display: flex;
 		margin-top: 0;
@@ -484,10 +434,12 @@
 		background: var(--sa-fill);
 		padding: 0 var(--sa-pill-pad-x);
 		color: var(--sa-ink);
-		font-size: 18px;
-		font-weight: var(--sa-pill-weight);
-		line-height: 1;
+		font: var(--sa-weight-regular) var(--sa-mobile-type-filter) / 1.5 var(--sa-font);
 		white-space: nowrap;
+	}
+
+	.mh-quick__pill span {
+		font: inherit;
 	}
 
 	.mh-quick__pill :global(svg) {
@@ -546,11 +498,7 @@
 		}
 
 		.mh-hero__box {
-			gap: 9px;
-		}
-
-		.mh-hero__modes button {
-			font-size: 19px;
+			gap: var(--sa-mobile-hero-gap);
 		}
 
 		.mh-hero__search {
@@ -561,14 +509,5 @@
 			width: var(--sa-mobile-pill-h);
 			height: var(--sa-mobile-pill-h);
 		}
-	}
-	.mh-hero__modes button {
-		font-size: var(--sa-mobile-type-primary-tab);
-		font-weight: var(--sa-weight-strong);
-		line-height: var(--sa-mobile-leading-heading);
-	}
-	.mh-quick__pill {
-		font-size: var(--sa-mobile-type-input);
-		font-weight: var(--sa-weight-semibold);
 	}
 </style>

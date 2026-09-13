@@ -106,8 +106,8 @@
 
 	.desktop-favorites__section-kicker {
 		color: var(--sa-red);
-		font-size: var(--sa-text-desktop-dense, 16px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-dense, var(--sa-text-base));
+		font-weight: var(--sa-weight-strong);
 		line-height: 1.2;
 		margin: 0 0 8px;
 	}
@@ -137,16 +137,16 @@
 
 	.desktop-favorites__section-heading h2 {
 		color: #101828;
-		font-size: clamp(34px, 3vw, 44px);
-		font-weight: 650;
+		font-size: var(--sa-heading-section);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.08;
 		margin: 0;
 	}
 
 	.desktop-favorites__section-heading > p {
 		color: #475467;
-		font-size: var(--sa-text-desktop-body, 18px);
-		font-weight: 500;
+		font-size: var(--sa-type-body);
+		font-weight: var(--sa-weight-medium);
 		line-height: 1.5;
 		margin: 0;
 		max-width: 520px;
@@ -191,15 +191,15 @@
 
 	.desktop-favorites__empty h2 {
 		color: #101828;
-		font-size: var(--sa-text-desktop-panel-title, 28px);
-		font-weight: 650;
+		font-size: var(--sa-text-desktop-panel-title, var(--sa-text-panel-title));
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.15;
 		margin: 0;
 	}
 
 	.desktop-favorites__empty p {
 		color: #475467;
-		font-size: var(--sa-text-desktop-body, 18px);
+		font-size: var(--sa-type-body);
 		line-height: 1.55;
 		margin: 0;
 		max-width: 560px;

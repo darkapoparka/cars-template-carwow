@@ -110,13 +110,13 @@
 	h1 {
 		margin: 0;
 		color: inherit;
-		font-size: 22px;
-		font-weight: 700;
+		font-size: var(--sa-text-card-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.2;
 	}
 	.page-title span {
 		color: var(--sa-ink-soft);
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		font-variant-numeric: tabular-nums;
 	}
 	.empty {
@@ -131,12 +131,12 @@
 	}
 	.empty h2 {
 		margin: 0;
-		font-size: 18px;
+		font-size: var(--sa-text-lg);
 		line-height: 1.3;
 	}
 	.empty p {
 		margin: 0;
-		font-size: 14px;
+		font-size: var(--sa-type-body);
 		line-height: 1.5;
 		color: var(--sa-ink-soft);
 	}
@@ -149,7 +149,7 @@
 		padding: 16px;
 	}
 	.actions span {
-		font-size: 12px;
+		font-size: var(--sa-text-caption);
 		color: var(--sa-ink-soft);
 	}
 	.actions button {
@@ -164,8 +164,8 @@
 		width: 100%;
 		color: var(--sa-ink);
 		font: inherit;
-		font-size: 14px;
-		font-weight: 600;
+		font-size: var(--sa-button-font-size);
+		font-weight: var(--sa-button-font-weight);
 	}
 	.cars {
 		display: grid;
@@ -217,12 +217,12 @@
 	}
 	.identity a {
 		color: inherit;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.35;
-		font-weight: 600;
+		font-weight: var(--sa-button-font-weight);
 	}
 	.identity strong {
-		font-size: 17px;
+		font-size: var(--sa-text-control);
 		line-height: 1.3;
 	}
 	dl {
@@ -235,15 +235,15 @@
 		border-top: 1px solid var(--sa-line);
 	}
 	dt {
-		font-size: 12px;
+		font-size: var(--sa-text-caption);
 		color: var(--sa-ink-soft);
 		margin-bottom: 4px;
 	}
 	dd {
 		margin: 0;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.4;
-		font-weight: 500;
+		font-weight: var(--sa-weight-medium);
 		overflow-wrap: anywhere;
 	}
 	a:focus-visible,
@@ -256,7 +256,7 @@
 	/* Mobile typography contract */
 	.mobile-compare h1 {
 		font-size: var(--sa-mobile-type-page-title);
-		font-weight: var(--sa-weight-display);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-mobile-leading-heading);
 	}
 	.mobile-compare .page-title span,
@@ -266,11 +266,11 @@
 	}
 	.mobile-compare .empty h2 {
 		font-size: var(--sa-mobile-type-section-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-mobile-leading-heading);
 	}
 	.mobile-compare .empty p {
-		font-size: var(--sa-mobile-type-body);
+		font-size: var(--sa-type-body);
 		font-weight: var(--sa-weight-medium);
 		line-height: var(--sa-mobile-leading-body);
 	}
@@ -278,11 +278,11 @@
 	.mobile-compare .identity a,
 	.mobile-compare dd {
 		font-size: var(--sa-mobile-type-control-sm);
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-button-font-weight);
 	}
 	.mobile-compare .identity strong {
 		font-size: var(--sa-mobile-type-feature-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 	}
 	.mobile-compare dt {
 		font-size: var(--sa-mobile-type-micro);

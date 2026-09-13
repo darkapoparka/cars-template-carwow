@@ -109,8 +109,8 @@
 	.lead-sheet__header h2 {
 		margin: 0;
 		color: var(--sa-ink);
-		font-size: 17px;
-		font-weight: var(--sa-weight-strong);
+		font-size: var(--sa-text-control);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.2;
 	}
 	.lead-sheet__close {
@@ -190,7 +190,7 @@
 		border-radius: 10px;
 		background: var(--sa-fill);
 		color: var(--sa-ink);
-		font: var(--sa-weight-medium) 16px / 1.25 var(--sa-font);
+		font: var(--sa-weight-medium) var(--sa-text-base) / 1.25 var(--sa-font);
 		outline: 0;
 		resize: none;
 	}
@@ -239,7 +239,7 @@
 		overflow: hidden;
 		color: var(--sa-ink);
 		font-size: var(--sa-mobile-type-body);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.2;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -255,7 +255,8 @@
 		border-radius: 9px;
 		background: var(--sa-surface);
 		color: var(--sa-ink);
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-micro) / 1 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-button-font-size) / var(--sa-button-line-height)
+			var(--sa-font);
 		padding: 0 10px;
 		cursor: pointer;
 	}
@@ -296,7 +297,8 @@
 		gap: 6px;
 		border: 0;
 		border-radius: 11px;
-		font: var(--sa-weight-semibold) var(--sa-mobile-type-control-sm) / 1 var(--sa-font);
+		font: var(--sa-button-font-weight) var(--sa-button-font-size) / var(--sa-button-line-height)
+			var(--sa-font);
 		cursor: pointer;
 	}
 	.lead-back {

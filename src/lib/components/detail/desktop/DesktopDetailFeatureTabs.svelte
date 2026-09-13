@@ -82,9 +82,9 @@
 	}
 
 	.pdp-info-tabs :global(.menu-tab-style4 li span) {
-		font-size: 18px;
+		font-size: var(--sa-text-lg);
 		line-height: 1.4;
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 		color: #4b4b4b;
 		transition: color 0.2s ease;
 	}

@@ -343,8 +343,8 @@
 	   26px (verified), so it is set here on the root. */
 	.financing-page {
 		color: #1c1c1c;
-		font-size: 16px;
-		font-weight: 400;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 		letter-spacing: 0;
 	}
@@ -485,19 +485,19 @@
 	   page shrinks. */
 	.h7 {
 		font-size: var(--sa-text-desktop-body);
-		font-weight: 500;
+		font-weight: var(--sa-weight-medium);
 		line-height: var(--sa-leading-body);
 	}
 
 	.h5 {
-		font-size: 18px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.35;
 	}
 
 	.h4 {
-		font-size: 22px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-card-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.25;
 	}
 
@@ -508,8 +508,8 @@
 	   section h2 headings are left (start). */
 	.financing-page h2 {
 		color: #111827;
-		font-size: clamp(32px, 3.2vw, 48px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		letter-spacing: 0;
 		line-height: 1.08;
 	}
@@ -614,8 +614,8 @@
 		border-radius: 999px;
 		background: var(--sa-blue, #b00000);
 		color: #fff;
-		font-size: 32px;
-		font-weight: 700;
+		font-size: var(--sa-type-page);
+		font-weight: var(--sa-weight-strong);
 	}
 
 	.step-title {
@@ -625,7 +625,7 @@
 	.step-box p.text-secondary {
 		margin: 0;
 		font-size: var(--sa-text-desktop-dense);
-		font-weight: 400;
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 	}
 

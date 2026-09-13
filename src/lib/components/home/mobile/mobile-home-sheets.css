@@ -77,7 +77,7 @@
 .mh-location-sheet.mh-sheet-scope header strong {
 	color: var(--sa-ink);
 	font-size: var(--sa-text-xl);
-	font-weight: var(--sa-weight-strong);
+	font-weight: var(--sa-weight-heading);
 	line-height: 1.15;
 }
 
@@ -477,7 +477,7 @@
 
 .mh-sheet-scope .mh-location-sheet__map strong {
 	font-size: var(--sa-text-xl);
-	font-weight: var(--sa-weight-strong);
+	font-weight: var(--sa-weight-heading);
 	line-height: 1.08;
 }
 
@@ -504,7 +504,7 @@
 .mh-location-sheet.mh-sheet-scope p {
 	margin: 0;
 	color: var(--sa-ink-soft);
-	font-size: var(--sa-text-sm);
+	font-size: var(--sa-type-body);
 	font-weight: var(--sa-weight-medium);
 	line-height: 1.38;
 }
@@ -525,7 +525,7 @@
 	background: var(--sa-fill);
 	color: var(--sa-ink) !important;
 	font-size: var(--sa-text-sm);
-	font-weight: var(--sa-weight-semibold);
+	font-weight: var(--sa-button-font-weight);
 	box-shadow: none;
 	transition:
 		background-color 120ms ease-out,

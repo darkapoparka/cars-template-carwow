@@ -471,8 +471,8 @@
 	.contact-page-root {
 		box-sizing: border-box;
 		color: #1c1c1c;
-		font-size: 16px;
-		font-weight: 400;
+		font-size: var(--sa-text-base);
+		font-weight: var(--sa-weight-regular);
 		line-height: 26px;
 		letter-spacing: 0;
 	}
@@ -591,7 +591,7 @@
 	}
 
 	.font-weight-600 {
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 	}
 
 	.text-highlight {
@@ -599,8 +599,8 @@
 	}
 
 	.h3 {
-		font-size: clamp(24px, 2.4vw, 32px);
-		font-weight: 700;
+		font-size: var(--sa-type-page);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.16;
 	}
 
@@ -621,7 +621,7 @@
 		color: #111827;
 		font: inherit;
 		font-size: var(--sa-text-desktop-body);
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 		outline: 0;
 		padding: 0 16px;
 	}
@@ -636,7 +636,7 @@
 		color: #111827;
 		font: inherit;
 		font-size: var(--sa-text-desktop-body);
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 		outline: 0;
 		padding: 14px 16px;
 	}
@@ -717,8 +717,8 @@
 		background: #e4072f;
 		padding: 8px 12px;
 		color: #fff;
-		font-size: 13px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		letter-spacing: 0;
 		line-height: 1;
 	}
@@ -734,8 +734,8 @@
 		max-width: 560px;
 		margin: 0 0 10px;
 		letter-spacing: 0;
-		font-weight: 700;
-		font-size: 36px;
+		font-weight: var(--sa-weight-strong);
+		font-size: var(--sa-heading-section);
 		line-height: 1.16;
 		text-align: left;
 	}
@@ -743,8 +743,8 @@
 	.contact-page-form > .h3 {
 		margin-bottom: 10px;
 		letter-spacing: 0;
-		font-size: 29px;
-		font-weight: 700;
+		font-size: var(--sa-text-panel-title);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.16;
 	}
 
@@ -798,7 +798,7 @@
 		margin: 0;
 		color: #42526a;
 		font-size: var(--sa-text-desktop-dense);
-		font-weight: 500;
+		font-weight: var(--sa-weight-medium);
 		line-height: 1.45;
 	}
 
@@ -874,18 +874,18 @@
 
 		.daynight-contact-primary .contact-page-form form > .grid > div > p {
 			color: #111827;
-			font-weight: 600;
+			font-weight: var(--sa-weight-semibold);
 		}
 
 		.daynight-contact-primary .contact-page-form input,
 		.daynight-contact-primary .contact-page-form textarea {
-			font-weight: 500;
+			font-weight: var(--sa-weight-medium);
 		}
 
 		.daynight-contact-primary .contact-page-form input::placeholder,
 		.daynight-contact-primary .contact-page-form textarea::placeholder {
 			color: #667085;
-			font-weight: 500;
+			font-weight: var(--sa-weight-medium);
 		}
 
 		.daynight-contact-primary .contact-page-form .daynight-contact-submit {
@@ -926,13 +926,13 @@
 
 		.daynight-contact-info-body .daynight-contact-title {
 			margin-bottom: 7px;
-			font-size: 32px;
+			font-size: var(--sa-type-page);
 			line-height: 1.16;
 		}
 
 		.daynight-contact-primary .contact-page .daynight-contact-info-body .daynight-contact-title {
 			margin-bottom: 7px;
-			font-size: 32px;
+			font-size: var(--sa-type-page);
 			line-height: 1.16;
 		}
 
@@ -966,22 +966,22 @@
 
 		.daynight-contact-primary .contact-page-form > .h3 {
 			margin-bottom: 7px;
-			font-size: 26px;
-			font-weight: 700;
+			font-size: var(--sa-text-2xl);
+			font-weight: var(--sa-weight-heading);
 			line-height: 1.16;
 		}
 
 		.contact-page-form > .h3 {
 			margin-bottom: 7px;
-			font-size: 26px;
-			font-weight: 700;
+			font-size: var(--sa-text-2xl);
+			font-weight: var(--sa-weight-heading);
 			line-height: 1.16;
 		}
 
 		.daynight-contact-primary .contact-page .contact-page-form > .h3 {
 			margin-bottom: 7px;
-			font-size: 26px;
-			font-weight: 700;
+			font-size: var(--sa-text-2xl);
+			font-weight: var(--sa-weight-heading);
 			line-height: 1.16;
 		}
 
@@ -1027,7 +1027,7 @@
 		}
 
 		.daynight-contact-info-body .daynight-contact-title {
-			font-size: 36px;
+			font-size: var(--sa-heading-section);
 		}
 
 		.daynight-contact-intro {
@@ -1095,8 +1095,8 @@
 	.daynight-contact-map__address {
 		margin: 0;
 		color: #111827;
-		font-size: 18px;
-		font-weight: 700;
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-strong);
 		letter-spacing: 0;
 		line-height: 1.24;
 	}
@@ -1104,7 +1104,7 @@
 	.daynight-contact-map__overlay a {
 		color: #cf2029;
 		font-size: var(--sa-text-desktop-dense);
-		font-weight: var(--sa-weight-semibold);
+		font-weight: var(--sa-button-font-weight);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}

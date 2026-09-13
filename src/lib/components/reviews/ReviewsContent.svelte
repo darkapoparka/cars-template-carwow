@@ -128,7 +128,7 @@
 	   card desc/label, breadcrumb spans) override it below. */
 	.reviews-page {
 		color: #1c1c1c;
-		font-family: var(--sa-font, 'Manrope', ui-sans-serif, system-ui, sans-serif);
+		font-family: var(--sa-font);
 		letter-spacing: 0;
 	}
 
@@ -222,8 +222,8 @@
 	.reviews-page h1 {
 		margin-bottom: 0;
 		color: #111827;
-		font-size: clamp(32px, 3.2vw, 48px);
-		font-weight: 700;
+		font-size: var(--sa-text-desktop-hero-title);
+		font-weight: var(--sa-weight-heading);
 		letter-spacing: 0;
 		line-height: 1.08;
 	}
@@ -238,8 +238,8 @@
 		margin: 0;
 		padding: 0;
 		color: #5f6877;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-weight-strong);
 		line-height: 22px;
 		list-style: none;
 	}
@@ -249,8 +249,8 @@
 	   line-height 22px comes from app.css's `.breadcrumb a, .breadcrumb span`. */
 	.breadcrumb a,
 	.breadcrumb span {
-		font-size: 14px;
-		font-weight: 400;
+		font-size: var(--sa-text-caption);
+		font-weight: var(--sa-button-font-weight);
 		line-height: 22px;
 	}
 
@@ -292,7 +292,7 @@
 	   18px / 1.65 blend via matched-rule inspection of the baseline. */
 	.testimonior-box--desc {
 		color: #374151;
-		font-size: 18px;
+		font-size: var(--sa-text-lg);
 		line-height: 1.65;
 	}
 
@@ -329,8 +329,8 @@
 
 	/* Card name. */
 	.h5 {
-		font-size: 18px;
-		font-weight: var(--sa-weight-semibold);
+		font-size: var(--sa-text-lg);
+		font-weight: var(--sa-weight-heading);
 		line-height: 1.35;
 	}
 
@@ -340,7 +340,7 @@
 	   shrinks. Colour #667085 from StorefrontTemplateContent's `.desc`. */
 	.desc {
 		color: #667085;
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 26px;
 	}
 

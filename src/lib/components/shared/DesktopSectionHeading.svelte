@@ -40,7 +40,7 @@
 		text-align: left;
 	}
 	h2 {
-		font: 750 clamp(28px, 2.35vw, 36px)/1.15 var(--sa-font);
+		font: var(--sa-weight-strong) var(--sa-heading-section)/1.15 var(--sa-font);
 		letter-spacing: -0.8px;
 		color: #171b1e;
 		margin: 0;
@@ -55,7 +55,7 @@
 	}
 	p {
 		color: #606a73;
-		font: 400 16px/1.5 var(--sa-font);
+		font: var(--sa-weight-regular) var(--sa-text-base)/1.5 var(--sa-font);
 		margin: 8px 0 0;
 	}
 </style>

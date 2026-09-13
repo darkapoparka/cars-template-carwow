@@ -101,7 +101,7 @@
 	}
 	h2 {
 		margin: 0;
-		font-size: 20px;
+		font-size: var(--sa-text-xl);
 		line-height: 1.25;
 		color: var(--sa-ink);
 	}
@@ -135,7 +135,7 @@
 		border: 0;
 		background: transparent;
 		outline: none;
-		font-size: 16px;
+		font-size: var(--sa-text-base);
 		color: var(--sa-ink);
 	}
 	.search:focus-within {
@@ -143,7 +143,7 @@
 	}
 	.status {
 		margin: 12px 16px;
-		font-size: 13px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.4;
 		color: var(--sa-ink-soft);
 	}
@@ -177,11 +177,11 @@
 	}
 	strong,
 	b {
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.35;
 	}
 	small {
-		font-size: 12px;
+		font-size: var(--sa-text-caption);
 		color: var(--sa-ink-soft);
 	}
 	.mark {
@@ -211,14 +211,14 @@
 		border-radius: 8px;
 		background: var(--sa-red);
 		color: white;
-		font-weight: 600;
+		font-weight: var(--sa-weight-semibold);
 	}
 	button:focus-visible {
 		outline: 2px solid var(--sa-red);
 		outline-offset: 2px;
 	}
 	.no-results {
-		font-size: 14px;
+		font-size: var(--sa-text-caption);
 		line-height: 1.5;
 		color: var(--sa-ink-soft);
 	}
@@ -226,7 +226,7 @@
 	/* Mobile typography contract */
 	.selector h2 {
 		font-size: var(--sa-mobile-type-section-title);
-		font-weight: var(--sa-weight-strong);
+		font-weight: var(--sa-weight-heading);
 		line-height: var(--sa-mobile-leading-heading);
 	}
 	.selector input {

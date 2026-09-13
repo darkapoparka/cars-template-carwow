@@ -42,7 +42,7 @@
 				<div class="mobile-inventory-card__price">
 					<span class="mobile-inventory-card__price-stack">
 						<strong>{vehicle.priceEur}</strong>
-						<span>{vehicle.monthly}</span>
+						{#if vehicle.monthly !== 'Финансиране по запитване'}<span>{vehicle.monthly}</span>{/if}
 					</span>
 					<span class="mobile-inventory-card__arrow" aria-hidden="true">
 						<svg viewBox="0 0 20 20" fill="none">

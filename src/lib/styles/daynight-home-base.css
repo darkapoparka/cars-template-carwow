@@ -4,10 +4,10 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: var(--sa-font, ui-sans-serif, system-ui, sans-serif);
-	font-size: 16px;
+	font-family: var(--sa-font);
+	font-size: var(--sa-text-base);
 	line-height: 26px;
-	font-weight: 400;
+	font-weight: var(--sa-weight-regular);
 	color: #1c1c1c;
 	font-style: normal;
 	font-optical-sizing: auto;
@@ -46,14 +46,14 @@
 	h5:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)),
 :where(body.daynight-home-page)
 	h6:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)) {
-	font-weight: 600;
+	font-weight: var(--sa-weight-semibold);
 }
 
 :where(body.daynight-home-page)
 	h1:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)),
 :where(body.daynight-home-page)
 	.h1:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)) {
-	font-size: 68px;
+	font-size: var(--sa-text-desktop-hero-title);
 	line-height: 76px;
 }
 
@@ -61,7 +61,7 @@
 	h2:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)),
 :where(body.daynight-home-page)
 	.h2:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)) {
-	font-size: 40px;
+	font-size: var(--sa-heading-section);
 	line-height: 48px;
 }
 
@@ -69,7 +69,7 @@
 	h3:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)),
 :where(body.daynight-home-page)
 	.h3:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)) {
-	font-size: 32px;
+	font-size: var(--sa-type-page);
 	line-height: 1.25;
 }
 
@@ -77,7 +77,7 @@
 	h4:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)),
 :where(body.daynight-home-page)
 	.h4:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)) {
-	font-size: 24px;
+	font-size: var(--sa-text-2xl);
 	line-height: 1.333;
 }
 
@@ -85,7 +85,7 @@
 	h5:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)),
 :where(body.daynight-home-page)
 	.h5:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)) {
-	font-size: 20px;
+	font-size: var(--sa-text-xl);
 	line-height: 1.4;
 }
 
@@ -93,13 +93,13 @@
 	h6:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)),
 :where(body.daynight-home-page)
 	.h6:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)) {
-	font-size: 20px;
+	font-size: var(--sa-text-xl);
 	line-height: 1.6;
 }
 
 :where(body.daynight-home-page)
 	.h7:not(:where([data-daynight-site-chrome], [data-daynight-site-chrome] *)) {
-	font-size: 18px;
+	font-size: var(--sa-text-lg);
 	line-height: 1.44;
 }
 
