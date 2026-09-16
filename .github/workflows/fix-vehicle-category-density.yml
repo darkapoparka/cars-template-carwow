@@ -1,0 +1,78 @@
+name: Fix desktop vehicle category density
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/fix-vehicle-category-density.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Keep the complete template taxonomy visible
+        shell: bash
+        run: |
+          set -euo pipefail
+          python <<'PY'
+          from pathlib import Path
+          path = Path('src/lib/components/home/desktop/DesktopHomeVehicleCategories.svelte')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace('showEmptyCategories = false', 'showEmptyCategories = true')
+          old = '''\tlet vehicleCategories = $derived(
+\t\tshowEmptyCategories
+\t\t\t? allVehicleCategories
+\t\t\t: allVehicleCategories.filter((category) => category.count > 0)
+\t);'''
+          new = '''\tlet vehicleCategories = $derived(
+\t\tshowEmptyCategories
+\t\t\t? [
+\t\t\t\t...allVehicleCategories.filter((category) => category.count > 0),
+\t\t\t\t...allVehicleCategories.filter((category) => category.count === 0)
+\t\t\t]
+\t\t\t: allVehicleCategories.filter((category) => category.count > 0)
+\t);'''
+          if text.count(old) != 1:
+              raise SystemExit(f'expected one vehicleCategories block, found {text.count(old)}')
+          text = text.replace(old, new)
+          path.write_text(text, encoding='utf-8')
+          PY
+          grep -q 'showEmptyCategories = true' src/lib/components/home/desktop/DesktopHomeVehicleCategories.svelte
+          grep -q 'allVehicleCategories.filter((category) => category.count === 0)' src/lib/components/home/desktop/DesktopHomeVehicleCategories.svelte
+          git diff --check
+      - name: Validate template
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run check
+          npm run build
+      - name: Commit reviewed template fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/fix-vehicle-category-density.yml
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "$GITHUB_SHA" ]; then
+            echo 'main moved during validation; refusing to overwrite' >&2
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/lib/components/home/desktop/DesktopHomeVehicleCategories.svelte .github/workflows/fix-vehicle-category-density.yml
+          git commit -m 'Keep desktop vehicle category grid complete'
+          git push origin HEAD:main
