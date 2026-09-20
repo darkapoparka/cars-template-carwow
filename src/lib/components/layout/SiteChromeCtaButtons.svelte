@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { getI18n } from '$lib/locale/context';
+	const i18n = getI18n();
+
 	import { resolve } from '$app/paths';
 	import { daynightSite } from '$lib/data/daynight-site';
 	import SiteChromeIcon from './SiteChromeIcon.svelte';
@@ -13,7 +16,7 @@
 	]}
 >
 	<a
-		href={resolve('/sell-your-car/request')}
+		href={i18n.href(resolve('/sell-your-car/request'))}
 		class={[
 			'inline-flex items-center justify-center rounded-sa-sm border leading-none font-bold whitespace-nowrap text-sa-surface no-underline transition-colors duration-150 ease-sa',
 			!mobile
@@ -27,7 +30,7 @@
 		title={daynightSite.sellCarCta}
 	>
 		{#if mobile}
-			{compact ? 'Продай' : daynightSite.sellCarCta}
+			{compact ? i18n.t('copy.6510e880c790') : daynightSite.sellCarCta}
 		{:else}
 			<SiteChromeIcon name="plus-circle" />
 		{/if}

@@ -1,6 +1,7 @@
 import { getDayNightVehicleBySlug, type DayNightVehicle } from '../data/daynight-vehicles';
 
 const contactSubjects = {
+	'trade-in': 'Продажба или бартер',
 	video: 'Заявка за видео преглед',
 	photos: 'Заявка за още снимки',
 	review: 'Изпращане на отзив',
@@ -25,7 +26,7 @@ export function buildVehicleContactHref(
 }
 
 export function readContactIntent(searchParams: Pick<URLSearchParams, 'get'>): ContactContext {
-	const intent = searchParams.get('intent')?.trim() ?? '';
+	const intent = (searchParams.get('intent') ?? searchParams.get('topic'))?.trim() ?? '';
 	const vehicle = getDayNightVehicleBySlug(searchParams.get('vehicle')?.trim() ?? '');
 	const subject = Object.hasOwn(contactSubjects, intent)
 		? contactSubjects[intent as ContactIntent]

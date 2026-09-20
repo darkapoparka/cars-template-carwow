@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { setLocaleContext, getI18n } from '$lib/locale/context';
+	import { routeParts } from '$lib/locale/core';
+	import LocalePreferences from '$lib/locale/LocalePreferences.svelte';
+	import LocaleTrigger from '$lib/locale/LocaleTrigger.svelte';
 	import geistCyrillicFont from '@fontsource-variable/geist/files/geist-cyrillic-wght-normal.woff2?url';
 	import geistLatinFont from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 	import { onMount } from 'svelte';
@@ -26,14 +30,17 @@
 	import { daynightSite } from '$lib/data/daynight-site';
 
 	let { children, data } = $props();
+	setLocaleContext(() => data.localeState);
+	const i18n = getI18n();
+	const applicationPath = $derived(routeParts(page.url.pathname).path);
 	initializeViewport(() => data.initialViewport === 'mobile');
 	const garage = new GarageState();
 	const routeBodyClasses = $derived(getRouteBodyClasses(page.url.pathname));
 	const usesRouteManagedChrome = $derived(routeManagesOwnChrome(page.url.pathname));
-	const usesStandaloneAppChrome = $derived(page.url.pathname.startsWith('/admin'));
+	const usesStandaloneAppChrome = $derived(applicationPath.startsWith('/admin'));
 	// /favorites owns its responsive chrome inside the route, so the layout
 	// fallback header/footer and global chat launcher stay out of its shell.
-	const usesFavoritesRouteChrome = $derived(page.url.pathname.startsWith('/favorites'));
+	const usesFavoritesRouteChrome = $derived(applicationPath.startsWith('/favorites'));
 	// The global template header/footer depend on per-route body classes, which
 	// error pages don't have — +error.svelte brings its own minimal chrome.
 	const hidesGlobalChrome = $derived(
@@ -45,7 +52,7 @@
 	const showsChatWidget = $derived(
 		!usesStandaloneAppChrome &&
 			!usesFavoritesRouteChrome &&
-			!page.url.pathname.startsWith('/presentation') &&
+			!applicationPath.startsWith('/presentation') &&
 			page.error === null
 	);
 	setGarageContext(garage);
@@ -59,9 +66,9 @@
 			'@type': 'AutoDealer',
 			name: daynightSite.name,
 			alternateName: daynightSite.shortName,
-			image: `${origin}${daynightSite.logoLight}`,
-			logo: `${origin}${daynightSite.logoLight}`,
-			url: `${origin}/`,
+			image: `${origin}${i18n.asset(daynightSite.logoLight)}`,
+			logo: `${origin}${i18n.asset(daynightSite.logoLight)}`,
+			url: `${origin}${i18n.href('/')}`,
 			telephone: daynightSite.phone,
 			...(daynightSite.email ? { email: daynightSite.email } : {}),
 			address: {
@@ -85,21 +92,34 @@
 <svelte:head>
 	<link
 		rel="preload"
-		href={geistCyrillicFont}
+		href={i18n.href(geistCyrillicFont)}
 		as="font"
 		type="font/woff2"
 		crossorigin="anonymous"
 	/>
-	<link rel="preload" href={geistLatinFont} as="font" type="font/woff2" crossorigin="anonymous" />
+	<link
+		rel="preload"
+		href={i18n.href(geistLatinFont)}
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
 	<JsonLdScript json={dealerJsonLd} />
 </svelte:head>
 
-<a class="skip-to-content" href="#main-content">Към основното съдържание</a>
+<a class="skip-to-content" href="#main-content">{i18n.t('a11y.skipToContent')}</a>
+
+{#if !usesStandaloneAppChrome}
+	{#if page.error || applicationPath === '/locale-settings'}<div class="locale-control">
+			<LocaleTrigger />
+		</div>{/if}
+	<LocalePreferences />
+{/if}
 
 <RouteBodyClassRuntime bodyClasses={routeBodyClasses} />
 
 {#if !hidesGlobalChrome}
-	<SiteHeader variant="light" pathname={page.url.pathname} />
+	<SiteHeader variant="light" pathname={applicationPath} />
 {/if}
 
 {@render children()}
@@ -114,6 +134,15 @@
 {/if}
 
 <style>
+	.locale-control {
+		position: fixed;
+		right: 12px;
+		bottom: 100px;
+		z-index: 1000;
+		background: var(--sa-surface);
+		color: var(--sa-ink);
+		border-radius: var(--sa-r-sm);
+	}
 	@media (min-width: 992px) {
 		:global(html) {
 			scrollbar-gutter: stable;
