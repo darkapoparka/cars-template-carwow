@@ -121,3 +121,19 @@ describe('native Carwow locale adapter', () => {
 		expect(cookies[0]).not.toContain('Domain=');
 	});
 });
+
+describe('native redirect mount preservation', () => {
+	for (const [target, expected] of [
+		['/admin/posts?updated=1', '/variant-3/admin/posts?updated=1'],
+		['/presentation/home2', '/variant-3/en/presentation/home2'],
+		['/sell-your-car?source=legacy', '/variant-3/en/sell-your-car?source=legacy'],
+		['https://external.example/path', 'https://external.example/path']
+	])
+		it(`normalizes ${target} without changing auth destinations`, async () => {
+			const response = await localeHandle({
+				event: event('/variant-3/en/contact'),
+				resolve: async () => new Response(null, { status: 303, headers: { location: target } })
+			} as never);
+			expect(response.headers.get('location')).toBe(expected);
+		});
+});

@@ -50,6 +50,27 @@ export const localeHandle: Handle = async ({ event, resolve }) => {
 	const response = await resolve(event, {
 		transformPageChunk: ({ html }) => html.replaceAll('%cars.locale%', state.locale)
 	});
+	const location = response.headers.get('location');
+	if (
+		response.status >= 300 &&
+		response.status < 400 &&
+		location?.startsWith('/') &&
+		!location.startsWith('//')
+	) {
+		const destination = isResource(location.split(/[?#]/)[0])
+			? parts.base && !routeParts(location).base
+				? parts.base + location
+				: location
+			: localeHref(location, state.locale, parts.base);
+		const headers = new Headers(response.headers);
+		headers.set('Location', destination);
+		privateHeaders(state.locale).forEach((value, key) => headers.set(key, value));
+		return new Response(response.body, {
+			status: response.status,
+			statusText: response.statusText,
+			headers
+		});
+	}
 	if (
 		!response.headers.get('content-type')?.includes('text/html') &&
 		!event.url.pathname.endsWith('/__data.json')
