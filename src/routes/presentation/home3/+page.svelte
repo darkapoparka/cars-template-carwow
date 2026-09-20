@@ -90,7 +90,7 @@
 				<Heart size={23} strokeWidth={2.1} />
 				<span>{i18n.t('copy.655f65ef3f03')}</span>
 			</a>
-			<a href={i18n.href('/admin/login')} aria-label={i18n.t('copy.bfd402b2f6f3')}>
+			<a href={i18n.endpoint('/admin/login')} aria-label={i18n.t('copy.bfd402b2f6f3')}>
 				<CircleUserRound size={23} strokeWidth={2.1} />
 				<span>{i18n.t('copy.bfd402b2f6f3')}</span>
 			</a>

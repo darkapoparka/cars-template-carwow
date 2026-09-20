@@ -142,6 +142,8 @@ for (const locale of ['en', 'bg'])
 				async () => {
 					await p.goto(origin + base + '/' + locale + '/presentation/' + variant);
 					await p.locator('[data-locale-ready=true]').waitFor({ state: 'attached' });
+					const account = p.locator('a[href$="/admin/login"]');
+					assert.equal(await account.getAttribute('href'), base + '/admin/login');
 					const tabs = p.getByRole('tab');
 					assert.equal(await tabs.count(), 3);
 					for (let i = 0; i < 3; i++) {

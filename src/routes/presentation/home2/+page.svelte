@@ -133,7 +133,7 @@
 
 			<div class="home2-nav__actions" aria-label={i18n.t('copy.1810407f5ab7')}>
 				<LocaleTrigger />
-				<a href={i18n.href('/admin/login')}>
+				<a href={i18n.endpoint('/admin/login')}>
 					<CircleUserRound size={27} strokeWidth={3} />
 					<span>{i18n.t('copy.c189840cf7e2')}</span>
 				</a>
