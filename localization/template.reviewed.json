@@ -12030,5 +12030,13 @@
 		"bg": "Под 30 000 £",
 		"disposition": "translate",
 		"notes": "Retained presentation copy; underlying facts unchanged."
+	},
+	{
+		"key": "presentation.used",
+		"source": "Used",
+		"en": "Used",
+		"bg": "Употребявани",
+		"disposition": "translate",
+		"notes": "Retained presentation shortcut label."
 	}
 ]
