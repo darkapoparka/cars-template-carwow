@@ -123,7 +123,13 @@ for (const locale of ['en', 'bg'])
 				'visible VAT popup has localized stock and labels',
 				async () => {
 					await p.goto(origin + base + '/' + locale + '/inventory/mercedes-benz-gla-45-amg-405323');
+					await p.locator('[data-locale-ready=true]').waitFor({ state: 'attached' });
 					await p.locator('#coreDropdownBtn').click();
+					await p.waitForFunction(
+						() =>
+							document.getElementById('coreDropdownBtn')?.getAttribute('aria-expanded') === 'true'
+					);
+					await p.locator('#coreDropdownMenu').waitFor({ state: 'visible' });
 					const text = await p.locator('#coreDropdownMenu').innerText();
 					assert.ok(locale === 'bg' ? /[А-Яа-я]/.test(text) : !/[А-Яа-я]/.test(text), text);
 					await p.screenshot({ path: out + '/' + locale + '-tax-popup.png' });

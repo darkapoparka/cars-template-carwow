@@ -127,7 +127,9 @@ for (const locale of ['en', 'bg'])
 							.map((e) => e.getAttribute('href'))
 							.filter(
 								(h) =>
-									h.startsWith('/') &&
+									!h.startsWith('#') &&
+									!h.startsWith('?') &&
+									!/^[a-z][a-z0-9+.-]*:/i.test(h) &&
 									!h.startsWith('//') &&
 									!/^\/(?:variant-3\/)?(?:en|bg|api|admin|assets|_app|favicon)(?:\/|\?|$)/.test(h)
 							);
