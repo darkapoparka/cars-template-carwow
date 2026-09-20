@@ -127,7 +127,13 @@
 </script>
 
 <dialog
-	onkeydown={(event) => containDialogTab(event, dialog)}
+	onkeydown={(event) => {
+		if (event.key === 'Escape') {
+			event.preventDefault();
+			event.stopPropagation();
+			void submit('dismiss');
+		} else containDialogTab(event, dialog);
+	}}
 	bind:this={dialog}
 	class="cars-locale-dialog"
 	data-locale-dialog
