@@ -1360,6 +1360,10 @@
 
 	@media (max-width: 760px) {
 		.home3-header {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			gap: 12px;
 			padding-inline: 18px;
 		}
 
