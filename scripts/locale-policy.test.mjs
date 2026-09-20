@@ -366,3 +366,21 @@ for (const returnTo of [
 			});
 		}
 }
+
+test('external URL confined to a query remains a host-only return', async () => {
+	const returnTo = '/en/contact?source=https://outside.example/car#form';
+	assert.equal(make().safeReturnPath(returnTo, 'https://dealer.example'), returnTo);
+	for (const type of ['application/json', 'application/x-www-form-urlencoded']) {
+		const data = { ...choice, returnTo };
+		const response = await make().preferenceResponse(
+			request(data, {
+				headers: { 'content-type': type },
+				body:
+					type === 'application/json' ? JSON.stringify(data) : new URLSearchParams(data).toString()
+			})
+		);
+		assert.equal(response.status, type === 'application/json' ? 200 : 303);
+		if (type !== 'application/json')
+			assert.equal(response.headers.get('location'), make().localeHref(returnTo, choice.locale));
+	}
+});

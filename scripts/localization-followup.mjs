@@ -154,6 +154,19 @@ for (const locale of ['en', 'bg'])
 						);
 						assert.deepEqual(issues, []);
 					}
+					const geometry = await p.evaluate((variant) => {
+						const h = document.querySelector('h1').getBoundingClientRect(),
+							form = document.querySelector('.' + variant + '-search').getBoundingClientRect();
+						const clipped = [...document.querySelectorAll('header a')]
+							.filter((n) => {
+								const r = n.getBoundingClientRect();
+								return r.width && r.height && (r.left < 0 || r.right > innerWidth + 1);
+							})
+							.map((n) => n.textContent);
+						return { overlap: h.bottom > form.top + 1, clipped };
+					}, variant);
+					assert.equal(geometry.overlap, false);
+					assert.deepEqual(geometry.clipped, []);
 					await p.screenshot({ path: out + '/' + locale + '-' + width + '-' + variant + '.png' });
 				},
 				{ locale, width }
@@ -161,20 +174,32 @@ for (const locale of ['en', 'bg'])
 		await c.close();
 	}
 for (const locale of ['en', 'bg'])
-	await check(
-		'no-JS invalid return fallback remains mounted',
-		async () => {
-			const c = await browser.newContext({ javaScriptEnabled: false });
-			const p = await c.newPage();
-			await p.goto(origin + base + '/' + locale + '/locale-settings?returnTo=https://evil.example');
-			const returnTo = await p.locator('input[name=returnTo]').inputValue();
-			assert.equal(returnTo, base + '/' + locale);
-			await p.locator('button[value=dismiss]').click();
-			await p.waitForURL((u) => u.pathname === base + '/' + locale);
-			await c.close();
-		},
-		{ locale }
-	);
+	for (const malicious of [
+		'https://evil.example',
+		'/x/..//evil.example/path',
+		'/%2e%2e//evil.example/'
+	])
+		await check(
+			'no-JS invalid return fallback remains mounted: ' + malicious,
+			async () => {
+				const c = await browser.newContext({ javaScriptEnabled: false });
+				const p = await c.newPage();
+				await p.goto(
+					origin +
+						base +
+						'/' +
+						locale +
+						'/locale-settings?returnTo=' +
+						encodeURIComponent(malicious)
+				);
+				const returnTo = await p.locator('input[name=returnTo]').inputValue();
+				assert.equal(returnTo, base + '/' + locale);
+				await p.locator('button[value=dismiss]').click();
+				await p.waitForURL((u) => u.pathname === base + '/' + locale);
+				await c.close();
+			},
+			{ locale }
+		);
 await browser.close();
 const summary = {
 	cases: results.length,

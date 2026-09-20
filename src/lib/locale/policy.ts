@@ -189,7 +189,7 @@ export function createLocaleRouting<const L extends Language>(input: LocaleConfi
 			// Reject encoded path separators, controls and nested escaping, not legitimate query values.
 			if (
 				url.origin !== origin ||
-				url.pathname.startsWith('//') ||
+				!/^\/(?!\/)/.test(url.pathname) ||
 				/%(?:2f|5c|25|0[0-9a-f]|1[0-9a-f]|7f)/i.test(url.pathname)
 			)
 				return null;

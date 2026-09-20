@@ -95,7 +95,7 @@
 				<span>{i18n.t('copy.bfd402b2f6f3')}</span>
 			</a>
 			<a class="home3-sell-button" href={i18n.href('/sell-your-car')}
-				>{i18n.t('copy.00060556e8e9')}</a
+				>{i18n.t('presentation.sell')}</a
 			>
 		</div>
 	</header>
@@ -378,11 +378,11 @@
 		position: relative;
 		z-index: 10;
 		display: grid;
-		grid-template-columns: minmax(244px, 1fr) auto minmax(244px, 1fr);
+		grid-template-columns: auto minmax(0, 1fr) auto;
 		align-items: center;
 		gap: 24px;
-		height: 58px;
-		padding: 0 52px;
+		min-height: 58px;
+		padding: 8px 52px;
 		border-bottom: 1px solid rgb(15 23 42 / 0.06);
 		background: white;
 		box-shadow: 0 1px 10px rgb(15 23 42 / 0.04);
@@ -415,7 +415,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 38px;
+		gap: 12px 18px;
+		flex-wrap: wrap;
 		color: #070b14;
 		font-size: var(--sa-text-caption);
 		font-weight: var(--sa-weight-strong);
@@ -423,6 +424,7 @@
 	}
 
 	.home3-actions {
+		white-space: nowrap;
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;

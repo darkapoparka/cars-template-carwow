@@ -525,6 +525,10 @@
 		padding-top: 0;
 	}
 
+	.home2-nav__actions :global(.cars-locale-trigger) {
+		color: white;
+		border-color: rgb(255 255 255 / 0.5);
+	}
 	.home2-nav__actions :where(a, button) {
 		display: grid;
 		place-items: center;
@@ -1567,7 +1571,11 @@
 		}
 
 		.home2-search {
-			bottom: 24px;
+			position: relative;
+			left: auto;
+			bottom: auto;
+			transform: none;
+			margin: 24px auto;
 		}
 
 		.home2-search__tabs {
