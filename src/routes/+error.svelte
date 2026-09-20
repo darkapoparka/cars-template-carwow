@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LocaleTrigger from '$lib/locale/LocaleTrigger.svelte';
 	import { getI18n } from '$lib/locale/context';
 	const i18n = getI18n();
 
@@ -45,6 +46,7 @@
 				<span>{i18n.t('copy.4af5d2efadd7')}</span>
 			</a>
 		</div>
+		<LocaleTrigger footer />
 	</div>
 </main>
 

@@ -81,7 +81,7 @@
 				</li>
 				<li>
 					<DayNightSpecIcon name="fuel" size={15} />
-					{i18n.spec(shortFuel(vehicle.fuel))}
+					{shortFuel(vehicle.fuel, i18n.locale)}
 				</li>
 				<li>
 					<DayNightSpecIcon name="transmission" size={15} />

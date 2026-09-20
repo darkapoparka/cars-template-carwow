@@ -135,7 +135,7 @@
 						<span class="mh-car__brand">{car.brand}</span>
 						<strong class="mh-car__title">{car.model}</strong>
 						<span class="mh-car__meta"
-							>{car.year} · {i18n.spec(shortFuel(car.fuel))} · {i18n.distance(car.mileage)}</span
+							>{car.year} · {shortFuel(car.fuel, i18n.locale)} · {i18n.distance(car.mileage)}</span
 						>
 					</span>
 					<span class="mh-car__foot">

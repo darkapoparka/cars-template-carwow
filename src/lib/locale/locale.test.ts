@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 vi.mock('$app/environment', () => ({ building: false }));
+vi.mock('$app/paths', () => ({ base: '' }));
 import { localeHandle } from './server';
 import { resolveLocale, localeHref, routeParts, preferenceResponse } from './core';
 import { message, templateText, dealerLabel } from './messages';
@@ -136,4 +137,29 @@ describe('native redirect mount preservation', () => {
 			} as never);
 			expect(response.headers.get('location')).toBe(expected);
 		});
+});
+
+describe('preference endpoint and query boundaries', () => {
+	for (const path of [
+		'/en/api/preferences',
+		'/bg/api/preferences',
+		'/variant-3/api/preferences',
+		'/variant-3/en/api/preferences'
+	])
+		it('rejects noncanonical POST ' + path, async () => {
+			const { response, downstream } = await handle(path, 'POST');
+			expect(response.status).toBe(403);
+			expect(response.headers.getSetCookie()).toEqual([]);
+			expect(downstream).not.toHaveBeenCalled();
+		});
+	for (const lang of ['de', 'EN', 'bogus', ''])
+		it('rejects unsupported query ' + lang, async () => {
+			const { response } = await handle('/contact?lang=' + lang);
+			expect(response.status).toBe(400);
+		});
+	it('keeps explicit supported locale ahead of invalid query', async () => {
+		const { response, downstream } = await handle('/en/contact?lang=de');
+		expect(response.status).toBe(200);
+		expect(downstream).toHaveBeenCalledOnce();
+	});
 });

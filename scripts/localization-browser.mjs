@@ -8,6 +8,10 @@ fs.mkdirSync(out, { recursive: true });
 const results = [];
 const browser = await chromium.launch({ headless: true });
 const routes = [
+	'/home1',
+	'/home1-box',
+	'/presentation/home2',
+	'/presentation/home3',
 	'',
 	'/inventory',
 	'/inventory/map',
@@ -51,7 +55,9 @@ for (const locale of ['en', 'bg'])
 					: undefined
 		});
 		await context.addCookies([{ name: 'cars_prompt', value: 'v1', url: origin }]);
-		for (const route of routes) {
+		for (const route of routes.filter(
+			(route) => !process.env.LOCALE_ROUTE_FILTER || route.includes(process.env.LOCALE_ROUTE_FILTER)
+		)) {
 			const p = await context.newPage(),
 				errors = [],
 				failedResources = [];

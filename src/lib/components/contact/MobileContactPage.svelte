@@ -26,7 +26,7 @@
 	let contact = $state(
 		appPage.url.searchParams.get('phone') || appPage.url.searchParams.get('email') || ''
 	);
-	let message = $state(contactContext.message);
+	let message = $state(i18n.text(contactContext.message));
 	let companyWebsite = $state('');
 	let leadSubmitState = $state<'idle' | 'submitting' | 'success' | 'error'>('idle');
 	let leadSubmitMessage = $state('');
@@ -61,7 +61,12 @@
 				email,
 				phone: email ? null : contactValue,
 				source: 'contact-page-mobile',
-				message: buildContactMessage(contactContext, message),
+				message: buildContactMessage(
+					contactContext,
+					message,
+					i18n.text(contactContext.subject),
+					i18n.locale
+				),
 				companyWebsite
 			},
 			{ signal: controller.signal }

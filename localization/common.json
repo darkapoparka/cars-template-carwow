@@ -402,5 +402,21 @@
 	"seo.contactTradeIn.description": {
 		"en": "Contact {dealerName} about a valuation, sale or trade-in of your car.",
 		"bg": "Свържете се с {dealerName} за оценка, продажба или бартер на Вашия автомобил."
+	},
+	"presentation.find": {
+		"en": "Find a car",
+		"bg": "Намери кола"
+	},
+	"presentation.sell": {
+		"en": "Sell my car",
+		"bg": "Продай кола"
+	},
+	"presentation.reviews": {
+		"en": "Read reviews",
+		"bg": "Отзиви"
+	},
+	"presentation.electric": {
+		"en": "Electric",
+		"bg": "Електромобили"
 	}
 }

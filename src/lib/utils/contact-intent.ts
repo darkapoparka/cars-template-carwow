@@ -1,3 +1,4 @@
+import type { Locale } from '../locale/core';
 import { getDayNightVehicleBySlug, type DayNightVehicle } from '../data/daynight-vehicles';
 
 const contactSubjects = {
@@ -46,13 +47,14 @@ export function readContactIntent(searchParams: Pick<URLSearchParams, 'get'>): C
 export function buildContactMessage(
 	context: ContactContext,
 	message: string,
-	subject = context.subject
+	subject = context.subject,
+	locale: Locale = 'bg'
 ) {
 	const vehicle = context.vehicle;
 	return [
-		subject.trim() ? `Тема: ${subject.trim()}` : '',
+		subject.trim() ? `${locale === 'en' ? 'Subject' : 'Тема'}: ${subject.trim()}` : '',
 		vehicle
-			? `Автомобил: ${vehicle.shortTitle} (${vehicle.year}), ${vehicle.lot}\nОбява: /inventory/${vehicle.slug}`
+			? `${locale === 'en' ? 'Vehicle' : 'Автомобил'}: ${vehicle.shortTitle} (${vehicle.year}), ${vehicle.lot}\n${locale === 'en' ? 'Listing' : 'Обява'}: /inventory/${vehicle.slug}`
 			: '',
 		message.trim()
 	]

@@ -53,11 +53,11 @@
 	const isImportMode = $derived(importFields.isImport);
 
 	let name = $state('');
-	let subject = $state(initialSubject);
+	let subject = $state(i18n.text(initialSubject));
 	let email = $state(initialEmail);
 	let phone = $state(initialImportFields.phone);
 	let sourceUrl = $state(initialImportFields.sourceUrl);
-	let message = $state(contactContext.message);
+	let message = $state(i18n.text(contactContext.message));
 	let leadSubmitState = $state<LeadSubmitState>('idle');
 	let leadSubmitMessage = $state('');
 
@@ -90,7 +90,12 @@
 		const messageValue = readFormValue(formData, 'message');
 		const sourceUrlValue = readFormValue(formData, 'sourceUrl');
 		const companyWebsite = readFormValue(formData, 'companyWebsite');
-		const fullMessage = buildContactMessage(contactContext, messageValue, subjectValue);
+		const fullMessage = buildContactMessage(
+			contactContext,
+			messageValue,
+			subjectValue,
+			i18n.locale
+		);
 
 		leadSubmitState = 'submitting';
 		leadSubmitMessage = '';
@@ -130,7 +135,7 @@
 				? 'Благодарим! Заявката за внос е изпратена и ще Ви изпратим конкретни варианти.'
 				: 'Благодарим! Ще се свържем с Вас възможно най-скоро.';
 			name = '';
-			subject = initialSubject;
+			subject = i18n.text(initialSubject);
 			email = '';
 			phone = '';
 			sourceUrl = '';

@@ -13,9 +13,9 @@
 	let isVatDropdownOpen = $state(false);
 
 	const vatRows = $derived([
-		{ id: 'price', label: i18n.t('copy.bbae2b0a216e'), value: vehicle.priceBgn },
-		{ id: 'tax', label: i18n.t('copy.76624ccd4357'), value: 'уточняват се' },
-		{ id: 'total', label: i18n.t('copy.b57f86f937c9'), value: vehicle.priceBgn }
+		{ id: 'price', label: i18n.t('copy.bbae2b0a216e'), value: i18n.stock(vehicle.priceBgn) },
+		{ id: 'tax', label: i18n.t('copy.76624ccd4357'), value: i18n.text('уточняват се') },
+		{ id: 'total', label: i18n.t('copy.b57f86f937c9'), value: i18n.stock(vehicle.priceBgn) }
 	]);
 
 	function selectPaymentMode(mode: PaymentMode) {

@@ -1,7 +1,9 @@
 import { building } from '$app/environment';
+import { base } from '$app/paths';
 import type { Handle } from '@sveltejs/kit';
 import {
 	isResource,
+	isLocale,
 	localeHref,
 	preferenceResponse,
 	privateHeaders,
@@ -13,7 +15,7 @@ import { message } from './messages';
 /** Locale state is request-local; native auth/database/device handling runs downstream. */
 export const localeHandle: Handle = async ({ event, resolve }) => {
 	const parts = routeParts(event.url.pathname);
-	if (parts.path === '/api/preferences') return preferenceResponse(event.request);
+	if (event.url.pathname === `${base}/api/preferences`) return preferenceResponse(event.request);
 	const state = resolveLocale({
 		url: event.url,
 		cookie: event.request.headers.get('cookie'),
@@ -36,6 +38,15 @@ export const localeHandle: Handle = async ({ event, resolve }) => {
 		});
 	}
 	if (!isResource(event.url.pathname)) {
+		if (
+			!parts.locale &&
+			event.url.searchParams.has('lang') &&
+			!isLocale(event.url.searchParams.get('lang'))
+		)
+			return new Response(message(state.locale, 'locale.unsupported'), {
+				status: 400,
+				headers: privateHeaders(state.locale)
+			});
 		if (unsupportedLocale(event.url.pathname))
 			return new Response(message(state.locale, 'locale.unsupported'), {
 				status: 404,

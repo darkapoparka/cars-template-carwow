@@ -27,7 +27,8 @@ export function localizedSeo(
 	input: { title: string; description: string },
 	params?: URLSearchParams
 ) {
-	const path = routeParts(pathname).path.replace(/^\/+|\/+$/g, '');
+	const sourcePath = routeParts(pathname).path.replace(/^\/+|\/+$/g, '');
+	const path = ['home1', 'home1-box'].includes(sourcePath) ? '' : sourcePath;
 	if (!routes.has(path)) return input;
 	const intent = params?.get('intent') ?? params?.get('topic');
 	const route =

@@ -38,7 +38,8 @@
 					<span class="import-example__body">
 						<span class="import-example__brand">{car.brand}</span>
 						<strong class="import-example__title">{car.model}</strong>
-						<span class="import-example__meta">{car.year} · {i18n.spec(shortFuel(car.fuel))}</span>
+						<span class="import-example__meta">{car.year} · {shortFuel(car.fuel, i18n.locale)}</span
+						>
 					</span>
 					<span class="import-example__foot">
 						<span class="import-example__price">{car.priceEur}</span>

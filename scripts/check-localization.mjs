@@ -43,7 +43,7 @@ function visit(node, callback, parent) {
 	}
 }
 for (const file of files('src').filter(
-	(file) => file.endsWith('.svelte') && !/[\\/](admin|ui|presentation)[\\/]/.test(file)
+	(file) => file.endsWith('.svelte') && !/[\\/](admin|ui)[\\/]/.test(file)
 )) {
 	const source = read(file),
 		ast = parse(source, { modern: true });
@@ -87,11 +87,7 @@ const result = {
 	nativeKeyUses: uses.length,
 	scope:
 		'Literal public Svelte copy, native key existence, catalog parity and dealer isolation. Dynamic copy and runtime interactions require browser evidence.',
-	exclusions: [
-		'Admin is English-only and separate',
-		'UI primitives have caller-owned labels',
-		'Presentation alternatives are not public locale release routes'
-	],
+	exclusions: ['Admin is English-only and separate', 'UI primitives have caller-owned labels'],
 	problems
 };
 fs.mkdirSync('.audit/localization', { recursive: true });

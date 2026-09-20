@@ -2,7 +2,6 @@
 	import { setLocaleContext, getI18n } from '$lib/locale/context';
 	import { routeParts } from '$lib/locale/core';
 	import LocalePreferences from '$lib/locale/LocalePreferences.svelte';
-	import LocaleTrigger from '$lib/locale/LocaleTrigger.svelte';
 	import geistCyrillicFont from '@fontsource-variable/geist/files/geist-cyrillic-wght-normal.woff2?url';
 	import geistLatinFont from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 	import { onMount } from 'svelte';
@@ -110,9 +109,6 @@
 <a class="skip-to-content" href="#main-content">{i18n.t('a11y.skipToContent')}</a>
 
 {#if !usesStandaloneAppChrome}
-	{#if page.error || applicationPath === '/locale-settings'}<div class="locale-control">
-			<LocaleTrigger />
-		</div>{/if}
 	<LocalePreferences />
 {/if}
 
@@ -134,15 +130,6 @@
 {/if}
 
 <style>
-	.locale-control {
-		position: fixed;
-		right: 12px;
-		bottom: 100px;
-		z-index: 1000;
-		background: var(--sa-surface);
-		color: var(--sa-ink);
-		border-radius: var(--sa-r-sm);
-	}
 	@media (min-width: 992px) {
 		:global(html) {
 			scrollbar-gutter: stable;
