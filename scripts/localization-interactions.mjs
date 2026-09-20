@@ -183,6 +183,11 @@ for (const locale of ['en', 'bg'])
 			'saved and compared vehicle facts render in the chosen language',
 			async () => {
 				await goto(p, '/' + locale + '/inventory/mercedes-benz-gla-45-amg-405323');
+				const detailTrigger = p.locator('[data-locale-selector]:visible').first();
+				await detailTrigger.click();
+				await p.locator('[data-locale-dialog]').waitFor({ state: 'visible' });
+				await p.keyboard.press('Escape');
+				await p.locator('[data-locale-dialog]').waitFor({ state: 'hidden' });
 				await p
 					.locator(
 						width < 992

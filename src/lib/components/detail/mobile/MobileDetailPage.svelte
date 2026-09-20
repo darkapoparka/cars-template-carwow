@@ -556,6 +556,11 @@
 		pointer-events: none;
 	}
 
+	.mobile-detail__topbar-right :global(.cars-locale-trigger) {
+		background: var(--sa-surface);
+		color: var(--sa-ink);
+		pointer-events: auto;
+	}
 	.mobile-detail__topbar-right {
 		display: flex;
 		align-items: center;
