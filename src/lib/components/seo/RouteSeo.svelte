@@ -26,10 +26,15 @@
 	} = $props();
 
 	const metadata = $derived(
-		localizedSeo(i18n.locale, page.url.pathname, {
-			title,
-			description: description || DEFAULT_DESCRIPTION
-		})
+		localizedSeo(
+			i18n.locale,
+			page.url.pathname,
+			{
+				title,
+				description: description || DEFAULT_DESCRIPTION
+			},
+			page.url.searchParams
+		)
 	);
 	const metaDescription = $derived(metadata.description);
 

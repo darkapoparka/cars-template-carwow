@@ -11,7 +11,7 @@
 		compact?: boolean;
 		fullLabel?: boolean;
 		footer?: boolean;
-		beforeOpen?: () => void | Promise<void>;
+		beforeOpen?: () => void | HTMLElement | Promise<void | HTMLElement>;
 	} = $props();
 	const fallback = $derived(
 		`${i18n.href('/locale-settings')}?returnTo=${encodeURIComponent(page.url.pathname + page.url.search + page.url.hash)}`
@@ -20,8 +20,8 @@
 		if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
 			return;
 		event.preventDefault();
-		const opener = event.currentTarget;
-		await beforeOpen?.();
+		const originalOpener = event.currentTarget;
+		const opener = (await beforeOpen?.()) ?? originalOpener;
 		window.dispatchEvent(new CustomEvent('cars:locale-open', { detail: { opener } }));
 	}
 </script>

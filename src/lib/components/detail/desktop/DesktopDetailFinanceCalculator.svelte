@@ -92,19 +92,23 @@
 	<div class="md-grid-cols-1 grid grid-cols-3 gap-8">
 		<div>
 			<p class="mb-4">{i18n.t('copy.9bb5c9b15d01')}</p>
-			<p class="font-weight-600">{estimate.valid ? formatFinanceEur(estimate.monthly) : '—'}</p>
+			<p class="font-weight-600">
+				{estimate.valid ? formatFinanceEur(estimate.monthly, i18n.locale) : '—'}
+			</p>
 		</div>
 
 		<div>
 			<p class="mb-4">{i18n.t('copy.05356987fb4e')}</p>
 			<p class="font-weight-600">
-				{estimate.valid ? formatFinanceEur(estimate.interest + estimate.fees) : '—'}
+				{estimate.valid ? formatFinanceEur(estimate.interest + estimate.fees, i18n.locale) : '—'}
 			</p>
 		</div>
 
 		<div>
 			<p class="mb-4">{i18n.t('copy.916e0277bed7')}</p>
-			<p class="font-weight-600">{estimate.valid ? formatFinanceEur(estimate.price) : '—'}</p>
+			<p class="font-weight-600">
+				{estimate.valid ? formatFinanceEur(estimate.price, i18n.locale) : '—'}
+			</p>
 		</div>
 	</div>
 	<p class="h7 text-secondary">

@@ -75,7 +75,7 @@ for (const locale of ['en', 'bg'])
 				await p.evaluate(() => document.fonts.ready);
 				await p.waitForTimeout(120);
 				const data = await p.evaluate(
-					({ locale }) => {
+					({ locale, base }) => {
 						const visible = (e) =>
 							e.getClientRects().length &&
 							getComputedStyle(e).visibility !== 'hidden' &&
@@ -133,7 +133,25 @@ for (const locale of ['en', 'bg'])
 							tabTextOverflow: tabs,
 							unlocalizedLinks: links,
 							manualControl: [...document.querySelectorAll('[data-locale-selector]')].some(visible),
-							title: document.title
+							title: document.title,
+							metadata: {
+								description: document.querySelector('meta[name=description]')?.content ?? '',
+								ogLocale: document.querySelector('meta[property="og:locale"]')?.content ?? '',
+								ogImage: document.querySelector('meta[property="og:image"]')?.content ?? '',
+								alternates: [...document.querySelectorAll('link[hreflang]')].map((e) => ({
+									lang: e.hreflang,
+									href: e.href
+								}))
+							},
+							assetMountLeaks: base
+								? [...document.images]
+										.map((e) => e.currentSrc || e.src)
+										.filter(
+											(h) =>
+												h.startsWith(location.origin + '/') &&
+												!new URL(h).pathname.startsWith(base + '/')
+										)
+								: []
 						};
 					},
 					{ locale, base }
@@ -142,6 +160,17 @@ for (const locale of ['en', 'bg'])
 				const pass =
 					response.status() === expected &&
 					data.lang === locale &&
+					(expected !== 200 ||
+						(data.metadata.ogLocale === (locale === 'en' ? 'en_GB' : 'bg_BG') &&
+							data.metadata.alternates.some(
+								(a) => a.lang === 'en' && new URL(a.href).pathname.startsWith(base + '/en')
+							) &&
+							data.metadata.alternates.some(
+								(a) => a.lang === 'bg' && new URL(a.href).pathname.startsWith(base + '/bg')
+							) &&
+							(locale !== 'en' || !/[А-Яа-я]/.test(data.metadata.description)) &&
+							(!base || new URL(data.metadata.ogImage).pathname.startsWith(base + '/')))) &&
+					!data.assetMountLeaks.length &&
 					!errors.length &&
 					!failedResources.length &&
 					!data.untranslated.length &&

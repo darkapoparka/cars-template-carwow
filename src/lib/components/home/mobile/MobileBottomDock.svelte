@@ -82,6 +82,7 @@
 		return currentPath === path || (path !== '/' && currentPath.startsWith(`${path}/`));
 	}
 
+	let menuButton: HTMLButtonElement;
 	async function openMenu(event: MouseEvent) {
 		if (event.currentTarget instanceof HTMLElement)
 			event.currentTarget.focus({ preventScroll: true });
@@ -220,6 +221,7 @@
 		<span class="mobile-bottom-dock__label">{i18n.t('copy.995bfafd0b63')}</span>
 	</a>
 	<button
+		bind:this={menuButton}
 		class={menuOpen || isMenuSection
 			? 'mobile-bottom-dock__item is-active'
 			: 'mobile-bottom-dock__item'}
@@ -288,6 +290,7 @@
 			fullLabel
 			beforeOpen={() => {
 				menuOpen = false;
+				return menuButton;
 			}}
 		/>
 		<nav class="mobile-menu-sheet__nav" aria-label={i18n.t('copy.e638fc3afbee')}>

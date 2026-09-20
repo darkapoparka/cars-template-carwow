@@ -341,3 +341,28 @@ test('invalid UTF-8 is rejected instead of silently replacing bytes', async () =
 	const req = request(choice, { body: new Uint8Array([0xff, 0xfe]) });
 	assert.equal((await make().preferenceResponse(req)).status, 400);
 });
+for (const returnTo of [
+	'/x/..//evil.example/path',
+	'/%2e%2e//evil.example/',
+	'/..//evil.example/path?x=1'
+]) {
+	for (const action of ['save', 'dismiss'])
+		for (const type of ['application/json', 'application/x-www-form-urlencoded']) {
+			test(`normalized return rejected: ${action} ${type} ${returnTo}`, async () => {
+				const data = { ...choice, action, returnTo };
+				const response = await make().preferenceResponse(
+					request(data, {
+						headers: { 'content-type': type },
+						body:
+							type === 'application/json'
+								? JSON.stringify(data)
+								: new URLSearchParams(data).toString()
+					})
+				);
+				assert.equal(response.status, 400);
+				assert.equal(response.headers.get('location'), null);
+				assert.equal(response.headers.getSetCookie().length, 0);
+				assert.equal(make().safeReturnPath(returnTo, 'https://dealer.example'), null);
+			});
+		}
+}

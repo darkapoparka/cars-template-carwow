@@ -386,5 +386,21 @@
 	"inventory.selection.bodies": {
 		"en": "body styles",
 		"bg": "каросерии"
+	},
+	"seo.contactImport.title": {
+		"en": "Import a car | {dealerName}",
+		"bg": "Внос на автомобил | {dealerName}"
+	},
+	"seo.contactImport.description": {
+		"en": "Send a listing or describe the car you want to import with {dealerName}.",
+		"bg": "Изпратете обява или опишете желания автомобил за внос с {dealerName}."
+	},
+	"seo.contactTradeIn.title": {
+		"en": "Sell or trade in your car | {dealerName}",
+		"bg": "Продажба или бартер на автомобил | {dealerName}"
+	},
+	"seo.contactTradeIn.description": {
+		"en": "Contact {dealerName} about a valuation, sale or trade-in of your car.",
+		"bg": "Свържете се с {dealerName} за оценка, продажба или бартер на Вашия автомобил."
 	}
 }

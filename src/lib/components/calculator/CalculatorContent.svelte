@@ -20,7 +20,7 @@
 	let inputs = $derived(readFinanceInputs(page.url.searchParams));
 	const estimate = $derived(calculateFinance(inputs));
 	const amount = (value: number | undefined) =>
-		value === undefined ? '—' : formatFinanceEur(value);
+		value === undefined ? '—' : formatFinanceEur(value, i18n.locale);
 
 	const budgetBoxes = $derived(
 		(inventorySummary()?.budgetBuckets ?? []).map((tier) => ({

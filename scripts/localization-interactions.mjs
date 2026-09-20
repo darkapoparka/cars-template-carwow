@@ -161,6 +161,25 @@ for (const locale of ['en', 'bg'])
 			info
 		);
 		await check(
+			'finance invalid inputs render native errors',
+			async () => {
+				for (const query of [
+					'price=invalid',
+					'months=0',
+					'months=121',
+					'deposit=999999',
+					'tradeIn=999999',
+					'annualRate=101'
+				]) {
+					await goto(p, '/' + locale + '/calculator?' + query);
+					const message = await p.locator('[role=alert]').innerText();
+					assert.ok(message.length > 10);
+					assert.equal(/[А-Яа-я]/.test(message), locale === 'bg', message);
+				}
+			},
+			info
+		);
+		await check(
 			'saved and compared vehicle facts render in the chosen language',
 			async () => {
 				await goto(p, '/' + locale + '/inventory/mercedes-benz-gla-45-amg-405323');
@@ -197,7 +216,11 @@ for (const locale of ['en', 'bg'])
 								locale === 'en' ? 'Country and language' : 'Държава и език'
 							)
 						);
+						await p.locator('#mobile-menu-sheet [data-locale-selector]').click();
+						await p.locator('[data-locale-dialog]').waitFor({ state: 'visible' });
 						await p.keyboard.press('Escape');
+						await p.waitForTimeout(350);
+						assert.equal(await menu.evaluate((el) => document.activeElement === el), true);
 					} else throw Error('Expected mobile menu unavailable');
 				} else {
 					await p.locator('.inventory-filter-triggers button').first().click();
@@ -322,6 +345,50 @@ await check('late save response cannot navigate after dismiss and reopen', async
 	assert.equal(new URL(p.url()).pathname, base + '/en');
 	assert.equal(await d.isVisible(), true);
 	assert.equal(await d.locator('button[type=submit]').isEnabled(), true);
+	await c.close();
+});
+await check('normalized returns fail closed for forms and JSON', async () => {
+	const c = await browser.newContext();
+	for (const returnTo of [
+		'/x/..//evil.example/path',
+		'/%2e%2e//evil.example/',
+		'/..//evil.example/path?x=1'
+	])
+		for (const action of ['save', 'dismiss'])
+			for (const type of ['application/json', 'application/x-www-form-urlencoded']) {
+				const data = { action, locale: 'en', country: 'BG', returnTo };
+				const response = await c.request.post(origin + base + '/api/preferences', {
+					headers: { origin, 'content-type': type },
+					data:
+						type === 'application/json'
+							? JSON.stringify(data)
+							: new URLSearchParams(data).toString(),
+					maxRedirects: 0
+				});
+				assert.equal(response.status(), 400);
+				assert.equal(response.headers().location, undefined);
+				assert.equal(response.headers()['set-cookie'], undefined);
+			}
+	await c.close();
+});
+await check('dialog rejects a mocked normalized external destination', async () => {
+	const c = await browser.newContext();
+	await c.addCookies([{ name: 'cars_prompt', value: 'v1', url: origin }]);
+	const p = await c.newPage();
+	await p.route('**/api/preferences', (route) =>
+		route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ destination: '/x/..//evil.example/path' })
+		})
+	);
+	await goto(p, '/en');
+	await p.locator('[data-locale-selector]:visible').first().click();
+	const d = p.locator('[data-locale-dialog]');
+	await d.locator('button[type=submit]').click();
+	await d.locator('[role=alert]').waitFor();
+	assert.equal(new URL(p.url()).origin, origin);
+	assert.equal(await d.isVisible(), true);
 	await c.close();
 });
 await check('admin stays English and redirects within deployment base', async () => {

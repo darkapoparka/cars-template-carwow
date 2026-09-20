@@ -24,11 +24,19 @@ const routes = new Set([
 export function localizedSeo(
 	locale: Locale,
 	pathname: string,
-	input: { title: string; description: string }
+	input: { title: string; description: string },
+	params?: URLSearchParams
 ) {
 	const path = routeParts(pathname).path.replace(/^\/+|\/+$/g, '');
 	if (!routes.has(path)) return input;
-	const key = 'seo.' + (path || 'home').replaceAll('/', '.');
+	const intent = params?.get('intent') ?? params?.get('topic');
+	const route =
+		path === 'contact' && intent === 'import'
+			? 'contactImport'
+			: path === 'contact' && intent === 'trade-in'
+				? 'contactTradeIn'
+				: path || 'home';
+	const key = 'seo.' + route.replaceAll('/', '.');
 	return {
 		title: message(locale, (key + '.title') as MessageKey),
 		description: message(locale, (key + '.description') as MessageKey)

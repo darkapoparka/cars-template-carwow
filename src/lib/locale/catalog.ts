@@ -117,6 +117,12 @@ export const en = {
 	'inventory.selection.brands': 'brands',
 	'inventory.selection.models': 'models',
 	'inventory.selection.bodies': 'body styles',
+	'seo.contactImport.title': 'Import a car | {dealerName}',
+	'seo.contactImport.description':
+		'Send a listing or describe the car you want to import with {dealerName}.',
+	'seo.contactTradeIn.title': 'Sell or trade in your car | {dealerName}',
+	'seo.contactTradeIn.description':
+		'Contact {dealerName} about a valuation, sale or trade-in of your car.',
 	'copy.3667f9f676c2': 'Find your next car',
 	'copy.f20a4411e8d6': 'View cars',
 	'copy.3618c24ea260': 'Contact and social media',
@@ -1854,6 +1860,12 @@ export const bg = {
 	'inventory.selection.brands': 'марки',
 	'inventory.selection.models': 'модела',
 	'inventory.selection.bodies': 'каросерии',
+	'seo.contactImport.title': 'Внос на автомобил | {dealerName}',
+	'seo.contactImport.description':
+		'Изпратете обява или опишете желания автомобил за внос с {dealerName}.',
+	'seo.contactTradeIn.title': 'Продажба или бартер на автомобил | {dealerName}',
+	'seo.contactTradeIn.description':
+		'Свържете се с {dealerName} за оценка, продажба или бартер на Вашия автомобил.',
 	'copy.3667f9f676c2': 'Намери следващия си автомобил',
 	'copy.f20a4411e8d6': 'Виж автомобилите',
 	'copy.3618c24ea260': 'Контакти и социални мрежи',
