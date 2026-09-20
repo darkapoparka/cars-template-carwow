@@ -92,6 +92,7 @@
 		object-position: left center;
 	}
 	.mobile-hero-bar__actions {
+		color: #fff;
 		display: flex;
 		flex: 0 0 auto;
 		align-items: center;

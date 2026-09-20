@@ -58,6 +58,7 @@
 	}
 
 	.mobile-home-header--banner {
+		color: #fff;
 		background: #08090b;
 		border-bottom: 0;
 		backdrop-filter: none;
