@@ -255,7 +255,7 @@
 							<a
 								class="inline-block text-sa-sm leading-[22px] font-medium text-sa-surface/60 no-underline transition duration-150 ease-sa hover:text-sa-surface focus-visible:text-sa-surface"
 								href={i18n.href(resolve(link.href))}
-								title={link.title}>{i18n.text(link.label)}</a
+								title={i18n.text(link.title)}>{i18n.text(link.label)}</a
 							>
 						</li>
 					{/each}

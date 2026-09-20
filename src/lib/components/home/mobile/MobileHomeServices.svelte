@@ -42,7 +42,7 @@
 	);
 </script>
 
-<section class="mobile-home-promos" aria-label={sectionLabel}>
+<section class="mobile-home-promos" aria-label={i18n.text(sectionLabel)}>
 	{#each visiblePromos as promo (promo.href)}
 		<a class="mobile-home-promo" href={i18n.href(resolve(promo.href))}>
 			<MobileActionCardContent

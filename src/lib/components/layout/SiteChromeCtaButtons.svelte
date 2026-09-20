@@ -26,11 +26,11 @@
 					: 'h-11 min-h-11 border-sa-red bg-sa-red px-5 text-[length:var(--sa-text-caption)] hover:border-sa-dark hover:bg-sa-dark focus-visible:border-sa-dark focus-visible:bg-sa-dark max-[1180px]:px-4'
 		]}
 		data-daynight-header-tool="sell"
-		aria-label={daynightSite.sellCarCta}
-		title={daynightSite.sellCarCta}
+		aria-label={i18n.text(daynightSite.sellCarCta)}
+		title={i18n.text(daynightSite.sellCarCta)}
 	>
 		{#if mobile}
-			{compact ? i18n.t('copy.6510e880c790') : daynightSite.sellCarCta}
+			{compact ? i18n.t('copy.6510e880c790') : i18n.text(daynightSite.sellCarCta)}
 		{:else}
 			<SiteChromeIcon name="plus-circle" />
 		{/if}

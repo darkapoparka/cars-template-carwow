@@ -78,7 +78,9 @@
 	data-daynight-has-tags={hasTags ? 'true' : undefined}
 	aria-live="polite"
 	aria-label={hasTags
-		? i18n.t('pattern.f073ac9807ac', { v0: filters.appliedTags.map((tag) => tag.label).join(', ') })
+		? i18n.t('pattern.f073ac9807ac', {
+				v0: filters.appliedTags.map((tag) => i18n.spec(tag.label)).join(', ')
+			})
 		: i18n.t('copy.bf7b7d17770e')}
 	hidden={!hasTags}
 	style:display={hasTags ? '' : 'none'}
@@ -90,11 +92,11 @@
 				type="button"
 				data-daynight-clear-field={tag.field}
 				data-daynight-clear-value={tag.value}
-				aria-label={i18n.t('pattern.d5de9d8f05c6', { v0: tag.label })}
-				title={tag.label}
+				aria-label={i18n.t('pattern.d5de9d8f05c6', { v0: i18n.spec(tag.label) })}
+				title={i18n.spec(tag.label)}
 				onclick={() => filters.removeTag(tag.field, tag.value)}
 			>
-				<span class="select-item__label">{tag.label}</span>
+				<span class="select-item__label">{i18n.spec(tag.label)}</span>
 				<img
 					src={i18n.asset('/assets/icons/X.svg')}
 					alt=""

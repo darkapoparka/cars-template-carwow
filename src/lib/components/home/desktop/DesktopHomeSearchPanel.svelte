@@ -315,10 +315,10 @@
 							class="hero-intent__filter"
 							disabled={!hydrated}
 							class:is-selected={!!selectedQuickValues[field.name]}
-							aria-label={`${field.label}: ${quickFullLabel(field)}`}
+							aria-label={`${i18n.text(field.label)}: ${i18n.spec(quickFullLabel(field))}`}
 							aria-haspopup="dialog"
 							aria-expanded={activeQuickFieldName === field.name}
-							title={quickFullLabel(field)}
+							title={i18n.spec(quickFullLabel(field))}
 							onclick={(event) => openQuickField(field, event)}
 						>
 							<span>{i18n.spec(quickDisplayLabel(field))}</span>
@@ -474,10 +474,10 @@
 				<button
 					type="button"
 					class="filter-select-dropdown__text"
-					aria-label={`${field.label}: ${quickFullLabel(field)}`}
+					aria-label={`${i18n.text(field.label)}: ${i18n.spec(quickFullLabel(field))}`}
 					aria-haspopup="dialog"
 					aria-expanded={activeQuickFieldName === field.name}
-					title={quickFullLabel(field)}
+					title={i18n.spec(quickFullLabel(field))}
 					onclick={(event) => openQuickField(field, event)}
 				>
 					<span data-daynight-quick-value="">{i18n.spec(quickDisplayLabel(field))}</span>
@@ -514,7 +514,7 @@
 {#if activeQuickField}
 	<dialog
 		class="daynight-hero-filter-sheet hero-intent-dialog"
-		aria-label={activeQuickField.label}
+		aria-label={i18n.text(activeQuickField.label)}
 		onkeydown={keepQuickDialogFocus}
 		oncancel={(event) => {
 			event.preventDefault();
@@ -553,10 +553,10 @@
 					class="daynight-hero-filter-sheet__search"
 					autocomplete="off"
 					placeholder={i18n.t('pattern.b73b60b23e89', {
-						v0: activeQuickField.label.toLocaleLowerCase('bg-BG')
+						v0: i18n.text(activeQuickField.label).toLocaleLowerCase(i18n.locale)
 					})}
 					aria-label={i18n.t('pattern.13a9318d4e85', {
-						v0: activeQuickField.label.toLocaleLowerCase('bg-BG')
+						v0: i18n.text(activeQuickField.label).toLocaleLowerCase(i18n.locale)
 					})}
 					bind:value={quickFilterQuery}
 				/>

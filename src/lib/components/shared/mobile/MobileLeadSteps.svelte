@@ -9,7 +9,7 @@
 	const content = $derived(leadInfoContent[kind]);
 </script>
 
-<section aria-label={content.title}>
+<section aria-label={i18n.text(content.title)}>
 	<MobileLeadImageBanner
 		title={i18n.t('copy.4dbb828642ef')}
 		action={i18n.t('copy.52ac512573fc')}

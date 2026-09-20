@@ -52,7 +52,7 @@
 							src={i18n.asset(
 								`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&playsinline=1&hl=bg`
 							)}
-							title={video.title}
+							title={i18n.text(video.title)}
 							allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
 							allowfullscreen
 							referrerpolicy="strict-origin-when-cross-origin"
@@ -61,7 +61,7 @@
 							class="mobile-video-card__close"
 							type="button"
 							onclick={stop}
-							aria-label={i18n.t('pattern.a582794b4e06', { v0: video.title })}
+							aria-label={i18n.t('pattern.a582794b4e06', { v0: i18n.text(video.title) })}
 						>
 							<X size={18} strokeWidth={2.5} />
 						</button>
@@ -70,7 +70,7 @@
 							class="mobile-video-card__play"
 							type="button"
 							onclick={(event) => play(video.id, event)}
-							aria-label={i18n.t('pattern.23e9e4cc63e8', { v0: video.title })}
+							aria-label={i18n.t('pattern.23e9e4cc63e8', { v0: i18n.text(video.title) })}
 						>
 							<img
 								src={i18n.asset(mobileImageSrc(video.thumbnail))}

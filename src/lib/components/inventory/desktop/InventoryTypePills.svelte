@@ -87,10 +87,10 @@
 			aria-current={active ? 'true' : 'false'}
 			aria-label={pill.clearsAll
 				? i18n.t('copy.507ff40ff784')
-				: i18n.t('pattern.8b15a08c1b53', { v0: pill.label })}
+				: i18n.t('pattern.8b15a08c1b53', { v0: i18n.spec(pill.label) })}
 			title={pill.clearsAll
 				? i18n.t('copy.507ff40ff784')
-				: i18n.t('pattern.8b15a08c1b53', { v0: pill.label })}
+				: i18n.t('pattern.8b15a08c1b53', { v0: i18n.spec(pill.label) })}
 			onclick={(event) => handlePillClick(event, pill)}
 		>
 			{@render pillIcon()}

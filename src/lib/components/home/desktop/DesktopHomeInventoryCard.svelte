@@ -34,7 +34,7 @@
 	data-daynight-mileage={vehicle.mileageValue}
 	data-daynight-condition={condition}
 	data-daynight-features={featureList}
-	data-daynight-title={vehicle.shortTitle}
+	data-daynight-title={vehicle.title}
 	data-daynight-year={vehicle.year}
 >
 	<div class="daynight-home-inventory-card__top">
@@ -63,7 +63,7 @@
 				<a
 					href={i18n.href(resolve('/inventory/[slug]', { slug: vehicle.slug }))}
 					class="daynight-home-inventory-card__badge-link"
-					aria-label={`${vehicle.transmission} - ${vehicle.shortTitle}`}
+					aria-label={`${i18n.spec(vehicle.transmission)} - ${vehicle.shortTitle}`}
 					>{i18n.spec(vehicle.transmission)}</a
 				>
 			</p>
@@ -81,7 +81,7 @@
 		<p class="daynight-home-inventory-card__title">
 			<a
 				href={i18n.href(resolve('/inventory/[slug]', { slug: vehicle.slug }))}
-				title={vehicle.title}>{vehicle.shortTitle}</a
+				title={vehicle.shortTitle}>{vehicle.shortTitle}</a
 			>
 		</p>
 		<ul class="daynight-home-inventory-card__specs">

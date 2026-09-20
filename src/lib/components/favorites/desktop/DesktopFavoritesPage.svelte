@@ -22,7 +22,7 @@
 	);
 	const countLabel = $derived(
 		vehicles.length === 1
-			? '1 запазен автомобил'
+			? i18n.text('1 запазен автомобил')
 			: i18n.t('pattern.0041639e21e7', { v0: vehicles.length })
 	);
 </script>

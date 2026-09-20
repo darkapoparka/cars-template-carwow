@@ -116,8 +116,8 @@
 			class="mobile-inventory-tool"
 			class:is-active={sortActive}
 			type="button"
-			aria-label={i18n.t('copy.6fb79ad30738') + sortLabel}
-			title={i18n.t('copy.6fb79ad30738') + sortLabel}
+			aria-label={i18n.t('copy.6fb79ad30738') + i18n.text(sortLabel)}
+			title={i18n.t('copy.6fb79ad30738') + i18n.text(sortLabel)}
 			aria-haspopup="dialog"
 			onclick={onOpenSort}
 		>

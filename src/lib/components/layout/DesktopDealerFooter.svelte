@@ -44,7 +44,7 @@
 				</div>
 			</div>
 			{#each groups as group (group.title)}
-				<nav aria-label={group.title}>
+				<nav aria-label={i18n.text(group.title)}>
 					<h2>{i18n.text(group.title)}</h2>
 					<ul>
 						{#each group.links as link (link.href)}

@@ -167,7 +167,7 @@
 								src={i18n.asset(desktopOnlyImagePlaceholder)}
 								srcset={desktopOnlySrcset(card.image, 1536)}
 								sizes={desktopOnlySizes('44vw')}
-								alt={card.alt}
+								alt={i18n.text(card.alt)}
 							/>
 							<div class="daynight-home-action-card__content">
 								<p class="daynight-home-action-card__heading">

@@ -42,7 +42,7 @@
 	data-daynight-mileage={vehicle.mileageValue}
 	data-daynight-condition={condition}
 	data-daynight-features={vehicle.features.join(' | ')}
-	data-daynight-title={vehicle.shortTitle}
+	data-daynight-title={vehicle.title}
 	data-daynight-year={vehicle.year}
 >
 	<div class="top">
@@ -73,7 +73,7 @@
 				<a
 					href={i18n.href(resolve('/inventory/[slug]', { slug: vehicle.slug }))}
 					class="text-xs text-white"
-					aria-label={`${vehicle.transmission} - ${vehicle.shortTitle} ${vehicle.year}`}
+					aria-label={`${i18n.spec(vehicle.transmission)} - ${vehicle.shortTitle} ${vehicle.year}`}
 					>{i18n.spec(vehicle.transmission)}</a
 				>
 			</p>

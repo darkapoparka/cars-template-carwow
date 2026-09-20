@@ -45,7 +45,7 @@
 							class={homePhoneClasses}
 							data-daynight-header-tool="phone"
 							aria-label={i18n.t('pattern.ab13c281dac3', { v0: daynightSite.phoneLabel })}
-							title={daynightSite.phoneCta}
+							title={i18n.text(daynightSite.phoneCta)}
 						>
 							<SiteChromeIcon name="phone" />
 						</a>
@@ -53,8 +53,8 @@
 							href={i18n.href(resolve('/contact'))}
 							class={headerToolClasses}
 							data-daynight-header-tool="contact"
-							aria-label={daynightSite.accountCta}
-							title={daynightSite.accountCta}
+							aria-label={i18n.text(daynightSite.accountCta)}
+							title={i18n.text(daynightSite.accountCta)}
 						>
 							<SiteChromeIcon name="account" />
 						</a>

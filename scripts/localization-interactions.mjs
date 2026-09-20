@@ -324,6 +324,17 @@ await check('late save response cannot navigate after dismiss and reopen', async
 	assert.equal(await d.locator('button[type=submit]').isEnabled(), true);
 	await c.close();
 });
+await check('admin stays English and redirects within deployment base', async () => {
+	const c = await browser.newContext();
+	const response = await c.request.get(origin + base + '/admin', { maxRedirects: 0 });
+	assert.equal(response.status(), 303);
+	assert.ok(response.headers().location.startsWith(base + '/admin/login?'));
+	const p = await c.newPage();
+	await p.goto(origin + base + '/admin/login');
+	assert.equal(await p.locator('html').getAttribute('lang'), 'en');
+	assert.ok(!(await p.locator('body').innerText()).includes('Internal Error'));
+	await c.close();
+});
 await browser.close();
 const summary = {
 	cases: results.length,

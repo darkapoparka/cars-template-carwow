@@ -133,7 +133,7 @@
 						<a class="about-team-card__image" href={i18n.href(resolve(teamHref(member.slug)))}
 							><img
 								src={i18n.asset(resolve(member.image as AssetHref))}
-								alt={i18n.t('pattern.141e9e4edaa0', { v0: member.name })}
+								alt={i18n.t('pattern.141e9e4edaa0', { v0: i18n.text(member.name) })}
 								width="500"
 								height="500"
 								loading="lazy"
@@ -148,7 +148,7 @@
 								<a
 									class="about-seller-contact"
 									href={i18n.href(`tel:${member.phone}`)}
-									aria-label={i18n.t('pattern.83d5aea4691e', { v0: member.role })}
+									aria-label={i18n.t('pattern.83d5aea4691e', { v0: i18n.text(member.role) })}
 									><Phone size={18} /></a
 								>
 							</div>
@@ -169,7 +169,7 @@
 			<img
 				class="about-story__image"
 				src={i18n.asset(resolve('/assets/images/services/service-card-trade-in-daynight-v2.webp'))}
-				alt={`Илюстративна визия на ${daynightSite.shortName}: Mercedes-Benz и Lamborghini с ключове за бартер`}
+				alt={i18n.t('pattern.52479dcffce2', { v0: daynightSite.shortName })}
 				width="1200"
 				height="800"
 				loading="lazy"

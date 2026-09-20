@@ -329,7 +329,7 @@
 								onclick={() => toggleBrand(option.value)}
 							>
 								{@render brandMark(option.value, 17)}
-								<span>{option.value}</span>
+								<span>{i18n.spec(option.value)}</span>
 								<small>{option.count}</small>
 							</button>
 						{/each}
@@ -363,7 +363,7 @@
 					<div class="mobile-search-options__heading">
 						<span id="mobile-search-fuel">{i18n.t('copy.b52d6c364219')}</span>
 						{#if fuel}
-							<small>{fuel}</small>
+							<small>{i18n.spec(fuel)}</small>
 						{/if}
 					</div>
 					<div class="mobile-search-options__chips">
@@ -376,7 +376,7 @@
 								onclick={() => setFuel(isSelected ? '' : option.value)}
 							>
 								<Fuel size={16} strokeWidth={2.2} aria-hidden="true" />
-								<span>{option.value}</span>
+								<span>{i18n.spec(option.value)}</span>
 								<small>{option.count}</small>
 							</button>
 						{/each}
@@ -431,7 +431,7 @@
 									<span>{brandInitials(option.value)}</span>
 								{/if}
 							</span>
-							<span>{option.value}</span>
+							<span>{i18n.spec(option.value)}</span>
 						</span>
 						{#if isSelected}
 							<span class="mobile-filter-options__selected-mark" aria-hidden="true"></span>

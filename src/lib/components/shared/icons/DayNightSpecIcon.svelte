@@ -9,6 +9,7 @@
 </script>
 
 <script lang="ts">
+	import { base } from '$app/paths';
 	const iconPaths: Record<DayNightSpecIconName, string> = {
 		body: '/assets/icons/auto.svg',
 		engine: '/assets/icons/engine.svg',
@@ -20,7 +21,7 @@
 
 	let { name, size = 14 }: { name: DayNightSpecIconName; size?: number } = $props();
 
-	const path = $derived(iconPaths[name]);
+	const path = $derived(base + iconPaths[name]);
 </script>
 
 <span

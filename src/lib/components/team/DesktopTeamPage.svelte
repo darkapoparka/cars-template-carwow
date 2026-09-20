@@ -133,8 +133,8 @@
 			<li>
 				<a
 					href={i18n.href(`mailto:${member.email}`)}
-					title={i18n.t('pattern.38be24678d5c', { v0: member.name })}
-					aria-label={i18n.t('pattern.38be24678d5c', { v0: member.name })}
+					title={i18n.t('pattern.38be24678d5c', { v0: i18n.text(member.name) })}
+					aria-label={i18n.t('pattern.38be24678d5c', { v0: i18n.text(member.name) })}
 				>
 					{@render mailIcon(20)}
 				</a>
@@ -183,7 +183,7 @@
 			<a
 				class="flex w-full"
 				href={i18n.href(resolve(teamHref(member.slug)))}
-				aria-label={i18n.t('pattern.c09d582164e0', { v0: member.name })}
+				aria-label={i18n.t('pattern.c09d582164e0', { v0: i18n.text(member.name) })}
 			>
 				<img
 					class="w-full"

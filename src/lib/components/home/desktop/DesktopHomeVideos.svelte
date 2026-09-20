@@ -38,7 +38,7 @@
 							src={i18n.asset(
 								`https://www.youtube-nocookie.com/embed/${video.id}?playsinline=1&rel=0&hl=bg`
 							)}
-							title={video.title}
+							title={i18n.text(video.title)}
 							width="480"
 							height="270"
 							loading="lazy"

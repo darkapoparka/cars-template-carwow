@@ -48,7 +48,7 @@
 		{#each daynightDealerFooterGroups as group (group.title)}
 			<details>
 				<summary>{i18n.text(group.title)}<Plus size={18} strokeWidth={2} /></summary>
-				<nav aria-label={group.title}>
+				<nav aria-label={i18n.text(group.title)}>
 					{#each group.links as link (link.href)}<a href={i18n.href(resolve(link.href))}
 							>{i18n.text(link.label)}</a
 						>{/each}
@@ -122,8 +122,8 @@
 					href={i18n.href(item.href)}
 					target="_blank"
 					rel="external noopener noreferrer"
-					title={item.title}
-					aria-label={item.title}
+					title={i18n.text(item.title)}
+					aria-label={i18n.text(item.title)}
 				>
 					{@render footerSocialIcon(item.icon)}
 				</a>
@@ -131,8 +131,8 @@
 				<a
 					class="mh-footer__social-link"
 					href={i18n.href(resolve(item.href))}
-					title={item.title}
-					aria-label={item.title}
+					title={i18n.text(item.title)}
+					aria-label={i18n.text(item.title)}
 				>
 					{@render footerSocialIcon(item.icon)}
 				</a>

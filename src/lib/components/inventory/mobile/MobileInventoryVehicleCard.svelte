@@ -24,7 +24,7 @@
 				return;
 			event.preventDefault();
 			replaceState('', { ...page.state, inventoryScrollY: window.scrollY });
-			void goto(resolve('/inventory/[slug]', { slug: vehicle.slug }), {
+			void goto(i18n.href(resolve('/inventory/[slug]', { slug: vehicle.slug })), {
 				state: { inventoryReturn: routeParts(page.url.pathname).path + page.url.search }
 			});
 		}}

@@ -187,7 +187,7 @@
 					<a
 						class="desktop-services-card"
 						href={i18n.href(resolve(serviceRequestPath(service.id)))}
-						aria-label={i18n.t('pattern.98f83adf5270', { v0: service.title })}
+						aria-label={i18n.t('pattern.98f83adf5270', { v0: i18n.text(service.title) })}
 						onclick={(event) => chooseService(service.id, event)}
 					>
 						<span

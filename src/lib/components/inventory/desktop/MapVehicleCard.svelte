@@ -43,7 +43,7 @@
 	data-daynight-mileage={vehicle.mileageValue}
 	data-daynight-condition={condition}
 	data-daynight-features={vehicle.features.join(' | ')}
-	data-daynight-title={vehicle.shortTitle}
+	data-daynight-title={vehicle.title}
 	data-daynight-year={vehicle.year}
 >
 	<div class="top">

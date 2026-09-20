@@ -204,7 +204,7 @@
 						>
 							<img
 								src={i18n.asset(teammate.image)}
-								alt={teammate.name}
+								alt={i18n.text(teammate.name)}
 								loading="lazy"
 								decoding="async"
 							/>
