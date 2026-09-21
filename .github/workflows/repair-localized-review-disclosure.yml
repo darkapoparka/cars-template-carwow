@@ -1,0 +1,79 @@
+name: Repair localized review disclosure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-localized-review-disclosure.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Add reviewed localized disclosure
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+
+          const disclosure = 'В този независим преглед не са включени потвърдени клиентски отзиви.';
+          const templatePath = 'localization/template.reviewed.json';
+          const rows = JSON.parse(fs.readFileSync(templatePath, 'utf8'));
+          if (!rows.some((row) => row.key === 'reviews.disclosure.unverified')) {
+            rows.push({
+              key: 'reviews.disclosure.unverified',
+              source: disclosure,
+              en: 'This independent preview does not include confirmed customer reviews.',
+              bg: disclosure,
+              disposition: 'translate',
+              notes: 'Context-specific disclosure for dealer packages without verified customer reviews.'
+            });
+            fs.writeFileSync(templatePath, JSON.stringify(rows, null, '\t') + '\n');
+          }
+
+          const testPath = 'src/lib/locale/locale.test.ts';
+          let test = fs.readFileSync(testPath, 'utf8');
+          if (!test.includes("localizes the no-verified-reviews dealer disclosure")) {
+            const marker = "\tit('fails on unknown immutable copy and missing parameters', () => {";
+            const block = [
+              "\tit('localizes the no-verified-reviews dealer disclosure', () => {",
+              `\t\tconst disclosure = '${disclosure}';`,
+              "\t\texpect(templateText('bg', disclosure)).toBe(disclosure);",
+              "\t\texpect(templateText('en', disclosure)).toBe(",
+              "\t\t\t'This independent preview does not include confirmed customer reviews.'",
+              "\t\t);",
+              "\t});",
+              ''
+            ].join('\n');
+            if (!test.includes(marker)) throw new Error('Locale test insertion marker not found');
+            test = test.replace(marker, block + marker);
+            fs.writeFileSync(testPath, test);
+          }
+          NODE
+          node scripts/build-locales.mjs
+          node scripts/build-locales.mjs --check
+      - name: Verify localization
+        run: |
+          npm run test:localization
+          npm run test:unit -- --run src/lib/locale/locale.test.ts
+      - name: Publish tested fix
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm .github/workflows/repair-localized-review-disclosure.yml
+          git add localization/template.reviewed.json localization/generated-manifest.json src/lib/locale/catalog.ts src/lib/locale/locale.test.ts
+          git commit -m "Fix localized dealer review disclosure"
+          git push origin HEAD:main
