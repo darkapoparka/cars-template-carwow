@@ -10,10 +10,10 @@ import { buildSitemapLocations, renderSitemapXml } from '../server/sitemap';
 
 describe('configured mount boundaries', () => {
 	it.each([
-		'/api/preferences',
 		'/en/api/preferences',
 		'/variant-2/api/preferences',
-		'/variant-3/en/api/preferences'
+		'/variant-3/en/api/preferences',
+		'/variant-3/api/preferences/extra'
 	])('rejects preference aliases: %s', async (path) => {
 		const url = new URL(path, 'https://cars.example');
 		const request = new Request(url, {
@@ -32,25 +32,28 @@ describe('configured mount boundaries', () => {
 		expect(response.headers.getSetCookie()).toEqual([]);
 		expect(resolve).not.toHaveBeenCalled();
 	});
-	it('accepts only the configured unlocalized endpoint', async () => {
-		const url = new URL('https://cars.example/variant-3/api/preferences');
-		const request = new Request(url, {
-			method: 'POST',
-			headers: { origin: url.origin, 'content-type': 'application/json' },
-			body: JSON.stringify({
-				action: 'dismiss',
-				locale: 'en',
-				country: 'GB',
-				returnTo: '/variant-3/en'
-			})
-		});
-		const response = await localeHandle({
-			event: { url, request, locals: {} },
-			resolve: vi.fn()
-		} as never);
-		expect(response.status).toBe(200);
-		expect(response.headers.getSetCookie()).toHaveLength(1);
-	});
+	it.each(['/api/preferences', '/variant-3/api/preferences'])(
+		'accepts the standalone and mounted unlocalized endpoint: %s',
+		async (path) => {
+			const url = new URL(path, 'https://cars.example');
+			const request = new Request(url, {
+				method: 'POST',
+				headers: { origin: url.origin, 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'dismiss',
+					locale: 'en',
+					country: 'GB',
+					returnTo: '/variant-3/en'
+				})
+			});
+			const response = await localeHandle({
+				event: { url, request, locals: {} },
+				resolve: vi.fn()
+			} as never);
+			expect(response.status).toBe(200);
+			expect(response.headers.getSetCookie()).toHaveLength(1);
+		}
+	);
 	it('keeps invalid return fallback inside the mount', async () => {
 		const result = await load({
 			url: new URL(

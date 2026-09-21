@@ -1,5 +1,4 @@
 import { building } from '$app/environment';
-import { base } from '$app/paths';
 import type { Handle } from '@sveltejs/kit';
 import {
 	isResource,
@@ -15,7 +14,12 @@ import { message } from './messages';
 /** Locale state is request-local; native auth/database/device handling runs downstream. */
 export const localeHandle: Handle = async ({ event, resolve }) => {
 	const parts = routeParts(event.url.pathname);
-	if (event.url.pathname === `${base}/api/preferences`) return preferenceResponse(event.request);
+	if (
+		!parts.locale &&
+		(parts.base === '' || parts.base === '/variant-3') &&
+		parts.path === '/api/preferences'
+	)
+		return preferenceResponse(event.request);
 	const state = resolveLocale({
 		url: event.url,
 		cookie: event.request.headers.get('cookie'),
