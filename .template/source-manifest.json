@@ -3,12 +3,12 @@
   "key": "carwow",
   "source": {
     "repository": "darkapoparka/cars",
-    "commit": "b7462812d29ba5a4758ddd069049ee50282b79f4",
+    "commit": "eb71de5330f8408754984c04e1ec0a79089ab859",
     "path": "templates/carwow",
     "tree": "af47a659d305d81523f5af97ef66d15dd0aa1f38",
     "digest": "cd4794eb4c6840acaf6112bc0e480fdc93f6ab4b224ef4976ee6af25df8d9420",
     "exportPolicy": "cars-source-v1"
   },
-  "mirroredAt": "2026-09-25T21:01:15+03:00",
+  "mirroredAt": "2026-09-25T23:55:24+03:00",
   "files": 1356
 }
